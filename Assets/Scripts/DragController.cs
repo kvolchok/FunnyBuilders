@@ -1,67 +1,54 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class DragController : MonoBehaviour
 {
-    public LayerMask Mask;
-    [SerializeField] private float _distance;
-    [SerializeField] private Collider _currentCollider;
-    private Camera _camera;
-    private Vector3 _offset;
-    private Plane _dragPlane;
+    [SerializeField] private GridTile _gridTile;
+    [SerializeField] private LayerMask _mask;
+    [SerializeField] private int _distance;
+    [SerializeField] private float _snapRange = 0.3f;
+    private Collider _currentCollider;
+    private Vector3 _startPositionObject;
+    private Vector3 _initialPosition;
 
-
-    private void Awake()
-    {
-        _camera = Camera.main;
-    }
 
     private void Update()
     {
         if (Input.GetMouseButton(0))
         {
-            SelectPart();
+            Drag();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             Drop();
         }
-
-        DragAndDropObject();
     }
 
-    private void SelectPart()
+    private void Drag()
     {
-        var ray = _camera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hitInfo, _distance, Mask))
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hitInfo, _distance, _mask))
         {
-            _currentCollider = hitInfo.collider;
-            _dragPlane = new Plane(_camera.transform.forward, _currentCollider.transform.position);
-            float planeDist;
-            _dragPlane.Raycast(ray, out planeDist);
-            _offset = _currentCollider.transform.position - ray.GetPoint(planeDist);
+            if (_currentCollider == null)
+            {
+                _currentCollider = hitInfo.collider;
+                _startPositionObject = _currentCollider.transform.position;
+                _initialPosition = _startPositionObject;
+            }
+        }
+
+        var groundPlane = new Plane(Vector3.up, new Vector3(0, 0.3f, 0));
+        if (groundPlane.Raycast(ray, out var position))
+        {
+            var worldPosition = ray.GetPoint(position);
+            if (_currentCollider != null)
+            {
+                _currentCollider.transform.position = worldPosition;
+            }
         }
     }
 
-    private void DragAndDropObject()
-    {
-        if (_currentCollider == null)
-        {
-            return;
-        }
-
-        var ray = _camera.ScreenPointToRay(Input.mousePosition);
-        float planeDist;
-        _dragPlane.Raycast(ray, out planeDist);
-
-        _currentCollider.transform.position = ray.GetPoint(planeDist) + _offset;
-
-        if (_currentCollider.transform.position.y < 0.5f)
-        {
-            _currentCollider.transform.position = new Vector3(_currentCollider.transform.position.x, 0.5f,
-                _currentCollider.transform.position.z);
-        }
-    }
 
     private void Drop()
     {
@@ -70,8 +57,34 @@ public class DragController : MonoBehaviour
             return;
         }
 
-        _currentCollider.transform.position = new Vector3(_currentCollider.transform.position.x, 0.5f,
-            _currentCollider.transform.position.z);
+        if (_currentCollider.transform.position != _initialPosition)
+        {
+            if (!IsSnapPointReached())
+            {
+                _currentCollider.transform.DOMove(_initialPosition, 1.0f);
+            }
+        }
+
         _currentCollider = null;
+    }
+
+    private bool IsSnapPointReached()
+    {
+        foreach (var item in _gridTile.Items)
+        {
+            var currentDistance = Vector3.Distance(_currentCollider.transform.position, item.transform.position);
+
+            if (currentDistance <= _snapRange)
+            {
+                if (item != _currentCollider.transform)
+                {
+                    _gridTile.Items.Remove(item);
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
