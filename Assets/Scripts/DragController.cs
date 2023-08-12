@@ -3,7 +3,7 @@ using DG.Tweening;
 
 public class DragController : MonoBehaviour
 {
-    [SerializeField] private GridTile _gridTile;
+   // [SerializeField] private GridTile _gridTile;
     [SerializeField] private LayerMask _mask;
     [SerializeField] private int _distance;
     [SerializeField] private float _snapRange = 0.3f;
@@ -59,32 +59,33 @@ public class DragController : MonoBehaviour
 
         if (_currentCollider.transform.position != _initialPosition)
         {
-            if (!IsSnapPointReached())
-            {
+           // if (!IsSnapPointReached())
+           // {
                 _currentCollider.transform.DOMove(_initialPosition, 1.0f);
-            }
+           // }
         }
 
         _currentCollider = null;
     }
 
-    private bool IsSnapPointReached()
-    {
-        foreach (var item in _gridTile.Items)
-        {
-            var currentDistance = Vector3.Distance(_currentCollider.transform.position, item.transform.position);
-
-            if (currentDistance <= _snapRange)
-            {
-                if (item != _currentCollider.transform)
-                {
-                    _gridTile.Items.Remove(item);
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+   // private bool IsSnapPointReached()
+   // {
+   //     foreach (var item in _gridTile.Items)
+   //     {
+   //        
+   //         var currentDistance = Vector3.Distance(_currentCollider.transform.position, item.transform.position);
+//
+   //         if (currentDistance <= _snapRange)
+   //         {
+   //             if (item != _currentCollider.transform )
+   //             {
+   //                 _currentCollider.gameObject.layer = default;
+   //                 _gridTile.Items.Remove(item);
+   //                 return true;
+   //             }
+   //         }
+   //     }
+//
+   //     return false;
+   // }
 }
