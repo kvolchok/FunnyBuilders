@@ -11,6 +11,6 @@ public class UnitPositioner : MonoBehaviour
         var targetPosition = new Vector3(tile.transform.position.x, unit.transform.localScale.y, 
             tile.transform.position.z);
         unit.transform.DOMove(targetPosition, _movementDuration);
-        tile.ChangeState(false);
+        tile.SetUnit(unit);
     }
 }

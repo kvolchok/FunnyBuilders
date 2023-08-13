@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class GridController : MonoBehaviour
 {
-    public event Action<Vector3Int, Vector3Int> UnitDropped;
+    public event Action<Tile, Tile> UnitDropped;
     
     [SerializeField]
     private Grid _grid;
-    [field:SerializeField]
-    public Vector2Int MapSize { get; private set; }
-
+    [SerializeField]
+    private Vector2Int _mapSize;
     [SerializeField]
     private Tile _tilePrefab;
     
@@ -19,8 +18,6 @@ public class GridController : MonoBehaviour
     
     private Tile _currentTile;
     private Tile _targetTile;
-    private Vector3Int _currentTileIndex;
-    private Vector3Int _targetTileIndex;
 
     private void Awake()
     {
@@ -34,14 +31,7 @@ public class GridController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            _currentTileIndex = GetTile();
-
-            if (_currentTileIndex == Vector3Int.up)
-            {
-                return;
-            }
-            
-            _currentTile = _tiles[_currentTileIndex.x, _currentTileIndex.z];
+            _currentTile = GetTile();
         }
         
         if (!Input.GetMouseButtonUp(0) || _currentTile == null)
@@ -49,15 +39,14 @@ public class GridController : MonoBehaviour
             return;
         }
         
-        _targetTileIndex = GetTile();
-        _targetTile = _tiles[_targetTileIndex.x, _targetTileIndex.z];
+        _targetTile = GetTile();
 
         if (_targetTile == null || _currentTile == _targetTile)
         {
             return;
         }
         
-        UnitDropped?.Invoke(_currentTileIndex, _targetTileIndex);
+        UnitDropped?.Invoke(_currentTile, _targetTile);
     }
 
     public Tile GetFirstAvailable()
@@ -65,19 +54,9 @@ public class GridController : MonoBehaviour
         return _tiles.Cast<Tile>().FirstOrDefault(tile => tile.IsAvailable);
     }
 
-    public Vector3Int GetIndex(Tile tile)
-    {
-        return _grid.WorldToCell(tile.transform.position);
-    }
-    
-    public void ChangeCurrentTileState(bool isAvailable)
-    {
-        _currentTile.ChangeState(isAvailable);
-    }
-
     private void SpawnTiles()
     {
-        _tiles = new Tile[MapSize.x, MapSize.y];
+        _tiles = new Tile[_mapSize.x, _mapSize.y];
         
         for (var x = 0; x < _tiles.GetLength(0); x++)
         {
@@ -93,22 +72,23 @@ public class GridController : MonoBehaviour
     }
     
     // Метод для теста, потом нужно дропнуть
-    private Vector3Int GetTile()
+    private Tile GetTile()
     {
         var mousePosition = Input.mousePosition;
         var ray = _camera.ScreenPointToRay(mousePosition);
 
         if (!Physics.Raycast(ray, out var hitInfo))
         {
-            return Vector3Int.up;
+            return null;
         }
 
         var worldPosition = hitInfo.point;
         var cell = _grid.WorldToCell(worldPosition);
 
-        return IsOutOfRange(cell) ? Vector3Int.up : cell;
+        return IsOutOfRange(cell) ? null : _tiles[cell.x, cell.z];
     }
 
+    // Метод для теста, потом нужно дропнуть
     private bool IsOutOfRange(Vector3Int cell)
     {
         return cell.x < 0 || cell.x >= _tiles.GetLength(0) ||

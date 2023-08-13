@@ -8,7 +8,7 @@ public class UnitSpawner : MonoBehaviour
     [SerializeField]
     private Unit _unitPrefab;
 
-    public Unit GetSpawnedUnit(Transform spawnPoint, int level = 1)
+    public Unit SpawnUnit(Transform spawnPoint, int level = 1)
     {
         var unitSettings = _gameSettings.UnitSettings.FirstOrDefault(unit => unit.Level == level);
         var unit = Instantiate(_unitPrefab);

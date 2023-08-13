@@ -3,23 +3,26 @@ using UnityEngine;
 
 public class MergeController : MonoBehaviour
 {
-    public event Action<Unit, Unit, Unit> UnitsMerged;
+    public event Action<Unit, Tile> UnitsMerged;
     public event Action<Unit> UnitsNotMerged;
     
     [SerializeField]
     private UnitSpawner _unitSpawner;
 
-    public void TryMergeUnits(Unit currentUnit, Unit targetUnit)
+    public void TryMergeUnits(Tile currentTile, Tile targetTile)
     {
-        var targetUnitLevel = targetUnit.Level;
-        if (currentUnit.Level == targetUnitLevel)
+        var targetUnitLevel = targetTile.Unit.Level;
+        if (currentTile.Unit.Level == targetUnitLevel)
         {
-            var newUnit = _unitSpawner.GetSpawnedUnit(targetUnit.transform, ++targetUnitLevel);
-            UnitsMerged?.Invoke(currentUnit, targetUnit, newUnit);
+            var newUnit = _unitSpawner.SpawnUnit(targetTile.Unit.transform, ++targetUnitLevel);
+            Destroy(currentTile.Unit.gameObject);
+            Destroy(targetTile.Unit.gameObject);
+            currentTile.ChangeState(true);
+            UnitsMerged?.Invoke(newUnit, targetTile);
         }
         else
         {
-            UnitsNotMerged?.Invoke(currentUnit);
+            UnitsNotMerged?.Invoke(currentTile.Unit);
         }
     }
 }
