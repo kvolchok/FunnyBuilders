@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class MergeController : MonoBehaviour
 {
-    public event Action<Unit, Tile> UnitsMerged;
-    public event Action<Unit> UnitsNotMerged;
-    
     [SerializeField]
     private UnitSpawner _unitSpawner;
 
-    public void TryMergeUnits(Tile currentTile, Tile targetTile)
+    public void TryMergeUnits(Tile currentTile, Tile targetTile, Action<Unit, Tile> onTriedMergeUnits)
     {
         var targetUnitLevel = targetTile.Unit.Level;
         if (currentTile.Unit.Level == targetUnitLevel)
@@ -18,11 +15,11 @@ public class MergeController : MonoBehaviour
             Destroy(currentTile.Unit.gameObject);
             Destroy(targetTile.Unit.gameObject);
             currentTile.ChangeState(true);
-            UnitsMerged?.Invoke(newUnit, targetTile);
+            onTriedMergeUnits?.Invoke(newUnit, targetTile);
         }
         else
         {
-            UnitsNotMerged?.Invoke(currentTile.Unit);
+            onTriedMergeUnits?.Invoke(currentTile.Unit, currentTile);
         }
     }
 }
