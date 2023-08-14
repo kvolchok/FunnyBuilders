@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using UnityEngine;
 
 
-public class Buildings : MonoBehaviour
+public class Building : MonoBehaviour
 {
     [SerializeField] private int _builderingPrice;
     [SerializeField] private List<Place> _placesList = new();
@@ -35,11 +34,11 @@ public class Buildings : MonoBehaviour
             count++;
         }
     }
+
     private void ShowMoneyOnDisplay(int money)
     {
         _amountProfit += money;
         _walletView.UpdateMoneyView(_amountProfit);
-
         var scale = (float)_amountProfit / _builderingPrice;
         _buildingProgressCalculator.BuildFloor(scale);
     }

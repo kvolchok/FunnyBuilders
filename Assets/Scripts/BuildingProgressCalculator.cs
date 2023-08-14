@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BuildingProgressCalculator : MonoBehaviour
 {
@@ -9,9 +11,8 @@ public class BuildingProgressCalculator : MonoBehaviour
 
     private const float _scaleY = 4.0f;
     private Action _stopWorking;
-    private Coroutine buildFloor;
+    private Coroutine _buildFloor;
     private Vector3 _transformLocalScale;
-
 
     private IEnumerator Build(float localScale)
     {
@@ -30,7 +31,7 @@ public class BuildingProgressCalculator : MonoBehaviour
         }
     }
 
-    private bool IsEnoughtScale(float scale)
+    private bool IsEnoughScale(float scale)
     {
         return scale >= _scaleY;
     }
@@ -42,18 +43,18 @@ public class BuildingProgressCalculator : MonoBehaviour
 
     public void BuildFloor(float scale)
     {
-        Debug.Log("StartBuildCoroutine");
-        if (buildFloor != null)
+        if (_buildFloor != null)
         {
-            StopCoroutine(buildFloor);
+            StopCoroutine(_buildFloor);
         }
 
-        if (IsEnoughtScale(_buildingBuilt.transform.localScale.y))
+        if (IsEnoughScale(_buildingBuilt.transform.localScale.y))
         {
             StopAllCoroutines();
             _stopWorking.Invoke();
+            return;
         }
 
-        buildFloor = StartCoroutine(Build(scale));
+        _buildFloor = StartCoroutine(Build(scale));
     }
 }
