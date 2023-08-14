@@ -6,7 +6,8 @@ public class BuildingIncomeCalculator : MonoBehaviour
 {
     private int _paymentInterval;
     private Action<int> _showMoneyOnDisplay;
-    
+
+   
     public void StartPay(int workLevel, Action<int> ShowMoneyOnDisplay)
     {
         Debug.Log("StartPay");
@@ -17,7 +18,7 @@ public class BuildingIncomeCalculator : MonoBehaviour
     private void SetPaymentInterval(int workLevel)
     {
         CheckLevelWorker(workLevel);
-        
+        Debug.Log("StartMoneyCoroutine");
          StartCoroutine(GiveSalary());
     }
 
@@ -41,10 +42,10 @@ public class BuildingIncomeCalculator : MonoBehaviour
         {
             profit += _paymentInterval;
             _showMoneyOnDisplay.Invoke(_paymentInterval);
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSeconds(1.0f);
         }
 
-        _showMoneyOnDisplay.Invoke(_paymentInterval);
+        _showMoneyOnDisplay.Invoke(profit);
     }
 
     public void StopWorking()

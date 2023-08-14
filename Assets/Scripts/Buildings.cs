@@ -5,12 +5,14 @@ using UnityEngine;
 public class Buildings : MonoBehaviour
 {
     [SerializeField] private Grid _grid;
+    [SerializeField] private int _builderingPrice;
     [SerializeField] private Place _placePrefab;
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
     [SerializeField] private BuildingProgressCalculator _buildingProgressCalculator;
     [SerializeField] private WalletView _walletView;
     private Place[] _arrayPlaces;
     private int _amount;
+
 
     // Start is called before the first frame update
     private void Start()
@@ -56,14 +58,16 @@ public class Buildings : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void ShowMoneyOnDisplay(int money)
     {
         _amount += money;
         _walletView.UpdateMoneyView(_amount);
-        if (IsProfitEnought(_amount))
-        {
-            _buildingProgressCalculator.BuildFloor(0.5f);
-        }
+       // if (_amount >= _builderingPrice)
+        //{
+            var scale = (float) _amount/_builderingPrice;
+            _buildingProgressCalculator.BuildFloor(scale);
+        //}
     }
 
     private bool IsProfitEnought(int profit)
