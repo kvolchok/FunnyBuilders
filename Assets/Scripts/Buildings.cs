@@ -1,82 +1,56 @@
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
 
 public class Buildings : MonoBehaviour
 {
-    [SerializeField] private Grid _grid;
     [SerializeField] private int _builderingPrice;
-    [SerializeField] private Place _placePrefab;
+    [SerializeField] private List<Place> _placesList = new();
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
     [SerializeField] private BuildingProgressCalculator _buildingProgressCalculator;
     [SerializeField] private WalletView _walletView;
-    private Place[] _arrayPlaces;
-    private int _amount;
+    [SerializeField] private int _amountHiddenPlaces;
+    private int _amountProfit;
+    public List<Place> GetPlacesList => _placesList;
 
-
-    // Start is called before the first frame update
     private void Start()
     {
-        _arrayPlaces = new Place[4];
-        InstancePlaces();
+        HidePlaces();
         _buildingProgressCalculator.Initialize(_buildingIncomeCalculator.StopWorking);
     }
 
-    private void InstancePlaces()
+    private void HidePlaces()
     {
-        for (var i = 0; i < _arrayPlaces.Length; i++)
+        var count = 0;
+        foreach (var place in _placesList)
         {
-            var place = Instantiate(_placePrefab);
-            place.SetStatusPlace(true);
-
-            var position = _grid.CellToWorld(new Vector3Int(i, 0, -i));
-
-            if (i > 1)
+            if (count >= _amountHiddenPlaces)
             {
+                place.SetStatusPlace(false);
                 place.gameObject.SetActive(false);
             }
 
-            place.transform.position = position;
-
-            _arrayPlaces[i] = place;
+            count++;
         }
     }
-
-    public void AddBuilderToBuildingSite(UnityEngine.Vector3 position, Unit worker)
-    {
-        Vector3Int index = _grid.WorldToCell(position);
-        var x = index.x;
-        if (x is >= 0 and < 3)
-        {
-            if (_arrayPlaces[x]._isAvaliablePlace)
-            {
-                Debug.Log("StartWorking");
-                _arrayPlaces[x].SetStatusPlace(false);
-                _arrayPlaces[x].SetWorker(worker);
-                _buildingIncomeCalculator.StartPay(worker.UnitLevel, ShowMoneyOnDisplay);
-            }
-        }
-    }
-
-    // ReSharper disable Unity.PerformanceAnalysis
     private void ShowMoneyOnDisplay(int money)
     {
-        _amount += money;
-        _walletView.UpdateMoneyView(_amount);
-       // if (_amount >= _builderingPrice)
-        //{
-            var scale = (float) _amount/_builderingPrice;
-            _buildingProgressCalculator.BuildFloor(scale);
-        //}
+        _amountProfit += money;
+        _walletView.UpdateMoneyView(_amountProfit);
+
+        var scale = (float)_amountProfit / _builderingPrice;
+        _buildingProgressCalculator.BuildFloor(scale);
     }
 
-    private bool IsProfitEnought(int profit)
+    public void AddBuilderToBuildingSite(Unit worker, Place place)
     {
-        if (profit % 200 == 0)
+        if (_placesList.Any(Place => Place.transform == place.transform))
         {
-            return true;
+            place.SetStatusPlace(false);
+            place.SetWorker(worker);
+            _buildingIncomeCalculator.StartPay(worker.UnitLevel, ShowMoneyOnDisplay);
         }
-
-        return false;
     }
 }

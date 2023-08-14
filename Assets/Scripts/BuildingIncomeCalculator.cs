@@ -4,22 +4,17 @@ using UnityEngine;
 
 public class BuildingIncomeCalculator : MonoBehaviour
 {
+    [SerializeField] private int _paymentFirstLevelUnit;
+    [SerializeField] private int _paymentSecondLevelUnit;
     private int _paymentInterval;
     private Action<int> _showMoneyOnDisplay;
 
-   
-    public void StartPay(int workLevel, Action<int> ShowMoneyOnDisplay)
-    {
-        Debug.Log("StartPay");
-        _showMoneyOnDisplay = ShowMoneyOnDisplay;
-        SetPaymentInterval(workLevel);
-    }
 
     private void SetPaymentInterval(int workLevel)
     {
         CheckLevelWorker(workLevel);
         Debug.Log("StartMoneyCoroutine");
-         StartCoroutine(GiveSalary());
+        StartCoroutine(GiveSalary());
     }
 
     private void CheckLevelWorker(int workLevel)
@@ -27,14 +22,13 @@ public class BuildingIncomeCalculator : MonoBehaviour
         switch (workLevel)
         {
             case 1:
-                _paymentInterval = 10;
+                _paymentInterval = _paymentFirstLevelUnit;
                 break;
             case 2:
-                _paymentInterval = 20;
+                _paymentInterval = _paymentSecondLevelUnit;
                 break;
         }
     }
-
     private IEnumerator GiveSalary()
     {
         var profit = 0;
@@ -44,12 +38,16 @@ public class BuildingIncomeCalculator : MonoBehaviour
             _showMoneyOnDisplay.Invoke(_paymentInterval);
             yield return new WaitForSeconds(1.0f);
         }
-
         _showMoneyOnDisplay.Invoke(profit);
     }
-
     public void StopWorking()
     {
         StopAllCoroutines();
+    }
+    public void StartPay(int workLevel, Action<int> ShowMoneyOnDisplay)
+    {
+        Debug.Log("StartPay");
+        _showMoneyOnDisplay = ShowMoneyOnDisplay;
+        SetPaymentInterval(workLevel);
     }
 }
