@@ -12,15 +12,26 @@ public class BuildingIncomeCalculator : MonoBehaviour
     private int _paymentInterval;
     private Action<int> _showMoneyOnDisplay;
 
-    private void SetPaymentInterval(int workLevel)
+    public void StopWorking()
     {
-        CheckLevelWorker(workLevel);
+        StopAllCoroutines();
+    }
+
+    public void StartPay(int unitLevel, Action<int> showMoneyOnDisplay)
+    {
+        _showMoneyOnDisplay = showMoneyOnDisplay;
+        SetPaymentInterval(unitLevel);
+    }
+
+    private void SetPaymentInterval(int unitLevel)
+    {
+        CheckLevelWorker(unitLevel);
         StartCoroutine(GiveSalary());
     }
 
-    private void CheckLevelWorker(int workLevel)
+    private void CheckLevelWorker(int unitLevel)
     {
-        switch (workLevel)
+        switch (unitLevel)
         {
             case 1:
                 _paymentInterval = _paymentFirstLevelUnit;
@@ -42,16 +53,5 @@ public class BuildingIncomeCalculator : MonoBehaviour
         }
 
         _showMoneyOnDisplay.Invoke(profit);
-    }
-
-    public void StopWorking()
-    {
-        StopAllCoroutines();
-    }
-
-    public void StartPay(int workLevel, Action<int> ShowMoneyOnDisplay)
-    {
-        _showMoneyOnDisplay = ShowMoneyOnDisplay;
-        SetPaymentInterval(workLevel);
     }
 }

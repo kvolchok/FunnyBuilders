@@ -6,13 +6,25 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     [SerializeField] private int _builderingPrice;
-    [SerializeField] private List<Place> _placesList = new();
+
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
     [SerializeField] private BuildingProgressCalculator _buildingProgressCalculator;
-    [SerializeField] private WalletView _walletView;
+    [SerializeField] private WalletManager _walletManager;
     [SerializeField] private int _amountHiddenPlaces;
+
     private int _amountProfit;
-    public List<Place> GetPlacesList => _placesList;
+
+    [field: SerializeField] public List<Tile> TilesList { get; private set; }
+
+    public void AddUnitToBuildingSite(Unit worker, Tile tile)
+    {
+        if (TilesList.Any(Place => Place.transform == tile.transform))
+        {
+            tile.SetStatusPlace(false);
+            tile.SetWorker(worker);
+            _buildingIncomeCalculator.StartPay(worker.UnitLevel, ShowMoneyOnDisplay);
+        }
+    }
 
     private void Start()
     {
@@ -23,12 +35,12 @@ public class Building : MonoBehaviour
     private void HidePlaces()
     {
         var count = 0;
-        foreach (var place in _placesList)
+        foreach (var tile in TilesList)
         {
             if (count >= _amountHiddenPlaces)
             {
-                place.SetStatusPlace(false);
-                place.gameObject.SetActive(false);
+                tile.SetStatusPlace(false);
+                tile.gameObject.SetActive(false);
             }
 
             count++;
@@ -38,18 +50,8 @@ public class Building : MonoBehaviour
     private void ShowMoneyOnDisplay(int money)
     {
         _amountProfit += money;
-        _walletView.UpdateMoneyView(_amountProfit);
-        var scale = (float)_amountProfit / _builderingPrice;
-        _buildingProgressCalculator.BuildFloor(scale);
-    }
-
-    public void AddBuilderToBuildingSite(Unit worker, Place place)
-    {
-        if (_placesList.Any(Place => Place.transform == place.transform))
-        {
-            place.SetStatusPlace(false);
-            place.SetWorker(worker);
-            _buildingIncomeCalculator.StartPay(worker.UnitLevel, ShowMoneyOnDisplay);
-        }
+        //_walletManager.UpdateMoneyView(_amountProfit); 
+        var scaleY = (float)_amountProfit / _builderingPrice;
+        _buildingProgressCalculator.BuildFloor(scaleY);
     }
 }

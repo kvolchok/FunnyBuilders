@@ -524,7 +524,7 @@ MonoBehaviour:
     m_Bits: 8
   _distance: 50
   _currentCollider: {fileID: 190767935}
-  _buildings: {fileID: 1347243869}
+  _building: {fileID: 1347243869}
 --- !u!1 &198908504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,17 +1813,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1053187818}
   m_CullTransparentMesh: 0
---- !u!114 &1081268636 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -4846131941867063660, guid: ed5701135f32dbd448440c4d0519d142, type: 3}
-  m_PrefabInstance: {fileID: 911372557}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70efff0340a1ad54bab1a4dbcede7414, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1247727136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2008,15 +1997,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _builderingPrice: 1000
-  _placesList:
-  - {fileID: 2018395791}
-  - {fileID: 2086740092}
-  - {fileID: 1081268636}
-  - {fileID: 1695356463}
   _buildingIncomeCalculator: {fileID: 1347243871}
   _buildingProgressCalculator: {fileID: 1347243870}
-  _walletView: {fileID: 128213469}
+  _walletManager: {fileID: 0}
   _amountHiddenPlaces: 2
+  <TilesList>k__BackingField:
+  - {fileID: 2018395791}
+  - {fileID: 2086740092}
 --- !u!114 &1347243870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2030,7 +2017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingBuilt: {fileID: 1347243864}
-  _durationBuilt: 0.01
+  _durationBuilt: 0.6
 --- !u!114 &1347243871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2045,6 +2032,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _paymentFirstLevelUnit: 10
   _paymentSecondLevelUnit: 20
+  _maxProfitUnit: 10000
+  _waitingTimeBetweenUnitProfit: 0.6
 --- !u!1001 &1417284139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2400,17 +2389,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537445114}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1695356463 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -4846131941867063660, guid: ed5701135f32dbd448440c4d0519d142, type: 3}
-  m_PrefabInstance: {fileID: 356814922}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70efff0340a1ad54bab1a4dbcede7414, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1716849454
 GameObject:
   m_ObjectHideFlags: 0
