@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DragController : MonoBehaviour
 {
-      [SerializeField] private LayerMask _raycastLayerMask;
+    [SerializeField] private LayerMask _raycastLayerMask;
     [SerializeField] private float _movementDuration = 1f;
     [SerializeField] private Vector3 _offset;
     private Collider _draggedObject;
