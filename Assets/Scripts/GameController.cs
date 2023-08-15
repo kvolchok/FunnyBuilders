@@ -7,7 +7,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private UnitSpawner _unitSpawner;
     [SerializeField]
-    private UnitBuyer _unitBuyer;
+    private EntityBuyer _unitBuyer;
+    [SerializeField]
+    private EntityBuyer _spotBuyer;
     [SerializeField]
     private WalletManager _walletManager;
 
@@ -15,6 +17,7 @@ public class GameController : MonoBehaviour
     {
         _unitSpawner.Initialize(_gameSettings.UnitSettings);
         _unitBuyer.Initialize(_gameSettings.UnitPrices);
+        _spotBuyer.Initialize(_gameSettings.SpotPrices);
         _walletManager.Initialize(_gameSettings.StartMoney);
     }
 }
