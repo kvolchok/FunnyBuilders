@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
     private EntityBuyer _spotBuyer;
     [SerializeField]
     private WalletManager _walletManager;
+    [SerializeField]
+    private MergeController _mergeController;
 
     private void Awake()
     {
@@ -19,5 +21,6 @@ public class GameController : MonoBehaviour
         _unitBuyer.Initialize(_gameSettings.UnitPrices);
         _spotBuyer.Initialize(_gameSettings.SpotPrices);
         _walletManager.Initialize(_gameSettings.StartMoney);
+        _mergeController.Initialize(_gameSettings.UnitSettings.Length);
     }
 }

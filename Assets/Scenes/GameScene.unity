@@ -2562,6 +2562,7 @@ MonoBehaviour:
   _unitBuyer: {fileID: 1460698042}
   _spotBuyer: {fileID: 45186040}
   _walletManager: {fileID: 723720421}
+  _mergeController: {fileID: 887359271}
 --- !u!4 &2023092203
 Transform:
   m_ObjectHideFlags: 0
