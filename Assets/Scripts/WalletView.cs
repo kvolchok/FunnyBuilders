@@ -1,12 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class WalletView : MonoBehaviour
+public class WalletView : MonoBehaviour, INumberView
 {
     [SerializeField]
     private TextMeshProUGUI _moneyLabel;
 
-    public void UpdateMoneyView(int value)
+    public void UpdateView(int value)
     {
         _moneyLabel.text = value.ToString();
     }

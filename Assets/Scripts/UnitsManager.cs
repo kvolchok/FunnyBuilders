@@ -1,4 +1,5 @@
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class UnitsManager : MonoBehaviour
@@ -18,9 +19,9 @@ public class UnitsManager : MonoBehaviour
     {
         _gridController.UnitDropped += OnUnitDropped;
     }
-
-    // Определить количество доступных к покупке юнитов
-    public void BuyNewUnit()
+    
+    [UsedImplicitly]
+    public void AddNewUnit()
     {
         var unit = _unitSpawner.SpawnUnit(_spawnPoint);
         var tile = _gridController.GetFirstAvailable();

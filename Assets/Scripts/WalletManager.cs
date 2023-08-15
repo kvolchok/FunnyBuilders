@@ -13,13 +13,16 @@ public class WalletManager : MonoBehaviour
         SetMoney(money);
     }
 
-    public void TryBuyItem(int price)
+    public bool TryPurchase(int price)
     {
-        if (HasEnoughMoney(price))
+        if (!HasEnoughMoney(price))
         {
-            var newMoney = _money - price;
-            SetMoney(newMoney);
+            return false;
         }
+        
+        var newMoney = _money - price;
+        SetMoney(newMoney);
+        return true;
     }
     
     private void SetMoney(int money)

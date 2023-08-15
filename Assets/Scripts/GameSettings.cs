@@ -5,5 +5,9 @@ using UnityEngine;
 public class GameSettings
 {
     [field:SerializeField]
-    public UnitSettings[] UnitSettings { get; private set; } 
+    public UnitSettings[] UnitSettings { get; private set; }
+    [field:SerializeField]
+    public int[] UnitPrices { get; private set; } 
+    [field:SerializeField]
+    public int StartMoney { get; private set; }
 }
