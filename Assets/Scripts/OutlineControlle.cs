@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DefaultNamespace
 {
     [RequireComponent(typeof(Outline))]
-    public class OutlineWorker : MonoBehaviour
+    public class OutlineController : MonoBehaviour
     {
         [SerializeField] private int _highlightIntensity = 4;
 
