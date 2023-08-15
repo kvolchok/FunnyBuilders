@@ -9,5 +9,7 @@ public class GameSettings
     [field:SerializeField]
     public int[] UnitPrices { get; private set; } 
     [field:SerializeField]
+    public int[] SpotPrices { get; private set; } 
+    [field:SerializeField]
     public int StartMoney { get; private set; }
 }
