@@ -10,17 +10,18 @@ public class EntityBuyer : MonoBehaviour
     [SerializeField]
     private UnityEvent _entityBought;
     
-    [SerializeField]
-    private WalletManager _walletManager;
+    private int _currentPrice => _entityPrices[_currentPriceIndex];
+    
     [SerializeField]
     private Button _buyButton;
-
-    private int _currentPrice => _entityPrices[_currentPriceIndex];
+    
+    private WalletManager _walletManager;
     private int[] _entityPrices;
     private int _currentPriceIndex;
 
-    public void Initialize(int[] entityPrices)
+    public void Initialize(WalletManager walletManager, int[] entityPrices)
     {
+        _walletManager = walletManager;
         _entityPrices = entityPrices;
         SetEntityPrice(_currentPrice);
     }

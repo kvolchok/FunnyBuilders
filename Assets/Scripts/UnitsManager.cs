@@ -7,16 +7,18 @@ public class UnitsManager : MonoBehaviour
     [SerializeField]
     private GridController _gridController;
     [SerializeField]
-    private UnitSpawner _unitSpawner;
-    [SerializeField]
-    private UnitPositioner _unitPositioner;
-    [SerializeField]
-    private MergeController _mergeController;
-    [SerializeField]
     private Transform _spawnPoint;
+    
+    private UnitSpawner _unitSpawner;
+    private UnitPositioner _unitPositioner;
+    private MergeController _mergeController;
 
-    private void Awake()
+    public void Initialize(UnitSpawner unitSpawner, UnitPositioner unitPositioner, MergeController mergeController)
     {
+        _unitSpawner = unitSpawner;
+        _unitPositioner = unitPositioner;
+        _mergeController = mergeController;
+            
         _gridController.UnitDropped += OnUnitDropped;
     }
     
