@@ -37,12 +37,18 @@ public class UnitsManager : MonoBehaviour
 
     private void MergeUnits(Tile currentTile, Tile targetTile)
     {
-        _mergeController.TryMergeUnits(currentTile, targetTile, OnTriedMergeUnits);
+        _mergeController.TryMergeUnits(currentTile, targetTile, OnUnitsMerged, OnUnitsNotMerged);
     }
     
-    private void OnTriedMergeUnits(Unit unit, Tile tile)
+    private void OnUnitsMerged(Tile targetTile, Transform targetUnitTransform, int targetUnitLevel)
     {
-        _unitPositioner.PlaceUnitOnTile(unit, tile);
+        var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
+        _unitPositioner.PlaceUnitOnTile(newUnit, targetTile);
+    }
+    
+    private void OnUnitsNotMerged(Unit currentUnit, Tile currentTile)
+    {
+        _unitPositioner.PlaceUnitOnTile(currentUnit, currentTile);
     }
     
     private void OnDestroy()
