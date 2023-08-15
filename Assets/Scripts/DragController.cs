@@ -3,89 +3,100 @@ using DG.Tweening;
 
 public class DragController : MonoBehaviour
 {
-   // [SerializeField] private GridTile _gridTile;
-    [SerializeField] private LayerMask _mask;
-    [SerializeField] private int _distance;
-    [SerializeField] private float _snapRange = 0.3f;
-    private Collider _currentCollider;
+    [SerializeField] private LayerMask _raycastLayerMask;
+    [SerializeField] private float _movementDuration = 1f;
+    [SerializeField] private Vector3 _offset;
+    private Collider _draggedObject;
     private Vector3 _startPositionObject;
-    private Vector3 _initialPosition;
+    private Vector3 _dropSpotPosition;
+    private Camera _camera;
+    private bool _isOverDropSpot;
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
 
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            TakeObject();
+        }
+
         if (Input.GetMouseButton(0))
         {
-            Drag();
+            DragObject();
         }
+
 
         if (Input.GetMouseButtonUp(0))
         {
-            Drop();
+            DropObject();
         }
     }
 
-    private void Drag()
+    private void TakeObject()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out var hitInfo, _distance, _mask))
+        var ray = _camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hit))
         {
-            if (_currentCollider == null)
+            if (hit.collider.CompareTag("Player"))
             {
-                _currentCollider = hitInfo.collider;
-                _startPositionObject = _currentCollider.transform.position;
-                _initialPosition = _startPositionObject;
-            }
-        }
-
-        var groundPlane = new Plane(Vector3.up, new Vector3(0, 0.3f, 0));
-        if (groundPlane.Raycast(ray, out var position))
-        {
-            var worldPosition = ray.GetPoint(position);
-            if (_currentCollider != null)
-            {
-                _currentCollider.transform.position = worldPosition;
+                _draggedObject = hit.collider;
+                _startPositionObject = _draggedObject.transform.position;
             }
         }
     }
 
-
-    private void Drop()
+    private void DragObject()
     {
-        if (_currentCollider == null)
+        var ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _raycastLayerMask))
+        {
+            if (_draggedObject != null)
+            {
+                _draggedObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z) + _offset;
+
+                CheckDropSpot();
+            }
+        }
+    }
+
+    private void DropObject()
+    {
+        if (_draggedObject == null)
         {
             return;
         }
 
-        if (_currentCollider.transform.position != _initialPosition)
+        if (_isOverDropSpot)
         {
-           // if (!IsSnapPointReached())
-           // {
-                _currentCollider.transform.DOMove(_initialPosition, 1.0f);
-           // }
+            _draggedObject.transform.position = _dropSpotPosition + _offset;
+        }
+        else
+        {
+            _draggedObject.transform.DOMove(_startPositionObject, _movementDuration);
         }
 
-        _currentCollider = null;
+
+        _draggedObject = null;
     }
 
-   // private bool IsSnapPointReached()
-   // {
-   //     foreach (var item in _gridTile.Items)
-   //     {
-   //        
-   //         var currentDistance = Vector3.Distance(_currentCollider.transform.position, item.transform.position);
-//
-   //         if (currentDistance <= _snapRange)
-   //         {
-   //             if (item != _currentCollider.transform )
-   //             {
-   //                 _currentCollider.gameObject.layer = default;
-   //                 _gridTile.Items.Remove(item);
-   //                 return true;
-   //             }
-   //         }
-   //     }
-//
-   //     return false;
-   // }
+    private void CheckDropSpot()
+    {
+        var ray = new Ray(_draggedObject.transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out var hitInfo))
+        {
+            var hit = hitInfo.collider.gameObject;
+            var spot = hit.CompareTag("Finish");
+            if (spot)
+            {
+                _isOverDropSpot = true;
+                _dropSpotPosition = hit.transform.position;
+            }
+        }
+    }
 }
