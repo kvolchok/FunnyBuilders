@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 public class Building : MonoBehaviour
 {
+    [field: SerializeField]
+    public List<Tile> TilesList { get; private set; }
+    
     [SerializeField] private int _builderingPrice;
 
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
@@ -14,15 +16,13 @@ public class Building : MonoBehaviour
 
     private int _amountProfit;
 
-    [field: SerializeField] public List<Tile> TilesList { get; private set; }
-
-    public void AddUnitToBuildingSite(Unit worker, Tile tile)
+    public void AddUnitToBuildingSite(Unit unit, Tile tile)
     {
         if (TilesList.Any(Place => Place.transform == tile.transform))
         {
-            tile.SetStatusPlace(false);
-            tile.SetWorker(worker);
-            _buildingIncomeCalculator.StartPay(worker.UnitLevel, ShowMoneyOnDisplay);
+            tile.ChangeState(false);
+            tile.SetUnit(unit);
+            _buildingIncomeCalculator.StartPay(unit.Level, ShowMoneyOnDisplay);
         }
     }
 
@@ -39,7 +39,7 @@ public class Building : MonoBehaviour
         {
             if (count >= _amountHiddenPlaces)
             {
-                tile.SetStatusPlace(false);
+                tile.ChangeState(false);
                 tile.gameObject.SetActive(false);
             }
 

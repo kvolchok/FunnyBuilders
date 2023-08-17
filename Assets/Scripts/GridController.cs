@@ -12,8 +12,7 @@ public class GridController : MonoBehaviour
     private Vector2Int _mapSize;
     [SerializeField]
     private Tile _tilePrefab;
-    
-    private Camera _camera;
+
     private Tile[,] _tiles;
     
     private Tile _currentTile;
@@ -21,32 +20,7 @@ public class GridController : MonoBehaviour
 
     private void Awake()
     {
-        _camera = Camera.main;
-
         SpawnTiles();
-    }
-
-    // Метод для теста, потом нужно дропнуть
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _currentTile = GetTile();
-        }
-        
-        if (!Input.GetMouseButtonUp(0) || _currentTile == null)
-        {
-            return;
-        }
-        
-        _targetTile = GetTile();
-
-        if (_targetTile == null || _currentTile == _targetTile)
-        {
-            return;
-        }
-        
-        UnitDropped?.Invoke(_currentTile, _targetTile);
     }
 
     public Tile GetFirstAvailable()
@@ -69,29 +43,5 @@ public class GridController : MonoBehaviour
                 _tiles[x, y] = tile;
             }   
         }
-    }
-    
-    // Метод для теста, потом нужно дропнуть
-    private Tile GetTile()
-    {
-        var mousePosition = Input.mousePosition;
-        var ray = _camera.ScreenPointToRay(mousePosition);
-
-        if (!Physics.Raycast(ray, out var hitInfo))
-        {
-            return null;
-        }
-
-        var worldPosition = hitInfo.point;
-        var cell = _grid.WorldToCell(worldPosition);
-
-        return IsOutOfRange(cell) ? null : _tiles[cell.x, cell.z];
-    }
-
-    // Метод для теста, потом нужно дропнуть
-    private bool IsOutOfRange(Vector3Int cell)
-    {
-        return cell.x < 0 || cell.x >= _tiles.GetLength(0) ||
-               cell.z < 0 || cell.z >= _tiles.GetLength(1);
     }
 }
