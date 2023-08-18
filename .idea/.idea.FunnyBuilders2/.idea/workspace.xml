@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a1c5ded1-8690-4633-8812-be6059b3bb4a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Building.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Building.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/57f7047e30904c739d3a054a0390f144860200/c7/fc067e4c/HostView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59e7be63019b4518baaf30c24595423615d800/22/a4dbbea2/CustomYieldInstruction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59e7be63019b4518baaf30c24595423615d800/25/1d3b4f68/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59e7be63019b4518baaf30c24595423615d800/34/609d1a64/UnitySynchronizationContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59e7be63019b4518baaf30c24595423615d800/98/accea94a/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/59e7be63019b4518baaf30c24595423615d800/a2/50af311f/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6d8d8bfa07a94600b91503349e4a8e4f10fc00/6b/91ff7b56/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../FunnyBuilders/Assets/Scripts/Building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../FunnyBuilders/Assets/Scripts/InputController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../FunnyBuilders/Assets/Scripts/TestClass.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../FunnyBuilders/Assets/Scripts/UnitController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/GitHubRepozitories/PLATFORM TASK/PersonalTasks/FunnyBuilders2/Assets/Scripts/Building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BuildingProgressCalculator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/GitHubRepozitories/PLATFORM TASK/PersonalTasks/FunnyBuilders2/Assets/Scripts/DragController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/GitHubRepozitories/PLATFORM TASK/PersonalTasks/FunnyBuilders2/Assets/Scripts/DragController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/DragController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Unity Projects and Programm JetBrains/UNITY HOMEWORK/PersonalTasks/Runner/Assets/Scripts/PositionCalculator.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Artyom/building_feat" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
