@@ -1,0 +1,14 @@
+Index: Assets/Scripts/OutlineController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using UnityEngine;\r\n\r\nnamespace DefaultNamespace\r\n{\r\n    [RequireComponent(typeof(Outline))]\r\n    public class OutlineController : MonoBehaviour\r\n    {\r\n        [SerializeField] private int _highlightIntensity = 4;\r\n\r\n        private Outline _outline;\r\n\r\n        private void Awake()\r\n        {\r\n            _outline = GetComponent<Outline>();\r\n        }\r\n\r\n        private void OnMouseDown()\r\n        {\r\n            SetFocus();\r\n        }\r\n\r\n        private void OnMouseUp()\r\n        {\r\n            RemoveFocus();\r\n        }\r\n\r\n        private void SetFocus()\r\n        {\r\n            _outline.OutlineWidth = _highlightIntensity;\r\n        }\r\n\r\n        private void RemoveFocus()\r\n        {\r\n            _outline.OutlineWidth = 0;\r\n        }\r\n    }\r\n}
+===================================================================
+diff --git a/Assets/Scripts/OutlineController.cs b/Assets/Scripts/OutlineController.cs
+--- a/Assets/Scripts/OutlineController.cs	
++++ b/Assets/Scripts/OutlineController.cs	
+@@ -1,4 +1,5 @@
+ using UnityEngine;
++using UnityEngine.UI;
+ 
+ namespace DefaultNamespace
+ {

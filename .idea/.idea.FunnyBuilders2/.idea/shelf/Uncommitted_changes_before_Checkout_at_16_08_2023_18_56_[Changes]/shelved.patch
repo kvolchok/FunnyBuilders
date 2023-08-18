@@ -1,0 +1,15 @@
+Index: Assets/Scripts/DragController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using UnityEngine;\r\n\r\npublic class DragController : MonoBehaviour\r\n{\r\n    public LayerMask Mask;\r\n    [SerializeField] private float _distance;\r\n    [SerializeField] private Collider _currentCollider;\r\n    private Camera _camera;\r\n    private Vector3 _offset;\r\n    private Plane _dragPlane;\r\n\r\n\r\n    private void Awake()\r\n    {\r\n        _camera = Camera.main;\r\n    }\r\n\r\n    private void Update()\r\n    {\r\n        if (Input.GetMouseButton(0))\r\n        {\r\n            SelectPart();\r\n        }\r\n\r\n        if (Input.GetMouseButtonUp(0))\r\n        {\r\n            Drop();\r\n        }\r\n\r\n        DragAndDropObject();\r\n    }\r\n\r\n    private void SelectPart()\r\n    {\r\n        var ray = _camera.ScreenPointToRay(Input.mousePosition);\r\n        if (Physics.Raycast(ray, out var hitInfo, _distance, Mask))\r\n        {\r\n            _currentCollider = hitInfo.collider;\r\n            _dragPlane = new Plane(_camera.transform.forward, _currentCollider.transform.position);\r\n            float planeDist;\r\n            _dragPlane.Raycast(ray, out planeDist);\r\n            _offset = _currentCollider.transform.position - ray.GetPoint(planeDist);\r\n        }\r\n    }\r\n\r\n    private void DragAndDropObject()\r\n    {\r\n        if (_currentCollider == null)\r\n        {\r\n            return;\r\n        }\r\n\r\n        var ray = _camera.ScreenPointToRay(Input.mousePosition);\r\n        float planeDist;\r\n        _dragPlane.Raycast(ray, out planeDist);\r\n\r\n        _currentCollider.transform.position = ray.GetPoint(planeDist) + _offset;\r\n\r\n        if (_currentCollider.transform.position.y < 0.5f)\r\n        {\r\n            _currentCollider.transform.position = new Vector3(_currentCollider.transform.position.x, 0.5f,\r\n                _currentCollider.transform.position.z);\r\n        }\r\n    }\r\n\r\n    private void Drop()\r\n    {\r\n        if (_currentCollider == null)\r\n        {\r\n            return;\r\n        }\r\n\r\n        _currentCollider.transform.position = new Vector3(_currentCollider.transform.position.x, 0.5f,\r\n            _currentCollider.transform.position.z);\r\n        _currentCollider = null;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Assets/Scripts/DragController.cs b/Assets/Scripts/DragController.cs
+--- a/Assets/Scripts/DragController.cs	(revision d3988099855c687a5d64a28f71ab039a14699b9c)
++++ b/Assets/Scripts/DragController.cs	(date 1692201041108)
+@@ -1,3 +1,4 @@
++using DG.Tweening;
+ using UnityEngine;
+ 
+ public class DragController : MonoBehaviour
