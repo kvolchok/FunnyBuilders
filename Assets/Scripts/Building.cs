@@ -18,11 +18,27 @@ public class Building : MonoBehaviour
 
     public void AddUnitToBuildingSite(Unit unit, Tile tile)
     {
-        if (TilesList.Any(Place => Place.transform == tile.transform))
+        if (TilesList.Any(place => place.transform == tile.transform))
         {
             tile.ChangeState(false);
             tile.SetUnit(unit);
             _buildingIncomeCalculator.StartPay(unit.Level, ShowMoneyOnDisplay);
+        }
+    }
+
+    public void BuyPlace()
+    {
+        foreach (var tile in TilesList)
+        {
+            if (tile.isActiveAndEnabled)
+            {
+                continue;
+            } 
+            if (!tile.isActiveAndEnabled)
+            {
+                tile.gameObject.SetActive(true);
+                break;
+            }
         }
     }
 
