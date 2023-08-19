@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a1c5ded1-8690-4633-8812-be6059b3bb4a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunnyBuilders2/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_08_2023_0_55__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FunnyBuilders2/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_08_2023_0_55__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunnyBuilders2/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_08_2023_1_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FunnyBuilders2/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_08_2023_1_00__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.FunnyBuilders2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FunnyBuilders2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Building.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Building.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BuildingIncomeCalculator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BuildingIncomeCalculator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tile.cs" afterDir="false" />
-    </list>
+    <list default="true" id="a1c5ded1-8690-4633-8812-be6059b3bb4a" name="Changes" comment="refactor: adding missing files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,8 +10,21 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Artyom/Building_feature" />
       </map>
+    </option>
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="f6decf41-edce-445f-bd7f-8bd9ad5f047f" />
+        <option name="url" value="https://github.com/kvolchok/FunnyBuilders.git" />
+      </UrlAndAccount>
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
@@ -34,14 +40,16 @@
     <setting file="file://$PROJECT_DIR$/../FunnyBuilders/Assets/Scripts/TestClass.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../FunnyBuilders/Assets/Scripts/UnitController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BuildingProgressCalculator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/GitHubRepozitories/PLATFORM TASK/PersonalTasks/FunnyBuilders2/Assets/Scripts/DragController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/GitHubRepozitories/PLATFORM TASK/PersonalTasks/FunnyBuilders2/Assets/Scripts/DragController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DragController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Unity Projects and Programm JetBrains/UNITY HOMEWORK/PersonalTasks/Runner/Assets/Scripts/PositionCalculator.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
-  <component name="ProjectId" id="2UCQifhKRahz7hKIaEPQx4eo18z" />
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectId" id="2TiPu8Tu4sFtwYI996mqZqCZkHX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -53,9 +61,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.4944853",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory"
+    ],
     "rider.external.source.directories": [
       "C:\\Users\\Artem\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
       "C:\\Users\\Artem\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
@@ -63,7 +75,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+  <component name="RunManager">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\Unity\Unity For Homework\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;D:\GitHubRepozitories\PLATFORM TASK\PersonalTasks\FunnyBuilders2&quot; -debugCodeOptimization" />
@@ -105,18 +117,94 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a1c5ded1-8690-4633-8812-be6059b3bb4a" name="Changes" comment="" />
-      <created>1692441224184</created>
+      <created>1691523147827</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1692441224184</updated>
-      <workItem from="1692441232632" duration="2813000" />
+      <updated>1691523147827</updated>
+      <workItem from="1691523151441" duration="3825000" />
+      <workItem from="1691588008170" duration="18369000" />
+      <workItem from="1691763545011" duration="8640000" />
+      <workItem from="1691784057714" duration="4655000" />
+      <workItem from="1691827132785" duration="22660000" />
+      <workItem from="1691903931280" duration="1367000" />
+      <workItem from="1691905502449" duration="8450000" />
+      <workItem from="1691955142028" duration="7766000" />
+      <workItem from="1692022217058" duration="20439000" />
+      <workItem from="1692118902658" duration="7002000" />
+      <workItem from="1692200391177" duration="1637000" />
+      <workItem from="1692291961315" duration="2795000" />
+      <workItem from="1692392739398" duration="2499000" />
     </task>
+    <task id="LOCAL-00001" summary="InitialCommit">
+      <created>1691911529311</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1691911529311</updated>
+    </task>
+    <task id="LOCAL-00002" summary="InitialCommit">
+      <created>1691911757821</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1691911757821</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix building animation">
+      <created>1692022588619</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1692022588619</updated>
+    </task>
+    <task id="LOCAL-00004" summary="refactor: refactoring all scripts in Building_feature">
+      <created>1692031393926</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692031393926</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix: deleted all children in Building GameObject, &#10;added four places near Building">
+      <created>1692031694772</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1692031694772</updated>
+    </task>
+    <task id="LOCAL-00006" summary="refactor: refactoring all scripts in feature">
+      <created>1692043361714</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1692043361714</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix: building animation, did not change pay per  unit level">
+      <created>1692127290790</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1692127290790</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix: ad some files">
+      <created>1692393971378</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1692393971378</updated>
+    </task>
+    <task id="LOCAL-00009" summary="refactor: adding missing files">
+      <created>1692394731077</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1692394731077</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="Vcs.Log.Tabs.Properties">
@@ -130,7 +218,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="Artyom/building_feat" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -141,5 +229,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="InitialCommit" />
+    <MESSAGE value="fix building animation" />
+    <MESSAGE value="refactor: refactoring all scripts in Building_feature" />
+    <MESSAGE value="fix: deleted all children in Building GameObject, &#10;added four places near Building" />
+    <MESSAGE value="refactor: refactoring all scripts in feature" />
+    <MESSAGE value="fix: building animation, did not change pay per  unit level" />
+    <MESSAGE value="fix: ad some files" />
+    <MESSAGE value="refactor: adding missing files" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: adding missing files" />
   </component>
 </project>

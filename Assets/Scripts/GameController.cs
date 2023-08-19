@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private UnitSpawner _unitSpawner;
     [SerializeField]
-    private UnitPositioner _unitPositioner;
-    [SerializeField]
     private MergeController _mergeController;
 
     private void Awake()
@@ -29,6 +27,6 @@ public class GameController : MonoBehaviour
         _unitSpawner.Initialize(_gameSettings.UnitSettings);
         _mergeController.Initialize(_gameSettings.UnitSettings.Length);
         
-        _unitsManager.Initialize(_unitSpawner, _unitPositioner, _mergeController);
+        _unitsManager.Initialize(_unitSpawner, _mergeController);
     }
 }

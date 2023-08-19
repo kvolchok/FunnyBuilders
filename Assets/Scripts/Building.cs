@@ -6,8 +6,9 @@ using UnityEngine.Serialization;
 
 public class Building : MonoBehaviour
 {
-    [field: SerializeField] public List<Tile> TilesList { get; private set; }
-
+    [field: SerializeField]
+    public List<Tile> TilesList { get; private set; }
+    
     [SerializeField] private int _builderingPrice;
 
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
@@ -24,8 +25,7 @@ public class Building : MonoBehaviour
         var replacementUnit = targetTile.Unit;
         if (replacementUnit == null)
         {
-            targetTile.ChangeState(false);
-            targetTile.SetUnit(draggableUnit);
+              targetTile.SetUnit(draggableUnit);
             _buildingIncomeCalculator.StartPay(draggableUnit.Level, ShowMoneyOnDisplay);
         }
 
@@ -70,8 +70,7 @@ public class Building : MonoBehaviour
         {
             if (count >= _amountAvalliablePlaces)
             {
-                tile.ChangeState(false);
-                tile.gameObject.SetActive(false);
+                    tile.gameObject.SetActive(false);
             }
 
             count++;

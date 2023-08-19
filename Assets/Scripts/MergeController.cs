@@ -19,7 +19,7 @@ public class MergeController : MonoBehaviour
         {
             Destroy(currentTile.Unit.gameObject);
             Destroy(targetTile.Unit.gameObject);
-            currentTile.ChangeState(true);
+            currentTile.ClearFromUnit();
             
             onUnitsMerged?.Invoke(targetTile, targetUnitTransform, targetUnitLevel);
         }
