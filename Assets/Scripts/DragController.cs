@@ -46,7 +46,8 @@ public class DragController : MonoBehaviour, IUnitPositioner
         if (Physics.Raycast(ray, out var hit))
         {
             var unit = hit.collider.GetComponent<Unit>();
-            if (unit != null)
+          
+            if (unit != null && !unit.IsWorking)
             {
                 _draggedObject = unit;
                 FindTileUnderDraggedObject();
