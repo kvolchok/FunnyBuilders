@@ -17,20 +17,25 @@ public class BuildingIncomeCalculator : MonoBehaviour
         StopAllCoroutines();
     }
 
-    public void StartPay(int unitLevel, Action<int> showMoneyOnDisplay)
+    public void StartPay(Unit currentUnit, Action<int> showMoneyOnDisplay)
     {
         _showMoneyOnDisplay = showMoneyOnDisplay;
-        SetPaymentInterval(unitLevel);
+        SetPaymentInterval(currentUnit);
     }
 
-    private void SetPaymentInterval(int unitLevel)
+    public void StopPay()
     {
-        CheckLevelWorker(unitLevel);
+        
+    }
+    private void SetPaymentInterval(Unit currentUnit)
+    {
+        CheckLevelWorker(currentUnit);
         StartCoroutine(GiveSalary());
     }
 
-    private void CheckLevelWorker(int unitLevel)
+    private void CheckLevelWorker(Unit currentUnit)
     {
+        var unitLevel = currentUnit.Level;
         switch (unitLevel)
         {
             case 1:

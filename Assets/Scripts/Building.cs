@@ -4,11 +4,10 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Building : MonoBehaviour
+public class Building : MonoBehaviour, IUnitPositioner
 {
-    [field: SerializeField]
-    public List<Tile> TilesList { get; private set; }
-    
+    [field: SerializeField] public List<Tile> TilesList { get; private set; }
+
     [SerializeField] private int _builderingPrice;
 
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
@@ -21,16 +20,23 @@ public class Building : MonoBehaviour
 
     public void AddUnitToBuildingSite(Tile currentTile, Tile targetTile)
     {
+        currentTile.ClearFromUnit();
         var draggableUnit = currentTile.Unit;
         var replacementUnit = targetTile.Unit;
         if (replacementUnit == null)
         {
-              targetTile.SetUnit(draggableUnit);
-            _buildingIncomeCalculator.StartPay(draggableUnit.Level, ShowMoneyOnDisplay);
+            targetTile.SetUnit(draggableUnit);
+            draggableUnit.ChangeWorkingState(true);
+            _buildingIncomeCalculator.StartPay(draggableUnit, ShowMoneyOnDisplay);
         }
 
         if (replacementUnit != null)
         {
+            targetTile.SetUnit(draggableUnit);
+            draggableUnit.ChangeWorkingState(true);
+            _buildingIncomeCalculator.StartPay(draggableUnit, ShowMoneyOnDisplay);
+
+            PlaceUnitOnTile(replacementUnit, currentTile);
         }
     }
 
@@ -70,7 +76,7 @@ public class Building : MonoBehaviour
         {
             if (count >= _amountAvalliablePlaces)
             {
-                    tile.gameObject.SetActive(false);
+                tile.gameObject.SetActive(false);
             }
 
             count++;
@@ -83,5 +89,13 @@ public class Building : MonoBehaviour
         //_walletManager.AddMoney(_amountProfit); 
         var scaleY = (float)_amountProfit / _builderingPrice;
         _buildingProgressCalculator.BuildFloor(scaleY);
+    }
+
+    public void PlaceUnitOnTile(Unit unit, Tile targetTile)
+    {
+        Vector3 targetPosition = new Vector3(targetTile.transform.position.x, unit.transform.localScale.y,
+            targetTile.transform.position.z);
+        unit.transform.DOMove(targetPosition, _durationUnitReturn);
+        targetTile.SetUnit(unit);
     }
 }
