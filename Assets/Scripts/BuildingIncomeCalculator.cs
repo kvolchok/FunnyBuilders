@@ -29,6 +29,7 @@ public class BuildingIncomeCalculator : MonoBehaviour
     {
         var coroutineDismissedUnit = _dataBaseCoroutine[dischargedUnit.transform];
         StopCoroutine(coroutineDismissedUnit);
+        _dataBaseCoroutine.Remove(dischargedUnit.transform);
     }
     private void SetPaymentInterval(Unit currentUnit)
     {
