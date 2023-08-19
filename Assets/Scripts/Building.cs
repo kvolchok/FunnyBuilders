@@ -27,6 +27,7 @@ public class Building : MonoBehaviour, IUnitPositioner
         if (replacementUnit != null)
         {
             FiredUnit(replacementUnit);
+
             PlaceUnitOnTile(replacementUnit, currentTile);
         }
     }
@@ -42,11 +43,6 @@ public class Building : MonoBehaviour, IUnitPositioner
         targetTile.SetUnit(recruitUnit);
         recruitUnit.ChangeWorkingState(true);
         _buildingIncomeCalculator.StartPay(recruitUnit, ShowMoneyOnDisplay);
-    }
-
-    private void ReturnUnit(Tile targetTile, Unit returnableUnit)
-    {
-        returnableUnit.gameObject.transform.DOMove(targetTile.transform.position, _durationUnitReturn);
     }
 
     public void BuyPlace()
@@ -90,7 +86,7 @@ public class Building : MonoBehaviour, IUnitPositioner
     private void ShowMoneyOnDisplay(int money)
     {
         _amountProfit += money;
-        //_walletManager.AddMoney(_amountProfit); 
+        _walletManager.AddMoney(_amountProfit);
         var scaleY = (float)_amountProfit / _builderingPrice;
         _buildingProgressCalculator.BuildFloor(scaleY);
     }
