@@ -5,9 +5,9 @@ using UnityEngine;
 public class UnitsManager : MonoBehaviour, IUnitPositioner
 {
     [SerializeField]
-    private GridController _gridController;
+    private MergePlacesController _mergePlacesController;
     [SerializeField]
-    private Transform _spawnPoint;
+    private Transform _unitSpawnPoint;
     [SerializeField]
     private float _unitMovementDuration;
     
@@ -18,15 +18,13 @@ public class UnitsManager : MonoBehaviour, IUnitPositioner
     {
         _unitSpawner = unitSpawner;
         _mergeController = mergeController;
-            
-        _gridController.UnitDropped += OnUnitDropped;
     }
     
     [UsedImplicitly]
     public void AddNewUnit()
     {
-        var unit = _unitSpawner.SpawnUnit(_spawnPoint);
-        var tile = _gridController.GetFirstAvailable();
+        var unit = _unitSpawner.SpawnUnit(_unitSpawnPoint);
+        var tile = _mergePlacesController.GetFirstAvailable();
         PlaceUnitOnTile(unit, tile);
     }
     
@@ -37,15 +35,8 @@ public class UnitsManager : MonoBehaviour, IUnitPositioner
         unit.transform.DOMove(targetPosition, _unitMovementDuration);
         tile.SetUnit(unit);
     }
-
-    private void OnUnitDropped(Tile currentTile, Tile targetTile)
-    {
-        currentTile.Unit.transform
-            .DOMove(targetTile.Unit.transform.position, 1)
-            .OnComplete(() => MergeUnits(currentTile, targetTile));
-    }
-
-    private void MergeUnits(Tile currentTile, Tile targetTile)
+    
+    public void TryMergeUnits(Tile currentTile, Tile targetTile)
     {
         _mergeController.TryMergeUnits(currentTile, targetTile, OnUnitsMerged, PlaceUnitOnTile);
     }
@@ -54,10 +45,5 @@ public class UnitsManager : MonoBehaviour, IUnitPositioner
     {
         var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
         PlaceUnitOnTile(newUnit, targetTile);
-    }
-    
-    private void OnDestroy()
-    {
-        _gridController.UnitDropped -= OnUnitDropped;
     }
 }
