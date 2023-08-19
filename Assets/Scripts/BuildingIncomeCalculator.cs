@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingIncomeCalculator : MonoBehaviour
@@ -11,6 +12,7 @@ public class BuildingIncomeCalculator : MonoBehaviour
 
     private int _paymentInterval;
     private Action<int> _showMoneyOnDisplay;
+    private Dictionary<Transform, Coroutine> _dataBaseCoroutine = new Dictionary<Transform, Coroutine>();
 
     public void StopAllWork()
     {
@@ -23,16 +25,22 @@ public class BuildingIncomeCalculator : MonoBehaviour
         SetPaymentInterval(currentUnit);
     }
 
-    public void StopPay()
+    public void StopPay(Unit dischargedUnit)
     {
-        
+        var coroutineDismissedUnit = _dataBaseCoroutine[dischargedUnit.transform];
+        StopCoroutine(coroutineDismissedUnit);
     }
     private void SetPaymentInterval(Unit currentUnit)
     {
         CheckLevelWorker(currentUnit);
-        StartCoroutine(GiveSalary());
+       var coroutine = StartCoroutine(GiveSalary());
+       AddCoroutineToDataBase(currentUnit.transform, coroutine);
     }
 
+    private void AddCoroutineToDataBase(Transform transform, Coroutine coroutine)
+    {
+        _dataBaseCoroutine.Add(transform, coroutine);
+    }
     private void CheckLevelWorker(Unit currentUnit)
     {
         var unitLevel = currentUnit.Level;

@@ -23,21 +23,25 @@ public class Building : MonoBehaviour, IUnitPositioner
         currentTile.ClearFromUnit();
         var draggableUnit = currentTile.Unit;
         var replacementUnit = targetTile.Unit;
-        if (replacementUnit == null)
-        {
-            targetTile.SetUnit(draggableUnit);
-            draggableUnit.ChangeWorkingState(true);
-            _buildingIncomeCalculator.StartPay(draggableUnit, ShowMoneyOnDisplay);
-        }
-
+        RecruitUnit(draggableUnit, targetTile);
         if (replacementUnit != null)
         {
-            targetTile.SetUnit(draggableUnit);
-            draggableUnit.ChangeWorkingState(true);
-            _buildingIncomeCalculator.StartPay(draggableUnit, ShowMoneyOnDisplay);
-
+            FiredUnit(replacementUnit);
             PlaceUnitOnTile(replacementUnit, currentTile);
         }
+    }
+
+    private void FiredUnit(Unit dischargedUnit)
+    {
+        dischargedUnit.ChangeWorkingState(false);
+        _buildingIncomeCalculator.StopPay(dischargedUnit);
+    }
+
+    private void RecruitUnit(Unit recruitUnit, Tile targetTile)
+    {
+        targetTile.SetUnit(recruitUnit);
+        recruitUnit.ChangeWorkingState(true);
+        _buildingIncomeCalculator.StartPay(recruitUnit, ShowMoneyOnDisplay);
     }
 
     private void ReturnUnit(Tile targetTile, Unit returnableUnit)
