@@ -13,6 +13,12 @@ public class MergeController : MonoBehaviour
     public void TryMergeUnits(Tile currentTile, Tile targetTile,
         Action<Tile, Transform, int> onUnitsMerged, Action<Unit, Tile> onUnitsNotMerged)
     {
+        if (targetTile.Unit == null || currentTile == targetTile)
+        {
+            onUnitsNotMerged?.Invoke(currentTile.Unit, currentTile);
+            return;
+        }
+        
         var targetUnitTransform = targetTile.Unit.transform;
         var targetUnitLevel = targetTile.Unit.Level;
         if (currentTile.Unit.Level == targetUnitLevel && currentTile.Unit.Level < _maxUnitsLevel)

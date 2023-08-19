@@ -1794,7 +1794,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 700339472}
         m_TargetAssemblyTypeName: UnitsManager, Assembly-CSharp
-        m_MethodName: MergeUnits
+        m_MethodName: TryMergeUnits
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2594,7 +2594,7 @@ MonoBehaviour:
   _buildingIncomeCalculator: {fileID: 1347243870}
   _buildingProgressCalculator: {fileID: 1347243869}
   _walletManager: {fileID: 723720421}
-  _amountAvalliablePlaces: 1
+  _amountAvalliablePlaces: 0
   _durationUnitReturn: 1
 --- !u!1 &1353487662
 GameObject:
@@ -2623,7 +2623,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353487662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -1.6, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 0, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2702,7 +2702,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415984857}
-  - component: {fileID: 1415984858}
   - component: {fileID: 1415984859}
   m_Layer: 0
   m_Name: MergePlacesController
@@ -2726,18 +2725,6 @@ Transform:
   m_Father: {fileID: 700339471}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!156049354 &1415984858
-Grid:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1415984856}
-  m_Enabled: 1
-  m_CellSize: {x: 0.5, y: 0, z: 0.5}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 0
-  m_CellSwizzle: 0
 --- !u!114 &1415984859
 MonoBehaviour:
   m_ObjectHideFlags: 0

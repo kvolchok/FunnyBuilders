@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Building : MonoBehaviour, IUnitPositioner
 {
@@ -20,7 +18,6 @@ public class Building : MonoBehaviour, IUnitPositioner
 
     public void AddUnitToBuildingSite(Tile currentTile, Tile targetTile)
     {
-        currentTile.ClearFromUnit();
         var draggableUnit = currentTile.Unit;
         var replacementUnit = targetTile.Unit;
         RecruitUnit(draggableUnit, targetTile);
@@ -30,6 +27,8 @@ public class Building : MonoBehaviour, IUnitPositioner
 
             PlaceUnitOnTile(replacementUnit, currentTile);
         }
+        
+        currentTile.ClearFromUnit();
     }
 
     private void FiredUnit(Unit dischargedUnit)
