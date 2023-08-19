@@ -3,7 +3,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public int Level { get; private set; }
-    
+    public bool IsWorking { get; private set; }
     private MeshRenderer _renderer;
 
     private void Awake()
@@ -15,5 +15,10 @@ public class Unit : MonoBehaviour
     {
         Level = unitSettings.Level;
         _renderer.material.color = unitSettings.Color;
+    }
+
+    public void ChangeWorkingState(bool isWorking)
+    {
+        IsWorking = isWorking;
     }
 }
