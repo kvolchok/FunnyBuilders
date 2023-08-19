@@ -20,7 +20,6 @@ public class Building : MonoBehaviour
     {
         if (TilesList.Any(Place => Place.transform == tile.transform))
         {
-            tile.ChangeState(false);
             tile.SetUnit(unit);
             _buildingIncomeCalculator.StartPay(unit.Level, ShowMoneyOnDisplay);
         }
@@ -39,7 +38,6 @@ public class Building : MonoBehaviour
         {
             if (count >= _amountHiddenPlaces)
             {
-                tile.ChangeState(false);
                 tile.gameObject.SetActive(false);
             }
 
