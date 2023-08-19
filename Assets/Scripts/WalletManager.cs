@@ -24,6 +24,12 @@ public class WalletManager : MonoBehaviour
         SetMoney(newMoney);
         return true;
     }
+
+    public void AddMoney(int earnedMoney)
+    {
+        var newMoney = _money + earnedMoney;
+        SetMoney(newMoney);
+    }
     
     private void SetMoney(int money)
     {
