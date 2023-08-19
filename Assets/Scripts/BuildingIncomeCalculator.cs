@@ -12,7 +12,7 @@ public class BuildingIncomeCalculator : MonoBehaviour
     private int _paymentInterval;
     private Action<int> _showMoneyOnDisplay;
 
-    public void StopWorking()
+    public void StopAllWork()
     {
         StopAllCoroutines();
     }
