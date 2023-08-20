@@ -1,62 +1,61 @@
 using System;
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 public class BuildingProgressCalculator : MonoBehaviour
 {
-    [SerializeField] private GameObject _buildingBuilt;
-    [SerializeField] private float _durationBuilt;
+    public event Action BuildingFinished;
 
-    private const float _scaleY = 4.0f;
-    private Action _stopWorking;
-    private Coroutine _buildFloor;
+    [SerializeField] private GameObject _building;
 
-    public void Initialize(Action stopWorking)
+    [SerializeField] private float _durationBuildingHeight;
+
+    [SerializeField] private float _endBuildingHeight = 1.0f;
+
+    private Coroutine _buildCoroutine;
+
+   
+
+    public void Build(float height)
     {
-        _stopWorking = stopWorking;
-    }
-
-    public void BuildFloor(float scaleY)
-    {
-        if (_buildFloor != null)
+        if (_buildCoroutine != null)
         {
-            StopCoroutine(_buildFloor);
+            StopCoroutine(_buildCoroutine);
         }
 
-        if (IsEnoughScale(_buildingBuilt.transform.localScale.y))
+        if (HasBuildingBuilt(_building.transform.localScale.y))
         {
             StopAllCoroutines();
-            _stopWorking.Invoke();
+            BuildingFinished?.Invoke();
             return;
         }
 
-        var localScale = _buildingBuilt.transform.localScale;
-        var finishScale = new Vector3(localScale.x, scaleY, localScale.z);
-        _buildFloor = StartCoroutine(Build(finishScale));
+        var localScale = _building.transform.localScale;
+        var finishScale = new Vector3(localScale.x, height, localScale.z);
+        _buildCoroutine = StartCoroutine(Build(finishScale));
     }
 
-    private IEnumerator Build(Vector3 endScale)
+    private IEnumerator Build(Vector3 finishScale)
     {
         var currentTime = 0f;
 
-        while (currentTime < _durationBuilt)
+        while (currentTime < _durationBuildingHeight)
         {
-            var progress = currentTime / _durationBuilt;
+            var progress = currentTime / _durationBuildingHeight;
 
-            var startScale = _buildingBuilt.transform.localScale;
-            var currentScaleY = Vector3.Lerp(startScale, endScale, progress);
-            _buildingBuilt.transform.localScale = currentScaleY;
+            var startScale = _building.transform.localScale;
+            var currentScaleY = Vector3.Lerp(startScale, finishScale, progress);
+            _building.transform.localScale = currentScaleY;
             currentTime += Time.deltaTime;
             yield return null;
         }
 
-        _buildingBuilt.transform.localScale = endScale;
+        _building.transform.localScale = finishScale;
     }
 
-    private bool IsEnoughScale(float scale)
+    private bool HasBuildingBuilt(float height)
     {
-        return scale >= _scaleY;
+        return height >= _endBuildingHeight;
     }
 }

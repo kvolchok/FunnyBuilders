@@ -6,44 +6,41 @@ public class Building : MonoBehaviour, IUnitPositioner
 {
     [field: SerializeField] public List<Tile> TilesList { get; private set; }
 
-    [SerializeField] private int _builderingPrice;
+    [SerializeField] private int _buildingConstructionCost;
 
     [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
     [SerializeField] private BuildingProgressCalculator _buildingProgressCalculator;
     [SerializeField] private WalletManager _walletManager;
-    [SerializeField] private int _amountAvalliablePlaces;
+    [SerializeField] private int _amountAvailablePlaces;
     [SerializeField] private float _durationUnitReturn;
 
-    private int _amountProfit;
+    private int _amountProfitAllUnits;
+
+    private void Start()
+    {
+        _buildingIncomeCalculator.MoneyEarned += OnMoneyEarned;
+        _buildingProgressCalculator.BuildingFinished += OnBuildingFinished;
+        ShowAvailablePlaces(_amountAvailablePlaces);
+    }
+
 
     public void AddUnitToBuildingSite(Tile currentTile, Tile targetTile)
     {
         var draggableUnit = currentTile.Unit;
         var replacementUnit = targetTile.Unit;
-        RecruitUnit(draggableUnit, targetTile);
+
+        RecruitUnit(draggableUnit);
+        PlaceUnitOnTile(draggableUnit, targetTile);
+
         if (replacementUnit != null)
         {
-            FiredUnit(replacementUnit);
-
+            DismissUnit(replacementUnit);
             PlaceUnitOnTile(replacementUnit, currentTile);
         }
         else
         {
             currentTile.ClearFromUnit();
         }
-    }
-
-    private void FiredUnit(Unit dischargedUnit)
-    {
-        dischargedUnit.ChangeWorkingState(false);
-        _buildingIncomeCalculator.StopPay(dischargedUnit);
-    }
-
-    private void RecruitUnit(Unit recruitUnit, Tile targetTile)
-    {
-        PlaceUnitOnTile(recruitUnit,targetTile);
-        recruitUnit.ChangeWorkingState(true);  
-        _buildingIncomeCalculator.StartPay(recruitUnit, ShowMoneyOnDisplay);
     }
 
     public void BuyPlace()
@@ -63,19 +60,32 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
 
-
-    private void Start()
+    public void PlaceUnitOnTile(Unit unit, Tile targetTile)
     {
-        HidePlaces();
-        _buildingProgressCalculator.Initialize(_buildingIncomeCalculator.StopAllWork);
+        Vector3 targetPosition = new Vector3(targetTile.transform.position.x, unit.transform.localScale.y,
+            targetTile.transform.position.z);
+        unit.transform.DOMove(targetPosition, _durationUnitReturn);
+        targetTile.SetUnit(unit);
     }
 
-    private void HidePlaces()
+    private void DismissUnit(Unit dismissedUnit)
+    {
+        dismissedUnit.ChangeWorkingState(false);
+        _buildingIncomeCalculator.StopPay(dismissedUnit);
+    }
+
+    private void RecruitUnit(Unit recruitedUnit)
+    {
+        recruitedUnit.ChangeWorkingState(true);
+        _buildingIncomeCalculator.StartPay(recruitedUnit);
+    }
+
+    private void ShowAvailablePlaces(int amountAvailablePlaces)
     {
         var count = 0;
         foreach (var tile in TilesList)
         {
-            if (count >= _amountAvalliablePlaces)
+            if (count >= amountAvailablePlaces)
             {
                 tile.gameObject.SetActive(false);
             }
@@ -84,19 +94,22 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
 
-    private void ShowMoneyOnDisplay(int money)
+    private void OnMoneyEarned(int money)
     {
-        _amountProfit += money;
+        _amountProfitAllUnits += money;
         _walletManager.AddMoney(money);
-        var scaleY = (float)_amountProfit / _builderingPrice;
-        _buildingProgressCalculator.BuildFloor(scaleY);
+        var height = (float)_amountProfitAllUnits / _buildingConstructionCost;
+        _buildingProgressCalculator.Build(height);
     }
 
-    public void PlaceUnitOnTile(Unit unit, Tile targetTile)
+    private void OnBuildingFinished()
     {
-        Vector3 targetPosition = new Vector3(targetTile.transform.position.x, unit.transform.localScale.y,
-            targetTile.transform.position.z);
-        unit.transform.DOMove(targetPosition, _durationUnitReturn);
-        targetTile.SetUnit(unit);
+        _buildingIncomeCalculator.StopAllPayments();
+    }
+
+    private void OnDestroy()
+    {
+        _buildingIncomeCalculator.MoneyEarned -= OnMoneyEarned;
+        _buildingProgressCalculator.BuildingFinished -= OnBuildingFinished;
     }
 }

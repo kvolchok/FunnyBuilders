@@ -5,23 +5,22 @@ using UnityEngine;
 
 public class BuildingIncomeCalculator : MonoBehaviour
 {
+    public event Action<int> MoneyEarned;
+
     [SerializeField] private int _paymentFirstLevelUnit;
     [SerializeField] private int _paymentSecondLevelUnit;
-    [SerializeField] private int _maxProfitUnit;
     [SerializeField] private float _waitingTimeBetweenUnitProfit;
 
     private int _paymentInterval;
-    private Action<int> _showMoneyOnDisplay;
-    private Dictionary<Transform, Coroutine> _dataBaseCoroutine = new Dictionary<Transform, Coroutine>();
+    private readonly Dictionary<Transform, Coroutine> _dataBaseCoroutine = new ();
 
-    public void StopAllWork()
+    public void StopAllPayments()
     {
         StopAllCoroutines();
     }
 
-    public void StartPay(Unit currentUnit, Action<int> showMoneyOnDisplay)
+    public void StartPay(Unit currentUnit)
     {
-        _showMoneyOnDisplay = showMoneyOnDisplay;
         SetPaymentInterval(currentUnit);
     }
 
@@ -31,17 +30,25 @@ public class BuildingIncomeCalculator : MonoBehaviour
         StopCoroutine(coroutineDismissedUnit);
         _dataBaseCoroutine.Remove(dischargedUnit.transform);
     }
+
     private void SetPaymentInterval(Unit currentUnit)
     {
         CheckLevelWorker(currentUnit);
-       var coroutine = StartCoroutine(GiveSalary());
-       AddCoroutineToDataBase(currentUnit.transform, coroutine);
+        var coroutine = StartCoroutine(GiveSalary());
+        AddCoroutineToDataBase(currentUnit.transform, coroutine);
     }
 
+    /// <summary>
+    /// this method have to check
+    /// </summary>
     private void AddCoroutineToDataBase(Transform transform, Coroutine coroutine)
     {
         _dataBaseCoroutine.Add(transform, coroutine);
     }
+
+    /// <summary>
+    /// this method will changing
+    /// </summary>
     private void CheckLevelWorker(Unit currentUnit)
     {
         var unitLevel = currentUnit.Level;
@@ -58,14 +65,10 @@ public class BuildingIncomeCalculator : MonoBehaviour
 
     private IEnumerator GiveSalary()
     {
-        var profit = 0;
-        while (profit < _maxProfitUnit)
+        while (true)
         {
-            profit += _paymentInterval;
-            _showMoneyOnDisplay.Invoke(_paymentInterval);
+            MoneyEarned?.Invoke(_paymentInterval);
             yield return new WaitForSeconds(_waitingTimeBetweenUnitProfit);
         }
-
-        _showMoneyOnDisplay.Invoke(profit);
     }
 }
