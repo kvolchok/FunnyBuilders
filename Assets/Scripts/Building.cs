@@ -85,7 +85,7 @@ public class Building : MonoBehaviour, IUnitPositioner
     private void ShowMoneyOnDisplay(int money)
     {
         _amountProfit += money;
-        _walletManager.AddMoney(_amountProfit);
+        _walletManager.AddMoney(money);
         var scaleY = (float)_amountProfit / _builderingPrice;
         _buildingProgressCalculator.BuildFloor(scaleY);
     }
