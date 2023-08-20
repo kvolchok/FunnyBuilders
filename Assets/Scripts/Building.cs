@@ -27,8 +27,10 @@ public class Building : MonoBehaviour, IUnitPositioner
 
             PlaceUnitOnTile(replacementUnit, currentTile);
         }
-        
-        currentTile.ClearFromUnit();
+        else
+        {
+            currentTile.ClearFromUnit();
+        }
     }
 
     private void FiredUnit(Unit dischargedUnit)
@@ -39,8 +41,8 @@ public class Building : MonoBehaviour, IUnitPositioner
 
     private void RecruitUnit(Unit recruitUnit, Tile targetTile)
     {
-        targetTile.SetUnit(recruitUnit);
-        recruitUnit.ChangeWorkingState(true);
+        PlaceUnitOnTile(recruitUnit,targetTile);
+        recruitUnit.ChangeWorkingState(true);  
         _buildingIncomeCalculator.StartPay(recruitUnit, ShowMoneyOnDisplay);
     }
 
