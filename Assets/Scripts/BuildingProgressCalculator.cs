@@ -8,6 +8,9 @@ public class BuildingProgressCalculator : MonoBehaviour
 
     [SerializeField]
     private GameObject _building;
+
+    [SerializeField]
+    private BuildingBar _buildingBar;
     
     private float _durationBuildingHeight;
     private float _endBuildingHeight;
@@ -18,6 +21,7 @@ public class BuildingProgressCalculator : MonoBehaviour
     {
         _durationBuildingHeight = durationBuildingHeight;
         _endBuildingHeight = endBuildingHeight;
+        _buildingBar.Initialize(_endBuildingHeight);
     }
     
     public void Build(float height)
@@ -37,6 +41,9 @@ public class BuildingProgressCalculator : MonoBehaviour
         var localScale = _building.transform.localScale;
         var finishScale = new Vector3(localScale.x, height, localScale.z);
         _buildCoroutine = StartCoroutine(Build(finishScale));
+        
+        _buildingBar.SetValueBar(height);
+
     }
     
     private bool HasBuildingBuilt(float height)
