@@ -8,16 +8,16 @@ public class UnitsManager : MonoBehaviour, IUnitPositioner
     private MergePlacesController _mergePlacesController;
     [SerializeField]
     private Transform _unitSpawnPoint;
-    [SerializeField]
-    private float _unitMovementDuration;
     
     private UnitSpawner _unitSpawner;
     private MergeController _mergeController;
+    private float _unitMovementDuration;
 
-    public void Initialize(UnitSpawner unitSpawner, MergeController mergeController)
+    public void Initialize(UnitSpawner unitSpawner, MergeController mergeController, float unitMovementDuration)
     {
         _unitSpawner = unitSpawner;
         _mergeController = mergeController;
+        _unitMovementDuration = unitMovementDuration;
     }
     
     [UsedImplicitly]

@@ -2,21 +2,24 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-
 public class BuildingProgressCalculator : MonoBehaviour
 {
     public event Action BuildingFinished;
 
-    [SerializeField] private GameObject _building;
-
-    [SerializeField] private float _durationBuildingHeight;
-
-    [SerializeField] private float _endBuildingHeight = 1.0f;
+    [SerializeField]
+    private GameObject _building;
+    
+    private float _durationBuildingHeight;
+    private float _endBuildingHeight;
 
     private Coroutine _buildCoroutine;
-
-   
-
+    
+    public void Initialize(float durationBuildingHeight, float endBuildingHeight)
+    {
+        _durationBuildingHeight = durationBuildingHeight;
+        _endBuildingHeight = endBuildingHeight;
+    }
+    
     public void Build(float height)
     {
         if (_buildCoroutine != null)
@@ -35,6 +38,11 @@ public class BuildingProgressCalculator : MonoBehaviour
         var finishScale = new Vector3(localScale.x, height, localScale.z);
         _buildCoroutine = StartCoroutine(Build(finishScale));
     }
+    
+    private bool HasBuildingBuilt(float height)
+    {
+        return height >= _endBuildingHeight;
+    }
 
     private IEnumerator Build(Vector3 finishScale)
     {
@@ -52,10 +60,5 @@ public class BuildingProgressCalculator : MonoBehaviour
         }
 
         _building.transform.localScale = finishScale;
-    }
-
-    private bool HasBuildingBuilt(float height)
-    {
-        return height >= _endBuildingHeight;
     }
 }

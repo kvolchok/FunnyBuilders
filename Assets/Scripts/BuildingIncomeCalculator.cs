@@ -7,21 +7,19 @@ public class BuildingIncomeCalculator : MonoBehaviour
 {
     public event Action<int> MoneyEarned;
 
-    [SerializeField] private int _paymentFirstLevelUnit;
-    [SerializeField] private int _paymentSecondLevelUnit;
-    [SerializeField] private float _waitingTimeBetweenUnitProfit;
+    private readonly Dictionary<Transform, Coroutine> _dataBaseCoroutine = new();
 
-    private int _paymentInterval;
-    private readonly Dictionary<Transform, Coroutine> _dataBaseCoroutine = new ();
+    private float _unitPaymentInterval;
 
-    public void StopAllPayments()
+    public void Initialize(float unitPaymentInterval)
     {
-        StopAllCoroutines();
+        _unitPaymentInterval = unitPaymentInterval;
     }
-
+    
     public void StartPay(Unit currentUnit)
     {
-        SetPaymentInterval(currentUnit);
+        var coroutine = StartCoroutine(GiveSalary(currentUnit.Salary));
+        AddCoroutineToDataBase(currentUnit.transform, coroutine);
     }
 
     public void StopPay(Unit dischargedUnit)
@@ -31,11 +29,18 @@ public class BuildingIncomeCalculator : MonoBehaviour
         _dataBaseCoroutine.Remove(dischargedUnit.transform);
     }
 
-    private void SetPaymentInterval(Unit currentUnit)
+    public void StopAllPayments()
     {
-        CheckLevelWorker(currentUnit);
-        var coroutine = StartCoroutine(GiveSalary());
-        AddCoroutineToDataBase(currentUnit.transform, coroutine);
+        StopAllCoroutines();
+    }
+    
+    private IEnumerator GiveSalary(int unitSalary)
+    {
+        while (true)
+        {
+            MoneyEarned?.Invoke(unitSalary);
+            yield return new WaitForSeconds(_unitPaymentInterval);
+        }
     }
 
     /// <summary>
@@ -44,31 +49,5 @@ public class BuildingIncomeCalculator : MonoBehaviour
     private void AddCoroutineToDataBase(Transform transform, Coroutine coroutine)
     {
         _dataBaseCoroutine.Add(transform, coroutine);
-    }
-
-    /// <summary>
-    /// this method will changing
-    /// </summary>
-    private void CheckLevelWorker(Unit currentUnit)
-    {
-        var unitLevel = currentUnit.Level;
-        switch (unitLevel)
-        {
-            case 1:
-                _paymentInterval = _paymentFirstLevelUnit;
-                break;
-            case 2:
-                _paymentInterval = _paymentSecondLevelUnit;
-                break;
-        }
-    }
-
-    private IEnumerator GiveSalary()
-    {
-        while (true)
-        {
-            MoneyEarned?.Invoke(_paymentInterval);
-            yield return new WaitForSeconds(_waitingTimeBetweenUnitProfit);
-        }
     }
 }

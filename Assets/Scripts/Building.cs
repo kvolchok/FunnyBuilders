@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Building : MonoBehaviour, IUnitPositioner
 {
-    [field: SerializeField] public List<Tile> TilesList { get; private set; }
-
-    [SerializeField] private int _buildingConstructionCost;
-    [SerializeField] private int _amountAvailablePlaces;
-    [SerializeField] private float _durationUnitReturn;
+    [field: SerializeField]
+    public List<Tile> WorkPlaces { get; private set; }
     
     private WalletManager _walletManager;
     private BuildingIncomeCalculator _buildingIncomeCalculator;
     private BuildingProgressCalculator _buildingProgressCalculator;
+    
+    private int _buildingConstructionCost;
+    private int _amountAvailableWorkPlaces;
+    private float _unitMovementDuration;
 
     private int _amountProfitAllUnits;
 
     public void Initialize(WalletManager walletManager, BuildingIncomeCalculator buildingIncomeCalculator,
-        BuildingProgressCalculator buildingProgressCalculator)
+        BuildingProgressCalculator buildingProgressCalculator, int buildingConstructionCost, int amountAvailableWorkPlaces,
+        float unitMovementDuration)
     {
         _walletManager = walletManager;
         _buildingIncomeCalculator = buildingIncomeCalculator;
@@ -25,10 +27,26 @@ public class Building : MonoBehaviour, IUnitPositioner
         
         _buildingIncomeCalculator.MoneyEarned += OnMoneyEarned;
         _buildingProgressCalculator.BuildingFinished += OnBuildingFinished;
+
+        _buildingConstructionCost = buildingConstructionCost;
+        _amountAvailableWorkPlaces = amountAvailableWorkPlaces;
+        _unitMovementDuration = unitMovementDuration;
         
-        ShowAvailablePlaces(_amountAvailablePlaces);
+        ShowAvailableWorkPlaces(_amountAvailableWorkPlaces);
     }
 
+    public void BuyPlace()
+    {
+        foreach (var workPlace in WorkPlaces)
+        {
+            if (!workPlace.isActiveAndEnabled)
+            {
+                workPlace.gameObject.SetActive(true);
+                return;
+            }
+        }
+    }
+    
     public void AddUnitToBuildingSite(Tile currentTile, Tile targetTile)
     {
         var draggableUnit = currentTile.Unit;
@@ -48,28 +66,11 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
 
-    public void BuyPlace()
-    {
-        foreach (var tile in TilesList)
-        {
-            if (tile.isActiveAndEnabled)
-            {
-                continue;
-            }
-
-            if (!tile.isActiveAndEnabled)
-            {
-                tile.gameObject.SetActive(true);
-                return;
-            }
-        }
-    }
-
     public void PlaceUnitOnTile(Unit unit, Tile targetTile)
     {
-        Vector3 targetPosition = new Vector3(targetTile.transform.position.x, unit.transform.localScale.y,
+        var targetPosition = new Vector3(targetTile.transform.position.x, unit.transform.localScale.y,
             targetTile.transform.position.z);
-        unit.transform.DOMove(targetPosition, _durationUnitReturn);
+        unit.transform.DOMove(targetPosition, _unitMovementDuration);
         targetTile.SetUnit(unit);
     }
 
@@ -85,16 +86,12 @@ public class Building : MonoBehaviour, IUnitPositioner
         _buildingIncomeCalculator.StartPay(recruitedUnit);
     }
 
-    private void ShowAvailablePlaces(int amountAvailablePlaces)
+    private void ShowAvailableWorkPlaces(int amountAvailablePlaces)
     {
         var count = 0;
-        foreach (var tile in TilesList)
+        foreach (var workPlace in WorkPlaces)
         {
-            if (count >= amountAvailablePlaces)
-            {
-                tile.gameObject.SetActive(false);
-            }
-
+            workPlace.gameObject.SetActive(count >= amountAvailablePlaces);
             count++;
         }
     }

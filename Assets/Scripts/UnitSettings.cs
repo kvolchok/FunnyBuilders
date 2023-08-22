@@ -6,5 +6,7 @@ public class UnitSettings : ScriptableObject
     [field:SerializeField]
     public int Level { get; private set; }
     [field:SerializeField]
+    public int Salary { get; private set; }
+    [field:SerializeField]
     public Color Color { get; private set; }
 }

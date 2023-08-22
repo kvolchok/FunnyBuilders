@@ -31,10 +31,16 @@ public class GameController : MonoBehaviour
         _walletManager.ChangeMoney(_gameSettings.StartMoney);
         _unitBuyer.Initialize(_walletManager, _gameSettings.UnitPrices);
         _spotBuyer.Initialize(_walletManager, _gameSettings.SpotPrices);
+        
         _unitSpawner.Initialize(_gameSettings.UnitSettings);
         _mergeController.Initialize(_gameSettings.UnitSettings.Length);
+        _unitsManager.Initialize(_unitSpawner, _mergeController, _gameSettings.UnitMovementDuration);
         
-        _unitsManager.Initialize(_unitSpawner, _mergeController);
-        _building.Initialize(_walletManager, _buildingIncomeCalculator, _buildingProgressCalculator);
+        _buildingIncomeCalculator.Initialize(_gameSettings.UnitPaymentInterval);
+        _buildingProgressCalculator.Initialize(_gameSettings.DurationBuildingHeight,
+            _gameSettings.EndBuildingHeight);
+        _building.Initialize(_walletManager, _buildingIncomeCalculator, _buildingProgressCalculator,
+            _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots,
+            _gameSettings.UnitMovementDuration);
     }
 }
