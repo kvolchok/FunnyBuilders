@@ -19,6 +19,13 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private MergeController _mergeController;
 
+    [SerializeField]
+    private Building _building;
+    [SerializeField]
+    private BuildingIncomeCalculator _buildingIncomeCalculator;
+    [SerializeField]
+    private BuildingProgressCalculator _buildingProgressCalculator;
+
     private void Awake()
     {
         _walletManager.ChangeMoney(_gameSettings.StartMoney);
@@ -28,5 +35,6 @@ public class GameController : MonoBehaviour
         _mergeController.Initialize(_gameSettings.UnitSettings.Length);
         
         _unitsManager.Initialize(_unitSpawner, _mergeController);
+        _building.Initialize(_walletManager, _buildingIncomeCalculator, _buildingProgressCalculator);
     }
 }

@@ -1647,7 +1647,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &732165533
 GameObject:
@@ -1823,7 +1823,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &794070136
 GameObject:
@@ -2016,7 +2016,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -2616,9 +2616,6 @@ MonoBehaviour:
   - {fileID: 719081381}
   - {fileID: 666562902}
   _buildingConstructionCost: 1000
-  _buildingIncomeCalculator: {fileID: 1347243870}
-  _buildingProgressCalculator: {fileID: 1347243869}
-  _walletManager: {fileID: 723720421}
   _amountAvailablePlaces: 0
   _durationUnitReturn: 1
 --- !u!1 &1353487662
@@ -3320,6 +3317,9 @@ MonoBehaviour:
   _unitsManager: {fileID: 700339472}
   _unitSpawner: {fileID: 198908509}
   _mergeController: {fileID: 887359271}
+  _building: {fileID: 1347243871}
+  _buildingIncomeCalculator: {fileID: 1347243870}
+  _buildingProgressCalculator: {fileID: 1347243869}
 --- !u!4 &2023092203
 Transform:
   m_ObjectHideFlags: 0

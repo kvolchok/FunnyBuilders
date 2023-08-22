@@ -7,22 +7,27 @@ public class Building : MonoBehaviour, IUnitPositioner
     [field: SerializeField] public List<Tile> TilesList { get; private set; }
 
     [SerializeField] private int _buildingConstructionCost;
-
-    [SerializeField] private BuildingIncomeCalculator _buildingIncomeCalculator;
-    [SerializeField] private BuildingProgressCalculator _buildingProgressCalculator;
-    [SerializeField] private WalletManager _walletManager;
     [SerializeField] private int _amountAvailablePlaces;
     [SerializeField] private float _durationUnitReturn;
+    
+    private WalletManager _walletManager;
+    private BuildingIncomeCalculator _buildingIncomeCalculator;
+    private BuildingProgressCalculator _buildingProgressCalculator;
 
     private int _amountProfitAllUnits;
 
-    private void Start()
+    public void Initialize(WalletManager walletManager, BuildingIncomeCalculator buildingIncomeCalculator,
+        BuildingProgressCalculator buildingProgressCalculator)
     {
+        _walletManager = walletManager;
+        _buildingIncomeCalculator = buildingIncomeCalculator;
+        _buildingProgressCalculator = buildingProgressCalculator;
+        
         _buildingIncomeCalculator.MoneyEarned += OnMoneyEarned;
         _buildingProgressCalculator.BuildingFinished += OnBuildingFinished;
+        
         ShowAvailablePlaces(_amountAvailablePlaces);
     }
-
 
     public void AddUnitToBuildingSite(Tile currentTile, Tile targetTile)
     {
