@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyLabel: {fileID: 471478620}
+  _moneyCalculationTime: 1
 --- !u!1 &198908504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,7 +1624,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 128213469}
         m_TargetAssemblyTypeName: WalletView, Assembly-CSharp
-        m_MethodName: UpdateView
+        m_MethodName: SetNewMoney
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2284,6 +2285,14 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5
       objectReference: {fileID: 0}
@@ -2363,6 +2372,14 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5
       objectReference: {fileID: 0}
@@ -2440,6 +2457,14 @@ PrefabInstance:
     - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
       propertyPath: m_RootOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2555,8 +2580,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00791f90d38867041a641987569fa007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildingBuilt: {fileID: 1353487662}
-  _durationBuilt: 0.6
+  _building: {fileID: 1353487662}
+  _durationBuildingHeight: 4
+  _endBuildingHeight: 4
 --- !u!114 &1347243870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2571,7 +2597,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _paymentFirstLevelUnit: 10
   _paymentSecondLevelUnit: 20
-  _maxProfitUnit: 10000
   _waitingTimeBetweenUnitProfit: 0.6
 --- !u!114 &1347243871
 MonoBehaviour:
@@ -2590,11 +2615,11 @@ MonoBehaviour:
   - {fileID: 82429803}
   - {fileID: 719081381}
   - {fileID: 666562902}
-  _builderingPrice: 1000
+  _buildingConstructionCost: 1000
   _buildingIncomeCalculator: {fileID: 1347243870}
   _buildingProgressCalculator: {fileID: 1347243869}
   _walletManager: {fileID: 723720421}
-  _amountAvalliablePlaces: 0
+  _amountAvailablePlaces: 0
   _durationUnitReturn: 1
 --- !u!1 &1353487662
 GameObject:
@@ -3046,6 +3071,14 @@ PrefabInstance:
     - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
       propertyPath: m_RootOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: eb938b9368e9846aeb7b8f57cbd8617e, type: 3}
       propertyPath: m_LocalPosition.x

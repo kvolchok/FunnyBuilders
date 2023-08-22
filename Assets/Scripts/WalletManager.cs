@@ -4,13 +4,15 @@ using UnityEngine.Events;
 public class WalletManager : MonoBehaviour
 {
     [SerializeField]
-    private UnityEvent<int> _moneyValueChanged;
+    private UnityEvent<int, int> _moneyValueChanged;
     
-    private int _money;
-
-    public void Initialize(int money)
+    private int _currentMoney;
+    
+    public void ChangeMoney(int deltaMoney)
     {
-        SetMoney(money);
+        var oldMoney = _currentMoney;
+        _currentMoney += deltaMoney;
+        _moneyValueChanged?.Invoke(oldMoney, _currentMoney);
     }
 
     public bool TryPurchase(int price)
@@ -19,26 +21,13 @@ public class WalletManager : MonoBehaviour
         {
             return false;
         }
-        
-        var newMoney = _money - price;
-        SetMoney(newMoney);
-        return true;
-    }
 
-    public void AddMoney(int earnedMoney)
-    {
-        var newMoney = _money + earnedMoney;
-        SetMoney(newMoney);
-    }
-    
-    private void SetMoney(int money)
-    {
-        _money = money;
-        _moneyValueChanged?.Invoke(_money);
+        ChangeMoney(-price);
+        return true;
     }
 
     private bool HasEnoughMoney(int price)
     {
-        return _money >= price;
+        return _currentMoney >= price;
     }
 }

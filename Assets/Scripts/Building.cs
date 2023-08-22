@@ -94,10 +94,10 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
 
-    private void OnMoneyEarned(int money)
+    private void OnMoneyEarned(int earnedMoney)
     {
-        _amountProfitAllUnits += money;
-        _walletManager.AddMoney(money);
+        _amountProfitAllUnits += earnedMoney;
+        _walletManager.ChangeMoney(earnedMoney);
         var height = (float)_amountProfitAllUnits / _buildingConstructionCost;
         _buildingProgressCalculator.Build(height);
     }
