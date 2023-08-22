@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        _walletManager.Initialize(_gameSettings.StartMoney);
+        _walletManager.ChangeMoney(_gameSettings.StartMoney);
         _unitBuyer.Initialize(_walletManager, _gameSettings.UnitPrices);
         _spotBuyer.Initialize(_walletManager, _gameSettings.SpotPrices);
         _unitSpawner.Initialize(_gameSettings.UnitSettings);
