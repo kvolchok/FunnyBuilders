@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: UnitLevel1
   m_EditorClassIdentifier: 
   <Level>k__BackingField: 1
+  <Salary>k__BackingField: 10
   <Color>k__BackingField: {r: 0.11764706, g: 0.43137255, b: 0.8627451, a: 0}

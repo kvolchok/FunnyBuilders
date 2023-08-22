@@ -4,19 +4,25 @@ using UnityEngine.Events;
 
 public class DragController : MonoBehaviour, IUnitPositioner
 {
-    [SerializeField] private UnityEvent<Tile, Tile> _dropOnWorkPlace;
-    [SerializeField] private UnityEvent<Tile, Tile> _dropOnMergePlace;
-    [SerializeField] private LayerMask _planeLayerMask;
-    [SerializeField] private float _unitReturnDuration = 1f;
-    [SerializeField] private Vector3 _offset;
+    [SerializeField]
+    private UnityEvent<Tile, Tile> _dropOnWorkPlace;
+    [SerializeField]
+    private UnityEvent<Tile, Tile> _dropOnMergePlace;
+    
+    [SerializeField]
+    private LayerMask _planeLayerMask;
+
+    private float _unitMovementDuration;
+    private Camera _camera;
+    
     private Unit _draggedObject;
     private Tile _destinationTile;
     private Tile _initialTile;
-    private Camera _camera;
     private bool _canDropUnitOnTile;
 
-    private void Awake()
+    public void Initialize(float unitMovementDuration)
     {
+        _unitMovementDuration = unitMovementDuration;
         _camera = Camera.main;
     }
 
@@ -40,8 +46,10 @@ public class DragController : MonoBehaviour, IUnitPositioner
 
     public void PlaceUnitOnTile(Unit unit, Tile tile)
     {
-        var targetPosition = tile.transform.position + _offset;
-        unit.transform.DOMove(targetPosition, _unitReturnDuration);
+        var targetPosition = new Vector3(tile.transform.position.x, unit.transform.localScale.y,
+            tile.transform.position.z);
+        // var targetPosition = tile.transform.position + _offset;
+        unit.transform.DOMove(targetPosition, _unitMovementDuration);
     }
 
     private void TakeObject()
@@ -87,7 +95,9 @@ public class DragController : MonoBehaviour, IUnitPositioner
 
         if (_draggedObject != null)
         {
-            var currentPosition = hit.point + _offset; // new Vector3(hit.point.x, hit.point.y, hit.point.z) + _offset;
+            var currentPosition = new Vector3(hit.point.x, _draggedObject.transform.localScale.y, hit.point.z);
+            //hit.point + _offset;
+            // new Vector3(hit.point.x, _draggedObject.transform.localScale.y, hit.point.z);
             _draggedObject.transform.position = currentPosition;
             _canDropUnitOnTile = CanDropUnitOnTile(currentPosition);
         }

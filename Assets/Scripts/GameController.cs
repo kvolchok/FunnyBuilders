@@ -26,6 +26,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private BuildingProgressCalculator _buildingProgressCalculator;
 
+    [SerializeField]
+    private DragController _dragController;
+
     private void Awake()
     {
         _walletManager.ChangeMoney(_gameSettings.StartMoney);
@@ -42,5 +45,7 @@ public class GameController : MonoBehaviour
         _building.Initialize(_walletManager, _buildingIncomeCalculator, _buildingProgressCalculator,
             _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots,
             _gameSettings.UnitMovementDuration);
+
+        _dragController.Initialize(_gameSettings.UnitMovementDuration);
     }
 }

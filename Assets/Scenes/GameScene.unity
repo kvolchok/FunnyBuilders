@@ -1400,7 +1400,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mergePlacesController: {fileID: 1415984859}
   _unitSpawnPoint: {fileID: 1048574860}
-  _unitMovementDuration: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1805,10 +1804,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _raycastLayerMask:
+  _planeLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  _movementDuration: 1
   _offset: {x: 0, y: 0.3, z: 0}
 --- !u!4 &757358516
 Transform:
@@ -2581,8 +2579,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _building: {fileID: 1353487662}
-  _durationBuildingHeight: 4
-  _endBuildingHeight: 4
 --- !u!114 &1347243870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,9 +2591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77792c9b033736948bff2d69b145c84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _paymentFirstLevelUnit: 10
-  _paymentSecondLevelUnit: 20
-  _waitingTimeBetweenUnitProfit: 0.6
 --- !u!114 &1347243871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2610,14 +2603,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 477b6df83b04ab74d94378057e7db620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TilesList>k__BackingField:
+  <WorkPlaces>k__BackingField:
   - {fileID: 80102420}
   - {fileID: 82429803}
   - {fileID: 719081381}
   - {fileID: 666562902}
-  _buildingConstructionCost: 1000
-  _amountAvailablePlaces: 0
-  _durationUnitReturn: 1
 --- !u!1 &1353487662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3305,12 +3295,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameSettings:
+    <StartMoney>k__BackingField: 5000
     <UnitSettings>k__BackingField:
     - {fileID: 11400000, guid: cc5b73d5329894d12a981fa773fbf2b7, type: 2}
     - {fileID: 11400000, guid: 0dd743993fe38476ead23b846b0dc8d9, type: 2}
     <UnitPrices>k__BackingField: f4010000e8030000dc050000d0070000
+    <UnitMovementDuration>k__BackingField: 1
+    <UnitPaymentInterval>k__BackingField: 1
     <SpotPrices>k__BackingField: e8030000d0070000b80b0000a00f0000
-    <StartMoney>k__BackingField: 5000
+    <AmountAvailableSpots>k__BackingField: 0
+    <BuildingConstructionCost>k__BackingField: 4000
+    <DurationBuildingHeight>k__BackingField: 4
+    <EndBuildingHeight>k__BackingField: 4
   _walletManager: {fileID: 723720421}
   _unitBuyer: {fileID: 1460698042}
   _spotBuyer: {fileID: 45186040}
@@ -3320,6 +3316,7 @@ MonoBehaviour:
   _building: {fileID: 1347243871}
   _buildingIncomeCalculator: {fileID: 1347243870}
   _buildingProgressCalculator: {fileID: 1347243869}
+  _dragController: {fileID: 757358515}
 --- !u!4 &2023092203
 Transform:
   m_ObjectHideFlags: 0

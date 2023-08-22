@@ -66,12 +66,12 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
 
-    public void PlaceUnitOnTile(Unit unit, Tile targetTile)
+    public void PlaceUnitOnTile(Unit unit, Tile tile)
     {
-        var targetPosition = new Vector3(targetTile.transform.position.x, unit.transform.localScale.y,
-            targetTile.transform.position.z);
+        var targetPosition = new Vector3(tile.transform.position.x, unit.transform.localScale.y,
+            tile.transform.position.z);
         unit.transform.DOMove(targetPosition, _unitMovementDuration);
-        targetTile.SetUnit(unit);
+        tile.SetUnit(unit);
     }
 
     private void DismissUnit(Unit dismissedUnit)
@@ -91,7 +91,7 @@ public class Building : MonoBehaviour, IUnitPositioner
         var count = 0;
         foreach (var workPlace in WorkPlaces)
         {
-            workPlace.gameObject.SetActive(count >= amountAvailablePlaces);
+            workPlace.gameObject.SetActive(amountAvailablePlaces > count);
             count++;
         }
     }

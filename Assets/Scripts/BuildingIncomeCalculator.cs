@@ -7,7 +7,7 @@ public class BuildingIncomeCalculator : MonoBehaviour
 {
     public event Action<int> MoneyEarned;
 
-    private readonly Dictionary<Transform, Coroutine> _dataBaseCoroutine = new();
+    private readonly Dictionary<Unit, Coroutine> _dataBaseCoroutine = new();
 
     private float _unitPaymentInterval;
 
@@ -19,14 +19,14 @@ public class BuildingIncomeCalculator : MonoBehaviour
     public void StartPay(Unit currentUnit)
     {
         var coroutine = StartCoroutine(GiveSalary(currentUnit.Salary));
-        AddCoroutineToDataBase(currentUnit.transform, coroutine);
+        AddCoroutineToDataBase(currentUnit, coroutine);
     }
 
     public void StopPay(Unit dischargedUnit)
     {
-        var coroutineDismissedUnit = _dataBaseCoroutine[dischargedUnit.transform];
+        var coroutineDismissedUnit = _dataBaseCoroutine[dischargedUnit];
         StopCoroutine(coroutineDismissedUnit);
-        _dataBaseCoroutine.Remove(dischargedUnit.transform);
+        _dataBaseCoroutine.Remove(dischargedUnit);
     }
 
     public void StopAllPayments()
@@ -46,8 +46,8 @@ public class BuildingIncomeCalculator : MonoBehaviour
     /// <summary>
     /// this method have to check
     /// </summary>
-    private void AddCoroutineToDataBase(Transform transform, Coroutine coroutine)
+    private void AddCoroutineToDataBase(Unit unit, Coroutine coroutine)
     {
-        _dataBaseCoroutine.Add(transform, coroutine);
+        _dataBaseCoroutine.Add(unit, coroutine);
     }
 }
