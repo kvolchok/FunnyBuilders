@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : MonoBehaviour, IDraggable
 {
     public int Level { get; private set; }
     public int Salary { get; private set; }
@@ -22,5 +22,16 @@ public class Unit : MonoBehaviour
     public void ChangeWorkingState(bool isWorking)
     {
         IsWorking = isWorking;
+    }
+    
+    public void Drag(Vector3 targetPosition)
+    {
+        targetPosition = new Vector3(targetPosition.x, transform.localScale.y, targetPosition.z);
+        transform.position = targetPosition;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }
