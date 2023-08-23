@@ -10,28 +10,28 @@ public class MergeController : MonoBehaviour
         _maxUnitsLevel = maxUnitsLevel;
     }
     
-    public void TryMergeUnits(Tile currentTile, Tile targetTile,
-        Action<Tile, Transform, int> onUnitsMerged, Action<Unit, Tile> onUnitsNotMerged)
+    public void TryMergeUnits(UnitHolder currentUnitHolder, MergingPlace targetUnitHolder,
+        Action<MergingPlace, Transform, int> onUnitsMerged, Action<Unit, UnitHolder> onUnitsNotMerged)
     {
-        if (targetTile.Unit == null || currentTile == targetTile)
+        if (targetUnitHolder.Unit == null || currentUnitHolder == targetUnitHolder)
         {
-            onUnitsNotMerged?.Invoke(currentTile.Unit, currentTile);
+            onUnitsNotMerged?.Invoke(currentUnitHolder.Unit, currentUnitHolder);
             return;
         }
         
-        var targetUnitTransform = targetTile.Unit.transform;
-        var targetUnitLevel = targetTile.Unit.Level;
-        if (currentTile.Unit.Level == targetUnitLevel && currentTile.Unit.Level < _maxUnitsLevel)
+        var targetUnitTransform = targetUnitHolder.Unit.transform;
+        var targetUnitLevel = targetUnitHolder.Unit.Level;
+        if (currentUnitHolder.Unit.Level == targetUnitLevel && currentUnitHolder.Unit.Level < _maxUnitsLevel)
         {
-            Destroy(currentTile.Unit.gameObject);
-            Destroy(targetTile.Unit.gameObject);
-            currentTile.ClearFromUnit();
+            Destroy(currentUnitHolder.Unit.gameObject);
+            Destroy(targetUnitHolder.Unit.gameObject);
+            currentUnitHolder.ClearFromUnit();
             
-            onUnitsMerged?.Invoke(targetTile, targetUnitTransform, targetUnitLevel);
+            onUnitsMerged?.Invoke(targetUnitHolder, targetUnitTransform, targetUnitLevel);
         }
         else
         {
-            onUnitsNotMerged?.Invoke(currentTile.Unit, currentTile);
+            onUnitsNotMerged?.Invoke(currentUnitHolder.Unit, currentUnitHolder);
         }
     }
 }

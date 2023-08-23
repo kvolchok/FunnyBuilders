@@ -1,4 +1,4 @@
 public interface IUnitPositioner
 {
-    void PlaceUnitOnTile(Unit unit, Tile tile);
+    void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder);
 }

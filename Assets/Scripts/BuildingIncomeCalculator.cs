@@ -43,9 +43,6 @@ public class BuildingIncomeCalculator : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// this method have to check
-    /// </summary>
     private void AddCoroutineToDataBase(Unit unit, Coroutine coroutine)
     {
         _dataBaseCoroutine.Add(unit, coroutine);

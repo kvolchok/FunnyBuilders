@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 6153682087324189311}
   - component: {fileID: 6153682087324189308}
   - component: {fileID: 6153682087324189309}
-  - component: {fileID: 3690829225731810812}
+  - component: {fileID: -2747143672942807501}
   m_Layer: 0
-  m_Name: Tile
-  m_TagString: Finish
+  m_Name: WorkPlace
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3690829225731810812
+--- !u!114 &-2747143672942807501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,8 +107,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6153682087324189283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5f79003e92b435b95db201921f53fec, type: 3}
+  m_Script: {fileID: 11500000, guid: 57a2944e332244be9dde5fe5c580ed6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsMergePlace>k__BackingField: 0
-  <IsWorkPlace>k__BackingField: 0

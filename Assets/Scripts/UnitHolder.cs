@@ -1,12 +1,7 @@
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public abstract class UnitHolder : MonoBehaviour
 {
-    [field:SerializeField]
-    public bool IsMergePlace { get; private set; }
-    [field:SerializeField]
-    public bool IsWorkPlace { get; private set; }
-    
     public bool IsAvailable { get; private set; } = true;
     public Unit Unit { get; private set; }
 

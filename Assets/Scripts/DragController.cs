@@ -5,9 +5,9 @@ using UnityEngine.Events;
 public class DragController : MonoBehaviour, IUnitPositioner
 {
     [SerializeField]
-    private UnityEvent<Tile, Tile> _dropOnWorkPlace;
+    private UnityEvent<UnitHolder, MergingPlace> _dropOnMergingPlace;
     [SerializeField]
-    private UnityEvent<Tile, Tile> _dropOnMergePlace;
+    private UnityEvent<UnitHolder, WorkPlace> _dropOnWorkPlace;
     
     [SerializeField]
     private LayerMask _planeLayerMask;
@@ -16,9 +16,9 @@ public class DragController : MonoBehaviour, IUnitPositioner
     private Camera _camera;
     
     private Unit _draggedObject;
-    private Tile _destinationTile;
-    private Tile _initialTile;
-    private bool _canDropUnitOnTile;
+    private UnitHolder _initialUnitHolder;
+    private UnitHolder _destinationUnitHolder;
+    private bool _canDropUnit;
 
     public void Initialize(float unitMovementDuration)
     {
@@ -44,11 +44,10 @@ public class DragController : MonoBehaviour, IUnitPositioner
         }
     }
 
-    public void PlaceUnitOnTile(Unit unit, Tile tile)
+    public void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder)
     {
-        var targetPosition = new Vector3(tile.transform.position.x, unit.transform.localScale.y,
-            tile.transform.position.z);
-        // var targetPosition = tile.transform.position + _offset;
+        var targetPosition = new Vector3(unitHolder.transform.position.x, unit.transform.localScale.y,
+            unitHolder.transform.position.z);
         unit.transform.DOMove(targetPosition, _unitMovementDuration);
     }
 
@@ -65,11 +64,11 @@ public class DragController : MonoBehaviour, IUnitPositioner
         if (unit != null && !unit.IsWorking)
         {
             _draggedObject = unit;
-            FindTileUnderDraggedObject();
+            FindHolderUnderDraggedObject();
         }
     }
 
-    private void FindTileUnderDraggedObject()
+    private void FindHolderUnderDraggedObject()
     {
         if (!Physics.Raycast(_draggedObject.transform.position, Vector3.down, out var hit,
                 Mathf.Infinity))
@@ -77,17 +76,16 @@ public class DragController : MonoBehaviour, IUnitPositioner
             return;
         }
 
-        var tile = hit.collider.GetComponent<Tile>();
-        if (tile != null)
+        var unitHolder = hit.collider.GetComponent<UnitHolder>();
+        if (unitHolder != null)
         {
-            _initialTile = tile;
+            _initialUnitHolder = unitHolder;
         }
     }
 
     private void DragObject()
     {
         var ray = _camera.ScreenPointToRay(Input.mousePosition);
-
         if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, _planeLayerMask))
         {
             return;
@@ -96,14 +94,12 @@ public class DragController : MonoBehaviour, IUnitPositioner
         if (_draggedObject != null)
         {
             var currentPosition = new Vector3(hit.point.x, _draggedObject.transform.localScale.y, hit.point.z);
-            //hit.point + _offset;
-            // new Vector3(hit.point.x, _draggedObject.transform.localScale.y, hit.point.z);
             _draggedObject.transform.position = currentPosition;
-            _canDropUnitOnTile = CanDropUnitOnTile(currentPosition);
+            _canDropUnit = CanDropUnit(currentPosition);
         }
     }
 
-    private bool CanDropUnitOnTile(Vector3 position)
+    private bool CanDropUnit(Vector3 position)
     {
         var ray = new Ray(position, Vector3.down);
         if (!Physics.Raycast(ray, out var hitInfo))
@@ -111,11 +107,11 @@ public class DragController : MonoBehaviour, IUnitPositioner
             return false;
         }
 
-        var tile = hitInfo.collider.GetComponent<Tile>();
-        if (tile != null)
+        var unitHolder = hitInfo.collider.GetComponent<UnitHolder>();
+        if (unitHolder != null)
         {
-            _canDropUnitOnTile = true;
-            _destinationTile = tile;
+            _canDropUnit = true;
+            _destinationUnitHolder = unitHolder;
             return true;
         }
 
@@ -129,20 +125,20 @@ public class DragController : MonoBehaviour, IUnitPositioner
             return;
         }
 
-        if (_canDropUnitOnTile)
+        if (_canDropUnit)
         {
-            if (_destinationTile.IsMergePlace)
+            if (_destinationUnitHolder is MergingPlace mergingPlace)
             {
-                _dropOnMergePlace?.Invoke(_initialTile, _destinationTile);
+                _dropOnMergingPlace?.Invoke(_initialUnitHolder, mergingPlace);
             }
-            else if (_destinationTile.IsWorkPlace)
+            else if (_destinationUnitHolder is WorkPlace workPlace)
             {
-                _dropOnWorkPlace?.Invoke(_initialTile, _destinationTile);
+                _dropOnWorkPlace?.Invoke(_initialUnitHolder, workPlace);
             }
         }
         else
         {
-            PlaceUnitOnTile(_draggedObject, _initialTile);
+            PlaceUnitInHolder(_draggedObject, _initialUnitHolder);
         }
 
         _draggedObject = null;

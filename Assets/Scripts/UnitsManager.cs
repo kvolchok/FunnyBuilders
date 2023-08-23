@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitsManager : MonoBehaviour, IUnitPositioner
 {
     [SerializeField]
-    private MergePlacesController _mergePlacesController;
+    private MergingPlacesController _mergingPlacesController;
     [SerializeField]
     private Transform _unitSpawnPoint;
     
@@ -24,26 +24,26 @@ public class UnitsManager : MonoBehaviour, IUnitPositioner
     public void AddNewUnit()
     {
         var unit = _unitSpawner.SpawnUnit(_unitSpawnPoint);
-        var tile = _mergePlacesController.GetFirstAvailable();
-        PlaceUnitOnTile(unit, tile);
+        var mergingPlace = _mergingPlacesController.GetFirstAvailable();
+        PlaceUnitInHolder(unit, mergingPlace);
     }
     
-    public void PlaceUnitOnTile(Unit unit, Tile tile)
+    public void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder)
     {
-        var targetPosition = new Vector3(tile.transform.position.x, unit.transform.localScale.y, 
-            tile.transform.position.z);
+        var targetPosition = new Vector3(unitHolder.transform.position.x, unit.transform.localScale.y, 
+            unitHolder.transform.position.z);
         unit.transform.DOMove(targetPosition, _unitMovementDuration);
-        tile.SetUnit(unit);
+        unitHolder.SetUnit(unit);
     }
     
-    public void TryMergeUnits(Tile currentTile, Tile targetTile)
+    public void TryMergeUnits(UnitHolder currentUnitHolder, MergingPlace targetUnitHolder)
     {
-        _mergeController.TryMergeUnits(currentTile, targetTile, OnUnitsMerged, PlaceUnitOnTile);
+        _mergeController.TryMergeUnits(currentUnitHolder, targetUnitHolder, OnUnitsMerged, PlaceUnitInHolder);
     }
     
-    private void OnUnitsMerged(Tile targetTile, Transform targetUnitTransform, int targetUnitLevel)
+    private void OnUnitsMerged(MergingPlace targetUnitHolder, Transform targetUnitTransform, int targetUnitLevel)
     {
         var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
-        PlaceUnitOnTile(newUnit, targetTile);
+        PlaceUnitInHolder(newUnit, targetUnitHolder);
     }
 }

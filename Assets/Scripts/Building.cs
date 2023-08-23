@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Building : MonoBehaviour, IUnitPositioner
 {
     [field: SerializeField]
-    public List<Tile> WorkPlaces { get; private set; }
+    public List<WorkPlace> WorkPlaces { get; private set; }
     
     private WalletManager _walletManager;
     private BuildingIncomeCalculator _buildingIncomeCalculator;
@@ -18,8 +19,8 @@ public class Building : MonoBehaviour, IUnitPositioner
     private int _amountProfitAllUnits;
 
     public void Initialize(WalletManager walletManager, BuildingIncomeCalculator buildingIncomeCalculator,
-        BuildingProgressCalculator buildingProgressCalculator, int buildingConstructionCost, int amountAvailableWorkPlaces,
-        float unitMovementDuration)
+        BuildingProgressCalculator buildingProgressCalculator, int buildingConstructionCost,
+        int amountAvailableWorkPlaces, float unitMovementDuration)
     {
         _walletManager = walletManager;
         _buildingIncomeCalculator = buildingIncomeCalculator;
@@ -35,6 +36,7 @@ public class Building : MonoBehaviour, IUnitPositioner
         ShowAvailableWorkPlaces(_amountAvailableWorkPlaces);
     }
 
+    [UsedImplicitly]
     public void BuyPlace()
     {
         foreach (var workPlace in WorkPlaces)
@@ -47,31 +49,31 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
     
-    public void AddUnitToBuildingSite(Tile currentTile, Tile targetTile)
+    public void AddUnitToBuildingSite(UnitHolder currentUnitHolder, WorkPlace targetUnitHolder)
     {
-        var draggableUnit = currentTile.Unit;
-        var replacementUnit = targetTile.Unit;
+        var draggableUnit = currentUnitHolder.Unit;
+        var replacementUnit = targetUnitHolder.Unit;
 
         RecruitUnit(draggableUnit);
-        PlaceUnitOnTile(draggableUnit, targetTile);
+        PlaceUnitInHolder(draggableUnit, targetUnitHolder);
 
         if (replacementUnit != null)
         {
             DismissUnit(replacementUnit);
-            PlaceUnitOnTile(replacementUnit, currentTile);
+            PlaceUnitInHolder(replacementUnit, currentUnitHolder);
         }
         else
         {
-            currentTile.ClearFromUnit();
+            currentUnitHolder.ClearFromUnit();
         }
     }
 
-    public void PlaceUnitOnTile(Unit unit, Tile tile)
+    public void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder)
     {
-        var targetPosition = new Vector3(tile.transform.position.x, unit.transform.localScale.y,
-            tile.transform.position.z);
+        var targetPosition = new Vector3(unitHolder.transform.position.x, unit.transform.localScale.y,
+            unitHolder.transform.position.z);
         unit.transform.DOMove(targetPosition, _unitMovementDuration);
-        tile.SetUnit(unit);
+        unitHolder.SetUnit(unit);
     }
 
     private void DismissUnit(Unit dismissedUnit)
