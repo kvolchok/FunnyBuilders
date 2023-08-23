@@ -1,71 +1,60 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BuildingProgressCalculator : MonoBehaviour
 {
     public event Action BuildingFinished;
 
-    [SerializeField]
-    private GameObject _building;
+    [SerializeField] private GameObject _building;
+    [SerializeField] private UnityEvent<float, float> _setValueOnBuildingBar;
 
-    [SerializeField]
-    private BuildingBar _buildingBar;
-    
     private float _durationBuildingHeight;
-    private float _endBuildingHeight;
+    private const float _positionBuildingY = 0;
+    private float _depthExcavationForBuildingY; 
+    private Tweener _tweener;
+   
 
-    private Coroutine _buildCoroutine;
-    
     public void Initialize(float durationBuildingHeight, float endBuildingHeight)
     {
         _durationBuildingHeight = durationBuildingHeight;
-        _endBuildingHeight = endBuildingHeight;
-        _buildingBar.Initialize(_endBuildingHeight);
+        _depthExcavationForBuildingY = _building.transform.localPosition.y;
     }
-    
-    public void Build(float height)
+
+    public void Build(float height, float buildingConstructionCost)
     {
-        if (_buildCoroutine != null)
+      
+        if (_tweener != null)
         {
-            StopCoroutine(_buildCoroutine);
+            DOTween.Kill(_tweener);
+        }
+        var localPosition = _building.transform.localPosition;
+        var positionY = Mathf.Abs(_depthExcavationForBuildingY*height)+_depthExcavationForBuildingY;
+        if (positionY > 0)
+        {
+            positionY = 0;
+            if (HasBuildingBuilt(positionY))
+            {
+                BuildingFinished?.Invoke();
+                return;
+            }
         }
 
-        if (HasBuildingBuilt(_building.transform.localScale.y))
-        {
-            StopAllCoroutines();
-            BuildingFinished?.Invoke();
-            return;
-        }
-
-        var localScale = _building.transform.localScale;
-        var finishScale = new Vector3(localScale.x, height, localScale.z);
-        _buildCoroutine = StartCoroutine(Build(finishScale));
-        
-        _buildingBar.SetValueBar(height);
-
+        var finishPosition = new Vector3(localPosition.x, positionY, localPosition.z);
+         StartBuildProcess(finishPosition);
+        _setValueOnBuildingBar?.Invoke(height, buildingConstructionCost);
     }
-    
+
     private bool HasBuildingBuilt(float height)
     {
-        return height >= _endBuildingHeight;
+        return height >= _positionBuildingY;
     }
 
-    private IEnumerator Build(Vector3 finishScale)
+    private void StartBuildProcess(Vector3 finishPosition)
     {
-        var currentTime = 0f;
-
-        while (currentTime < _durationBuildingHeight)
-        {
-            var progress = currentTime / _durationBuildingHeight;
-
-            var startScale = _building.transform.localScale;
-            var currentScaleY = Vector3.Lerp(startScale, finishScale, progress);
-            _building.transform.localScale = currentScaleY;
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-
-        _building.transform.localScale = finishScale;
+        _building.transform.DOLocalMove(finishPosition, _durationBuildingHeight);
     }
+   
 }

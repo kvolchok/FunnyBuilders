@@ -901,7 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildingPosition: {fileID: 1353487663}
   _buildingBar: {fileID: 386875422}
-  _offset: {x: -0.9, y: 2.5, z: 0}
+  _offset: {x: -0.9, y: 2.8, z: 0}
 --- !u!1 &398639477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,6 +2169,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794070136}
   m_CullTransparentMesh: 0
+--- !u!4 &852105078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+  m_PrefabInstance: {fileID: 1359559833}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &887359270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2328,6 +2333,65 @@ Transform:
   m_Father: {fileID: 700339471}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1093364936
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1347243868}
+    m_Modifications:
+    - target: {fileID: 5151686397612985072, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_Name
+      value: OfficeBuilding
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
 --- !u!1 &1105439198
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,6 +2900,8 @@ Transform:
   - {fileID: 82429802}
   - {fileID: 719081382}
   - {fileID: 666562903}
+  - {fileID: 1682847976}
+  - {fileID: 852105078}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 120, z: 0}
@@ -2851,8 +2917,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00791f90d38867041a641987569fa007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _building: {fileID: 1353487662}
-  _buildingBar: {fileID: 386875423}
+  _building: {fileID: 1682847975}
+  _setValueOnBuildingBar:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 386875423}
+        m_TargetAssemblyTypeName: BuildingBar, Assembly-CSharp
+        m_MethodName: SetValueBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1347243870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2900,7 +2980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1353487663
 Transform:
   m_ObjectHideFlags: 0
@@ -2979,6 +3059,65 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1353487662}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1359559833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 1347243868}
+    m_Modifications:
+    - target: {fileID: 1204153699559012223, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_Name
+      value: polySurface1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3853889340770053287, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1a41a136a23fdfe46b4b2544450e3cde, type: 3}
 --- !u!1 &1415984856
 GameObject:
   m_ObjectHideFlags: 0
@@ -3404,6 +3543,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f79003e92b435b95db201921f53fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1682847975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5151686397612985072, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+  m_PrefabInstance: {fileID: 1093364936}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1682847976 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5491479863604760650, guid: 1aab64ca89d8a0843abc0a1068f22147, type: 3}
+  m_PrefabInstance: {fileID: 1093364936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1708143636
 GameObject:
   m_ObjectHideFlags: 0
@@ -3617,7 +3766,7 @@ MonoBehaviour:
     <AmountAvailableSpots>k__BackingField: 0
     <BuildingConstructionCost>k__BackingField: 4000
     <DurationBuildingHeight>k__BackingField: 4
-    <EndBuildingHeight>k__BackingField: 4
+    <EndBuildingHeight>k__BackingField: 2.13
   _walletManager: {fileID: 723720421}
   _unitBuyer: {fileID: 1460698042}
   _spotBuyer: {fileID: 45186040}
