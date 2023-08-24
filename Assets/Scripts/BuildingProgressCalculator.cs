@@ -11,6 +11,9 @@ public class BuildingProgressCalculator : MonoBehaviour
     [SerializeField] private GameObject _building;
     [SerializeField] private UnityEvent<float, float> _setValueOnBuildingBar;
 
+    [SerializeField] private UnityEvent _playParticleSystem;
+    [SerializeField] private UnityEvent _stopParticleSystem;
+    private bool _isParticleSystemWorking = false;
     private float _durationBuildingHeight;
     private const float _positionBuildingY = 0;
     private float _depthExcavationForBuildingY; 
@@ -30,6 +33,12 @@ public class BuildingProgressCalculator : MonoBehaviour
         {
             DOTween.Kill(_tweener);
         }
+
+        if (!_isParticleSystemWorking)
+        {
+            _isParticleSystemWorking = true;
+            _playParticleSystem?.Invoke();
+        }
         var localPosition = _building.transform.localPosition;
         var positionY = Mathf.Abs(_depthExcavationForBuildingY*height)+_depthExcavationForBuildingY;
         if (positionY > 0)
@@ -37,6 +46,7 @@ public class BuildingProgressCalculator : MonoBehaviour
             positionY = 0;
             if (HasBuildingBuilt(positionY))
             {
+                _stopParticleSystem?.Invoke();
                 BuildingFinished?.Invoke();
                 return;
             }

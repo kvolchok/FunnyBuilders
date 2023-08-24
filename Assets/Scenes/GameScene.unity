@@ -835,7 +835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buildingBar: {fileID: 386875424}
-  _durationFillBuildingBar: 0.6
+  _durationFillBuildingBar: 0
 --- !u!114 &386875424
 MonoBehaviour:
   m_ObjectHideFlags: 0
