@@ -3,14 +3,18 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class BuildingProgressCalculator : MonoBehaviour
 {
     public event Action BuildingFinished;
 
     [SerializeField] private GameObject _building;
-    [SerializeField] private UnityEvent<float, float> _setValueOnBuildingBar;
+    [SerializeField] private UnityEvent<float> _setValueOnBuildingBar;
+    [SerializeField] private UnityEvent _playParticleSystem;
+    [SerializeField] private UnityEvent _stopParticleSystem;
 
+    private bool _isParticleSystemWorking = false;
     private float _durationBuildingHeight;
     private const float _positionBuildingY = 0;
     private float _depthExcavationForBuildingY; 
@@ -23,12 +27,18 @@ public class BuildingProgressCalculator : MonoBehaviour
         _depthExcavationForBuildingY = _building.transform.localPosition.y;
     }
 
-    public void Build(float height, float buildingConstructionCost)
+    public void Build(float height)
     {
       
         if (_tweener != null)
         {
             DOTween.Kill(_tweener);
+        }
+
+        if (!_isParticleSystemWorking)
+        {
+            _isParticleSystemWorking = true;
+            _playParticleSystem?.Invoke();
         }
         var localPosition = _building.transform.localPosition;
         var positionY = Mathf.Abs(_depthExcavationForBuildingY*height)+_depthExcavationForBuildingY;
@@ -37,6 +47,7 @@ public class BuildingProgressCalculator : MonoBehaviour
             positionY = 0;
             if (HasBuildingBuilt(positionY))
             {
+                _stopParticleSystem?.Invoke();
                 BuildingFinished?.Invoke();
                 return;
             }
@@ -44,7 +55,7 @@ public class BuildingProgressCalculator : MonoBehaviour
 
         var finishPosition = new Vector3(localPosition.x, positionY, localPosition.z);
          StartBuildProcess(finishPosition);
-        _setValueOnBuildingBar?.Invoke(height, buildingConstructionCost);
+        _setValueOnBuildingBar?.Invoke(height);
     }
 
     private bool HasBuildingBuilt(float height)

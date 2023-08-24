@@ -101,7 +101,7 @@ public class Building : MonoBehaviour, IUnitPositioner
         _amountProfitAllUnits += earnedMoney;
         _walletManager.ChangeMoney(earnedMoney);
         var height = (float)_amountProfitAllUnits / _buildingConstructionCost;
-        _buildingProgressCalculator.Build(height, _buildingConstructionCost);
+        _buildingProgressCalculator.Build(height);
     }
 
     private void OnBuildingFinished()

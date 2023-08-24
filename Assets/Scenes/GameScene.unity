@@ -2932,6 +2932,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _playParticleSystem:
+    m_PersistentCalls:
+      m_Calls: []
+  _stopParticleSystem:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1347243870
 MonoBehaviour:
   m_ObjectHideFlags: 0

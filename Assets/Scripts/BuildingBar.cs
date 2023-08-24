@@ -5,14 +5,13 @@ using UnityEngine.UI;
 public class BuildingBar : MonoBehaviour
 {
     [SerializeField] private Slider _buildingBar;
-    private float _maxValueBar;
-    private Coroutine _fillBuildingBar;
+   
     
-    public void SetValueBar(float value, float maxValueBar)
+    public void SetValueBar(float value)
     {
     
-     var settingValue = value ;
-     _buildingBar.value = settingValue ;
+    
+     _buildingBar.value = value ;
 
     }
 
