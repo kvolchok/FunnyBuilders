@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5013726748806657674}
   - component: {fileID: 4629210543466197952}
   m_Layer: 0
-  m_Name: polySurface1
+  m_Name: Foundation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
