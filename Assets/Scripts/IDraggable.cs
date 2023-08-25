@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public interface IDraggable
+public interface IDraggable : IGetPosition
 {
     void Drag(Vector3 targetPosition);
-    Vector3 GetPosition();
 }

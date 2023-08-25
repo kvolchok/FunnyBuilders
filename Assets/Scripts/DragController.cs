@@ -70,9 +70,12 @@ public class DragController : MonoBehaviour, IUnitPositioner
         {
             return;
         }
-
-        _draggedObject = draggedObject;
-        _initialUnitHolder = initialUnitHolder;
+        
+        if (initialUnitHolder is MergingPlace)
+        {
+            _draggedObject = draggedObject;
+            _initialUnitHolder = initialUnitHolder;
+        }
     }
 
     private UnitHolder GetHolderUnderDraggedObject(IDraggable draggedObject)
@@ -84,7 +87,7 @@ public class DragController : MonoBehaviour, IUnitPositioner
             return null;
         }
 
-        var unitHolder = hit.collider.GetComponent<MergingPlace>();
+        var unitHolder = hit.collider.GetComponent<UnitHolder>();
         return unitHolder;
     }
 
