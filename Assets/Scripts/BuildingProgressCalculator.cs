@@ -1,64 +1,71 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class BuildingProgressCalculator : MonoBehaviour
 {
     public event Action BuildingFinished;
 
-    [SerializeField]
-    private GameObject _building;
-    
-    private float _durationBuildingHeight;
-    private float _endBuildingHeight;
+    [SerializeField] private GameObject _building;
+    [SerializeField] private UnityEvent<float> _setValueOnBuildingBar;
+    [SerializeField] private UnityEvent _playParticleSystem;
+    [SerializeField] private UnityEvent _stopParticleSystem;
 
-    private Coroutine _buildCoroutine;
-    
+    private bool _isParticleSystemWorking = false;
+    private float _durationBuildingHeight;
+    private const float _positionBuildingY = 0;
+    private float _depthExcavationForBuildingY; 
+    private Tweener _tweener;
+   
+
     public void Initialize(float durationBuildingHeight, float endBuildingHeight)
     {
         _durationBuildingHeight = durationBuildingHeight;
-        _endBuildingHeight = endBuildingHeight;
+        _depthExcavationForBuildingY = _building.transform.localPosition.y;
     }
-    
+
     public void Build(float height)
     {
-        if (_buildCoroutine != null)
+      
+        if (_tweener != null)
         {
-            StopCoroutine(_buildCoroutine);
+            DOTween.Kill(_tweener);
         }
 
-        if (HasBuildingBuilt(_building.transform.localScale.y))
+        if (!_isParticleSystemWorking)
         {
-            StopAllCoroutines();
-            BuildingFinished?.Invoke();
-            return;
+            _isParticleSystemWorking = true;
+            _playParticleSystem?.Invoke();
+        }
+        var localPosition = _building.transform.localPosition;
+        var positionY = Mathf.Abs(_depthExcavationForBuildingY*height)+_depthExcavationForBuildingY;
+        if (positionY > 0)
+        {
+            positionY = 0;
+            if (HasBuildingBuilt(positionY))
+            {
+                _stopParticleSystem?.Invoke();
+                BuildingFinished?.Invoke();
+                return;
+            }
         }
 
-        var localScale = _building.transform.localScale;
-        var finishScale = new Vector3(localScale.x, height, localScale.z);
-        _buildCoroutine = StartCoroutine(Build(finishScale));
+        var finishPosition = new Vector3(localPosition.x, positionY, localPosition.z);
+         StartBuildProcess(finishPosition);
+        _setValueOnBuildingBar?.Invoke(height);
     }
-    
+
     private bool HasBuildingBuilt(float height)
     {
-        return height >= _endBuildingHeight;
+        return height >= _positionBuildingY;
     }
 
-    private IEnumerator Build(Vector3 finishScale)
+    private void StartBuildProcess(Vector3 finishPosition)
     {
-        var currentTime = 0f;
-
-        while (currentTime < _durationBuildingHeight)
-        {
-            var progress = currentTime / _durationBuildingHeight;
-
-            var startScale = _building.transform.localScale;
-            var currentScaleY = Vector3.Lerp(startScale, finishScale, progress);
-            _building.transform.localScale = currentScaleY;
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-
-        _building.transform.localScale = finishScale;
+        _building.transform.DOLocalMove(finishPosition, _durationBuildingHeight);
     }
+   
 }
