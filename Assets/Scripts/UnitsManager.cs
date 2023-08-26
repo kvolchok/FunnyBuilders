@@ -44,6 +44,7 @@ public class UnitsManager : MonoBehaviour, IUnitPositioner
     private void OnUnitsMerged(MergingPlace targetUnitHolder, Transform targetUnitTransform, int targetUnitLevel)
     {
         var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
+        targetUnitHolder.ShowAppearAnimation();
         PlaceUnitInHolder(newUnit, targetUnitHolder);
     }
 }
