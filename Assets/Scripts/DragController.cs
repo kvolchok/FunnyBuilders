@@ -139,7 +139,8 @@ public class DragController : MonoBehaviour
         }
         else
         {
-            _unitPositioner.PlaceUnitInHolder(_draggedObject as Unit, _initialUnitHolder);
+            var currentUnit = _draggedObject as Unit;
+            _unitPositioner.PlaceUnitInHolder(currentUnit, _initialUnitHolder);
         }
 
         _draggedObject = null;

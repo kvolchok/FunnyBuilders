@@ -3073,6 +3073,7 @@ MonoBehaviour:
   - {fileID: 325244005}
   - {fileID: 2054774041}
   - {fileID: 1176550762}
+  _foundation: {fileID: 1703622511}
 --- !u!1001 &1388850240
 PrefabInstance:
   m_ObjectHideFlags: 0

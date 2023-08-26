@@ -6,6 +6,9 @@ public class Building : MonoBehaviour
 {
     [field: SerializeField]
     public List<WorkPlace> WorkPlaces { get; private set; }
+
+    [SerializeField]
+    private Transform _foundation;
     
     private WalletManager _walletManager;
     private UnitPositioner _unitPositioner;
@@ -14,12 +17,11 @@ public class Building : MonoBehaviour
     
     private int _buildingConstructionCost;
     private int _amountAvailableWorkPlaces;
-
     private int _amountProfitAllUnits;
 
-    public void Initialize(WalletManager walletManager, UnitPositioner unitPositioner, BuildingIncomeCalculator buildingIncomeCalculator,
-        BuildingProgressCalculator buildingProgressCalculator, int buildingConstructionCost,
-        int amountAvailableWorkPlaces)
+    public void Initialize(WalletManager walletManager, UnitPositioner unitPositioner,
+        BuildingIncomeCalculator buildingIncomeCalculator, BuildingProgressCalculator buildingProgressCalculator,
+        int buildingConstructionCost, int amountAvailableWorkPlaces)
     {
         _walletManager = walletManager;
         _unitPositioner = unitPositioner;
@@ -52,9 +54,9 @@ public class Building : MonoBehaviour
     {
         var draggableUnit = currentUnitHolder.Unit;
         var replacementUnit = targetUnitHolder.Unit;
-
+        
+        _unitPositioner.PlaceUnitInWorkPlace(draggableUnit, targetUnitHolder);
         RecruitUnit(draggableUnit);
-        _unitPositioner.PlaceUnitInHolder(draggableUnit, targetUnitHolder);
 
         if (replacementUnit != null)
         {
@@ -69,13 +71,14 @@ public class Building : MonoBehaviour
 
     private void DismissUnit(Unit dismissedUnit)
     {
-        dismissedUnit.ChangeWorkingState(false);
+        dismissedUnit.ChangeState(UnitState.Idle);
         _buildingIncomeCalculator.StopPay(dismissedUnit);
     }
 
     private void RecruitUnit(Unit recruitedUnit)
     {
-        recruitedUnit.ChangeWorkingState(true);
+        recruitedUnit.transform.LookAt(_foundation);
+        recruitedUnit.ChangeState(UnitState.Work);
         _buildingIncomeCalculator.StartPay(recruitedUnit);
     }
 
