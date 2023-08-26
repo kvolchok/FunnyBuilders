@@ -12,6 +12,8 @@ public class GameSettings
     [field:SerializeField]
     public int[] UnitPrices { get; private set; } 
     [field:SerializeField]
+    public Vector3 UnitOffset { get; private set; }
+    [field:SerializeField]
     public float UnitMovementDuration { get; private set; }
     [field:SerializeField]
     public float UnitPaymentInterval { get; private set; }

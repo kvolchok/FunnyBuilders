@@ -1,28 +1,30 @@
 using System.Collections.Generic;
-using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class Building : MonoBehaviour, IUnitPositioner
+public class Building : MonoBehaviour
 {
     [field: SerializeField]
     public List<WorkPlace> WorkPlaces { get; private set; }
+
+    [SerializeField]
+    private Transform _foundation;
     
     private WalletManager _walletManager;
+    private UnitPositioner _unitPositioner;
     private BuildingIncomeCalculator _buildingIncomeCalculator;
     private BuildingProgressCalculator _buildingProgressCalculator;
     
     private int _buildingConstructionCost;
     private int _amountAvailableWorkPlaces;
-    private float _unitMovementDuration;
-
     private int _amountProfitAllUnits;
 
-    public void Initialize(WalletManager walletManager, BuildingIncomeCalculator buildingIncomeCalculator,
-        BuildingProgressCalculator buildingProgressCalculator, int buildingConstructionCost,
-        int amountAvailableWorkPlaces, float unitMovementDuration)
+    public void Initialize(WalletManager walletManager, UnitPositioner unitPositioner,
+        BuildingIncomeCalculator buildingIncomeCalculator, BuildingProgressCalculator buildingProgressCalculator,
+        int buildingConstructionCost, int amountAvailableWorkPlaces)
     {
         _walletManager = walletManager;
+        _unitPositioner = unitPositioner;
         _buildingIncomeCalculator = buildingIncomeCalculator;
         _buildingProgressCalculator = buildingProgressCalculator;
         
@@ -31,8 +33,7 @@ public class Building : MonoBehaviour, IUnitPositioner
 
         _buildingConstructionCost = buildingConstructionCost;
         _amountAvailableWorkPlaces = amountAvailableWorkPlaces;
-        _unitMovementDuration = unitMovementDuration;
-        
+
         ShowAvailableWorkPlaces(_amountAvailableWorkPlaces);
     }
 
@@ -53,14 +54,14 @@ public class Building : MonoBehaviour, IUnitPositioner
     {
         var draggableUnit = currentUnitHolder.Unit;
         var replacementUnit = targetUnitHolder.Unit;
-
+        
+        _unitPositioner.PlaceUnitInWorkPlace(draggableUnit, targetUnitHolder);
         RecruitUnit(draggableUnit);
-        PlaceUnitInHolder(draggableUnit, targetUnitHolder);
 
         if (replacementUnit != null)
         {
             DismissUnit(replacementUnit);
-            PlaceUnitInHolder(replacementUnit, currentUnitHolder);
+            _unitPositioner.PlaceUnitInHolder(replacementUnit, currentUnitHolder);
         }
         else
         {
@@ -68,23 +69,16 @@ public class Building : MonoBehaviour, IUnitPositioner
         }
     }
 
-    public void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder)
-    {
-        var targetPosition = new Vector3(unitHolder.transform.position.x, unit.transform.localScale.y,
-            unitHolder.transform.position.z);
-        unit.transform.DOMove(targetPosition, _unitMovementDuration);
-        unitHolder.SetUnit(unit);
-    }
-
     private void DismissUnit(Unit dismissedUnit)
     {
-        dismissedUnit.ChangeWorkingState(false);
+        dismissedUnit.ChangeState(UnitState.Idle);
         _buildingIncomeCalculator.StopPay(dismissedUnit);
     }
 
     private void RecruitUnit(Unit recruitedUnit)
     {
-        recruitedUnit.ChangeWorkingState(true);
+        recruitedUnit.transform.LookAt(_foundation);
+        recruitedUnit.ChangeState(UnitState.Work);
         _buildingIncomeCalculator.StartPay(recruitedUnit);
     }
 

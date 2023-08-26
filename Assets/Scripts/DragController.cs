@@ -1,8 +1,7 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DragController : MonoBehaviour, IUnitPositioner
+public class DragController : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent<UnitHolder, MergingPlace> _dropOnMergingPlace;
@@ -12,7 +11,7 @@ public class DragController : MonoBehaviour, IUnitPositioner
     [SerializeField]
     private LayerMask _planeLayerMask;
 
-    private float _unitMovementDuration;
+    private UnitPositioner _unitPositioner;
     private Camera _camera;
     
     private IDraggable _draggedObject;
@@ -20,9 +19,9 @@ public class DragController : MonoBehaviour, IUnitPositioner
     private UnitHolder _destinationUnitHolder;
     private bool _canDropObject;
 
-    public void Initialize(float unitMovementDuration)
+    public void Initialize(UnitPositioner unitPositioner)
     {
-        _unitMovementDuration = unitMovementDuration;
+        _unitPositioner = unitPositioner;
         _camera = Camera.main;
     }
 
@@ -42,13 +41,6 @@ public class DragController : MonoBehaviour, IUnitPositioner
         {
             DropObject();
         }
-    }
-
-    public void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder)
-    {
-        var targetPosition = new Vector3(unitHolder.transform.position.x, unit.transform.localScale.y,
-            unitHolder.transform.position.z);
-        unit.transform.DOMove(targetPosition, _unitMovementDuration);
     }
 
     private void TakeObject()
@@ -101,7 +93,8 @@ public class DragController : MonoBehaviour, IUnitPositioner
 
         if (_draggedObject != null)
         {
-            _draggedObject.Drag(hit.point);
+            var dragPoint = hit.point + _unitPositioner.UnitOffset;
+            _draggedObject.Drag(dragPoint);
             var draggedObjectPosition = _draggedObject.GetPosition();
             _canDropObject = CanDropObject(draggedObjectPosition);
         }
@@ -146,7 +139,8 @@ public class DragController : MonoBehaviour, IUnitPositioner
         }
         else
         {
-            PlaceUnitInHolder(_draggedObject as Unit, _initialUnitHolder);
+            var currentUnit = _draggedObject as Unit;
+            _unitPositioner.PlaceUnitInHolder(currentUnit, _initialUnitHolder);
         }
 
         _draggedObject = null;
