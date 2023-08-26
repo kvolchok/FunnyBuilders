@@ -2,20 +2,32 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-   [SerializeField] private Animator _doorAnimator;
-   [SerializeField] private float _doorOpenSpeed = 1.5f;
-   [SerializeField] private float _doorCloseSpeed = 0.3f;
-   private static readonly int IsOpen = Animator.StringToHash("_isOpen");
-  
-   private void OnTriggerEnter(Collider other)
-   {
-      _doorAnimator.speed =  _doorOpenSpeed ; 
-      _doorAnimator.SetBool(IsOpen,true);
-   }
+    private static readonly int _open = Animator.StringToHash("Open");
+    private static readonly int _close = Animator.StringToHash("Close");
+    
+    [SerializeField]
+    private Animator _doorAnimator;
+    [SerializeField]
+    private float _doorAnimationSpeed;
 
-   private void OnTriggerExit(Collider other)
-   {
-      _doorAnimator.speed = _doorCloseSpeed;
-      _doorAnimator.SetBool(IsOpen,false);
-   }
+    private void Awake()
+    {
+        _doorAnimator.speed = _doorAnimationSpeed;
+    }
+
+    private void OnTriggerEnter(Collider otherCollider)
+    {
+        if (otherCollider.GetComponent<Unit>())
+        {
+            _doorAnimator.SetTrigger(_open);
+        }
+    }
+
+    private void OnTriggerExit(Collider otherCollider)
+    {
+        if (otherCollider.GetComponent<Unit>())
+        {
+            _doorAnimator.SetTrigger(_close);
+        }
+    }
 }

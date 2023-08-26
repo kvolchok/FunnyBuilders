@@ -517,6 +517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitSpawnBuilding
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf419ec0edc08634eafed48e28c7bee8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1610674058124987786, guid: bf419ec0edc08634eafed48e28c7bee8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -528,6 +532,10 @@ PrefabInstance:
     - target: {fileID: 3146708596552252174, guid: bf419ec0edc08634eafed48e28c7bee8, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3867088128146089108, guid: bf419ec0edc08634eafed48e28c7bee8, type: 3}
+      propertyPath: m_Name
+      value: Door
       objectReference: {fileID: 0}
     - target: {fileID: 4539532665470908635, guid: bf419ec0edc08634eafed48e28c7bee8, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2586,7 +2594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048574859}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.296, y: 0.3, z: 0.632}
+  m_LocalPosition: {x: 0.5, y: 0.3, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8803,8 +8811,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: cc5b73d5329894d12a981fa773fbf2b7, type: 2}
     - {fileID: 11400000, guid: 0dd743993fe38476ead23b846b0dc8d9, type: 2}
     <UnitPrices>k__BackingField: f4010000e8030000dc050000d0070000
-    <UnitOffset>k__BackingField: {x: 0, y: 0.1, z: 0}
-    <UnitMovementDuration>k__BackingField: 1
+    <UnitOffset>k__BackingField: {x: 0, y: 0.07, z: 0}
+    <UnitMovementDuration>k__BackingField: 3
     <UnitPaymentInterval>k__BackingField: 1
     <SpotPrices>k__BackingField: e8030000d0070000b80b0000a00f0000
     <AmountAvailableSpots>k__BackingField: 0
@@ -8852,7 +8860,7 @@ GameObject:
   - component: {fileID: 2027230088}
   - component: {fileID: 2027230087}
   m_Layer: 0
-  m_Name: CubeTrigger
+  m_Name: DoorTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8866,8 +8874,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027230085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -345.3, y: 88.3, z: 31.4}
-  m_LocalScale: {x: 67.4, y: 150.7, z: 54.2}
+  m_LocalPosition: {x: -350, y: 90, z: 30}
+  m_LocalScale: {x: 70, y: 150, z: 115}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 108829691}
@@ -8886,8 +8894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _doorAnimator: {fileID: 108829694}
-  _doorOpenSpeed: 5
-  _doorCloseSpeed: 4
+  _doorAnimationSpeed: 3
 --- !u!54 &2027230088
 Rigidbody:
   m_ObjectHideFlags: 0
