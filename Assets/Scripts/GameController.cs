@@ -13,11 +13,13 @@ public class GameController : MonoBehaviour
     private EntityBuyer _spotBuyer;
     
     [SerializeField]
-    private UnitsManager _unitsManager;
-    [SerializeField]
     private UnitSpawner _unitSpawner;
     [SerializeField]
+    private UnitPositioner _unitPositioner;
+    [SerializeField]
     private MergeController _mergeController;
+    [SerializeField]
+    private UnitsManager _unitsManager;
 
     [SerializeField]
     private Building _building;
@@ -36,16 +38,16 @@ public class GameController : MonoBehaviour
         _spotBuyer.Initialize(_walletManager, _gameSettings.SpotPrices);
         
         _unitSpawner.Initialize(_gameSettings.UnitSettings);
+        _unitPositioner.Initialize(_gameSettings.UnitOffset, _gameSettings.UnitMovementDuration);
         _mergeController.Initialize(_gameSettings.UnitSettings.Length);
-        _unitsManager.Initialize(_unitSpawner, _mergeController, _gameSettings.UnitMovementDuration);
+        _unitsManager.Initialize(_unitSpawner, _unitPositioner, _mergeController);
         
         _buildingIncomeCalculator.Initialize(_gameSettings.UnitPaymentInterval);
         _buildingProgressCalculator.Initialize(_gameSettings.DurationBuildingHeight,
             _gameSettings.EndBuildingHeight);
-        _building.Initialize(_walletManager, _buildingIncomeCalculator, _buildingProgressCalculator,
-            _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots,
-            _gameSettings.UnitMovementDuration);
+        _building.Initialize(_walletManager, _unitPositioner, _buildingIncomeCalculator, _buildingProgressCalculator,
+            _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
 
-        _dragController.Initialize(_gameSettings.UnitMovementDuration);
+        _dragController.Initialize(_unitPositioner);
     }
 }

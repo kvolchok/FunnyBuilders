@@ -5,12 +5,9 @@ public class Unit : MonoBehaviour, IDraggable
     public int Level { get; private set; }
     public int Salary { get; private set; }
     public bool IsWorking { get; private set; }
-    private MeshRenderer _renderer;
-
-    private void Awake()
-    {
-        _renderer = GetComponent<MeshRenderer>();
-    }
+    
+    [SerializeField]
+    private SkinnedMeshRenderer _renderer;
 
     public void Initialize(UnitSettings unitSettings)
     {
@@ -26,7 +23,6 @@ public class Unit : MonoBehaviour, IDraggable
     
     public void Drag(Vector3 targetPosition)
     {
-        targetPosition = new Vector3(targetPosition.x, transform.localScale.y, targetPosition.z);
         transform.position = targetPosition;
     }
 
