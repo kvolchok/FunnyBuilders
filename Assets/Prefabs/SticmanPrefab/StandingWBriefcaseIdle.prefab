@@ -749,7 +749,7 @@ GameObject:
   - component: {fileID: 5322814814766302306}
   - component: {fileID: -1948444555659907327}
   m_Layer: 0
-  m_Name: Standing W_Briefcase Idle
+  m_Name: StandingWBriefcaseIdle
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
