@@ -15116,8 +15116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00791f90d38867041a641987569fa007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _building: {fileID: 1682847975}
-  _setValueOnBuildingBar:
+  _onHeightChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 386875423}
@@ -15132,36 +15131,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _playParticleSystem:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1877346143}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _stopParticleSystem:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1877346143}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  _building: {fileID: 1682847975}
+  _dustParticle: {fileID: 1877346143}
 --- !u!114 &1347243870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27780,14 +27751,13 @@ MonoBehaviour:
     - {fileID: 11400000, guid: cc5b73d5329894d12a981fa773fbf2b7, type: 2}
     - {fileID: 11400000, guid: 0dd743993fe38476ead23b846b0dc8d9, type: 2}
     <UnitPrices>k__BackingField: f4010000e8030000dc050000d0070000
-    <UnitOffset>k__BackingField: {x: 0, y: 0.07, z: 0}
+    <UnitOffset>k__BackingField: {x: 0, y: 0.08, z: 0}
     <UnitMovementDuration>k__BackingField: 2
     <UnitPaymentInterval>k__BackingField: 1
     <SpotPrices>k__BackingField: e8030000d0070000b80b0000a00f0000
     <AmountAvailableSpots>k__BackingField: 0
     <BuildingConstructionCost>k__BackingField: 4000
     <DurationBuildingHeight>k__BackingField: 4
-    <EndBuildingHeight>k__BackingField: 2.13
   _walletManager: {fileID: 723720421}
   _unitBuyer: {fileID: 1460698042}
   _spotBuyer: {fileID: 45186040}

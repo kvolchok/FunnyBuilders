@@ -1,27 +1,28 @@
 using System;
-using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class BuildingProgressCalculator : MonoBehaviour
 {
     public event Action BuildingFinished;
+    
+    [SerializeField]
+    private UnityEvent<float> _onHeightChanged;
+    
+    private const float END_BUILDING_POSITION_Y = 0;
 
-    [SerializeField] private GameObject _building;
-    [SerializeField] private UnityEvent<float> _setValueOnBuildingBar;
-    [SerializeField] private UnityEvent _playParticleSystem;
-    [SerializeField] private UnityEvent _stopParticleSystem;
+    [SerializeField]
+    private GameObject _building;
+    [SerializeField]
+    private ParticleSystem _dustParticle;
 
-    private bool _isParticleSystemWorking = false;
     private float _durationBuildingHeight;
-    private const float _positionBuildingY = 0;
-    private float _depthExcavationForBuildingY; 
+    private bool _isParticleSystemWorking;
+    private float _depthExcavationForBuildingY;
     private Tweener _tweener;
-   
-
-    public void Initialize(float durationBuildingHeight, float endBuildingHeight)
+    
+    public void Initialize(float durationBuildingHeight)
     {
         _durationBuildingHeight = durationBuildingHeight;
         _depthExcavationForBuildingY = _building.transform.localPosition.y;
@@ -29,7 +30,6 @@ public class BuildingProgressCalculator : MonoBehaviour
 
     public void Build(float height)
     {
-      
         if (_tweener != null)
         {
             DOTween.Kill(_tweener);
@@ -38,34 +38,30 @@ public class BuildingProgressCalculator : MonoBehaviour
         if (!_isParticleSystemWorking)
         {
             _isParticleSystemWorking = true;
-            _playParticleSystem?.Invoke();
-        }
-        var localPosition = _building.transform.localPosition;
-        var positionY = Mathf.Abs(_depthExcavationForBuildingY*height)+_depthExcavationForBuildingY;
-        if (positionY > 0)
-        {
-            positionY = 0;
-            if (HasBuildingBuilt(positionY))
-            {
-                _stopParticleSystem?.Invoke();
-                BuildingFinished?.Invoke();
-                return;
-            }
+            _dustParticle.Play();
         }
 
-        var finishPosition = new Vector3(localPosition.x, positionY, localPosition.z);
-         StartBuildProcess(finishPosition);
-        _setValueOnBuildingBar?.Invoke(height);
+        var positionY = Mathf.Abs(_depthExcavationForBuildingY * height) + _depthExcavationForBuildingY;
+        if (HasBuildingBuilt(positionY))
+        {
+            _dustParticle.Stop();
+            BuildingFinished?.Invoke();
+            return;
+        }
+        
+        StartBuildProcess(positionY);
+        _onHeightChanged?.Invoke(height);
     }
 
     private bool HasBuildingBuilt(float height)
     {
-        return height >= _positionBuildingY;
+        return height >= END_BUILDING_POSITION_Y;
     }
 
-    private void StartBuildProcess(Vector3 finishPosition)
+    private void StartBuildProcess(float height)
     {
+        var finishPosition = new Vector3(_building.transform.localPosition.x, height,
+            _building.transform.localPosition.z);
         _building.transform.DOLocalMove(finishPosition, _durationBuildingHeight);
     }
-   
 }

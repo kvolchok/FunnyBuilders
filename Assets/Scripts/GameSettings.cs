@@ -27,6 +27,4 @@ public class GameSettings
     public int BuildingConstructionCost { get; private set; }
     [field:SerializeField]
     public float DurationBuildingHeight { get; private set; }
-    [field:SerializeField]
-    public float EndBuildingHeight { get; private set; }
 }

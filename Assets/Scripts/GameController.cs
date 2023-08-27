@@ -43,8 +43,7 @@ public class GameController : MonoBehaviour
         _unitsManager.Initialize(_unitSpawner, _unitPositioner, _mergeController);
         
         _buildingIncomeCalculator.Initialize(_gameSettings.UnitPaymentInterval);
-        _buildingProgressCalculator.Initialize(_gameSettings.DurationBuildingHeight,
-            _gameSettings.EndBuildingHeight);
+        _buildingProgressCalculator.Initialize(_gameSettings.DurationBuildingHeight);
         _building.Initialize(_walletManager, _unitPositioner, _buildingIncomeCalculator, _buildingProgressCalculator,
             _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
 
