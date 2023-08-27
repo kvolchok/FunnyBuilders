@@ -62,6 +62,6 @@ public class BuildingProgressCalculator : MonoBehaviour
     {
         var finishPosition = new Vector3(_building.transform.localPosition.x, height,
             _building.transform.localPosition.z);
-        _building.transform.DOLocalMove(finishPosition, _durationBuildingHeight);
+        _tweener =_building.transform.DOLocalMove(finishPosition, _durationBuildingHeight);
     }
 }
