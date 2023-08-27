@@ -103,6 +103,18 @@ public class Building : MonoBehaviour
     private void OnBuildingFinished()
     {
         _buildingIncomeCalculator.StopAllPayments();
+        StopAllWorks();
+    }
+
+    private void StopAllWorks()
+    {
+        foreach (var workPlace in WorkPlaces)
+        {
+            if (workPlace.Unit != null)
+            {
+                workPlace.Unit.ChangeState(UnitState.Idle);
+            }
+        }
     }
 
     private void OnDestroy()
