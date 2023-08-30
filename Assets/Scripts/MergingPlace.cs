@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MergingPlace : UnitHolder
 {
-    
-    [SerializeField] private ParticleSystem _particleAppear;
+    [SerializeField]
+    private ParticleSystem _particleAppear;
 
     public void ShowAppearAnimation()
     {

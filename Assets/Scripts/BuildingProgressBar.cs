@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingBar : MonoBehaviour
+public class BuildingProgressBar : MonoBehaviour
 {
     [SerializeField]
-    private Slider _buildingBar;
+    private Slider _buildingProgressBar;
     [SerializeField]
     private Image _fill;
     [SerializeField]
@@ -12,12 +12,8 @@ public class BuildingBar : MonoBehaviour
     
     public void SetValueBar(float value)
     {
-        _buildingBar.value = value;
-    }
-
-    private void Update()
-    {
-        var color = _gradient.Evaluate(_buildingBar.value);
+        _buildingProgressBar.value = value;
+        var color = _gradient.Evaluate(_buildingProgressBar.value);
         _fill.color = color;
     }
 }
