@@ -13,20 +13,21 @@ public class GameController : MonoBehaviour
     private EntityBuyer _spotBuyer;
     
     [SerializeField]
-    private UnitSpawner _unitSpawner;
-    [SerializeField]
     private UnitPositioner _unitPositioner;
-    [SerializeField]
-    private MergeController _mergeController;
+    
     [SerializeField]
     private UnitsManager _unitsManager;
+    [SerializeField]
+    private UnitSpawner _unitSpawner;
+    [SerializeField]
+    private MergeController _mergeController;
 
     [SerializeField]
-    private Building _building;
+    private ConstructionManager _constructionManager;
     [SerializeField]
     private BuildingIncomeCalculator _buildingIncomeCalculator;
     [SerializeField]
-    private BuildingProgressCalculator _buildingProgressCalculator;
+    private BuildingConstruction _buildingConstruction;
 
     [SerializeField]
     private DragController _dragController;
@@ -43,9 +44,9 @@ public class GameController : MonoBehaviour
         _unitsManager.Initialize(_unitSpawner, _unitPositioner, _mergeController);
         
         _buildingIncomeCalculator.Initialize(_gameSettings.UnitPaymentInterval);
-        _buildingProgressCalculator.Initialize(_gameSettings.DurationBuildingHeight);
-        _building.Initialize(_walletManager, _unitPositioner, _buildingIncomeCalculator, _buildingProgressCalculator,
-            _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
+        _buildingConstruction.Initialize(_gameSettings.DurationBuildingHeight);
+        _constructionManager.Initialize(_walletManager, _unitPositioner, _buildingIncomeCalculator,
+            _buildingConstruction, _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
 
         _dragController.Initialize(_unitPositioner);
     }

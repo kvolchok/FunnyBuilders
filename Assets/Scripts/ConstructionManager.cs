@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class ConstructionManager : MonoBehaviour
 {
     [field: SerializeField]
     public List<WorkPlace> WorkPlaces { get; private set; }
@@ -13,23 +13,23 @@ public class Building : MonoBehaviour
     private WalletManager _walletManager;
     private UnitPositioner _unitPositioner;
     private BuildingIncomeCalculator _buildingIncomeCalculator;
-    private BuildingProgressCalculator _buildingProgressCalculator;
+    private BuildingConstruction _buildingConstruction;
     
     private int _buildingConstructionCost;
     private int _amountAvailableWorkPlaces;
     private int _amountProfitAllUnits;
 
     public void Initialize(WalletManager walletManager, UnitPositioner unitPositioner,
-        BuildingIncomeCalculator buildingIncomeCalculator, BuildingProgressCalculator buildingProgressCalculator,
+        BuildingIncomeCalculator buildingIncomeCalculator, BuildingConstruction buildingConstruction,
         int buildingConstructionCost, int amountAvailableWorkPlaces)
     {
         _walletManager = walletManager;
         _unitPositioner = unitPositioner;
         _buildingIncomeCalculator = buildingIncomeCalculator;
-        _buildingProgressCalculator = buildingProgressCalculator;
+        _buildingConstruction = buildingConstruction;
         
         _buildingIncomeCalculator.MoneyEarned += OnMoneyEarned;
-        _buildingProgressCalculator.BuildingFinished += OnBuildingFinished;
+        _buildingConstruction.BuildingFinished += OnBuildingFinished;
 
         _buildingConstructionCost = buildingConstructionCost;
         _amountAvailableWorkPlaces = amountAvailableWorkPlaces;
@@ -68,20 +68,7 @@ public class Building : MonoBehaviour
             currentUnitHolder.ClearFromUnit();
         }
     }
-
-    private void DismissUnit(Unit dismissedUnit)
-    {
-        dismissedUnit.ChangeState(UnitState.Idle);
-        _buildingIncomeCalculator.StopPay(dismissedUnit);
-    }
-
-    private void RecruitUnit(Unit recruitedUnit)
-    {
-        recruitedUnit.transform.LookAt(_foundation);
-        recruitedUnit.ChangeState(UnitState.Work);
-        _buildingIncomeCalculator.StartPay(recruitedUnit);
-    }
-
+    
     private void ShowAvailableWorkPlaces(int amountAvailablePlaces)
     {
         var count = 0;
@@ -91,13 +78,26 @@ public class Building : MonoBehaviour
             count++;
         }
     }
+    
+    private void RecruitUnit(Unit recruitedUnit)
+    {
+        recruitedUnit.transform.LookAt(_foundation);
+        recruitedUnit.ChangeState(UnitState.Work);
+        _buildingIncomeCalculator.StartPay(recruitedUnit);
+    }
+
+    private void DismissUnit(Unit dismissedUnit)
+    {
+        dismissedUnit.ChangeState(UnitState.Idle);
+        _buildingIncomeCalculator.StopPay(dismissedUnit);
+    }
 
     private void OnMoneyEarned(int earnedMoney)
     {
         _amountProfitAllUnits += earnedMoney;
         _walletManager.ChangeMoney(earnedMoney);
-        var height = (float)_amountProfitAllUnits / _buildingConstructionCost;
-        _buildingProgressCalculator.Build(height);
+        var progress = (float)_amountProfitAllUnits / _buildingConstructionCost;
+        _buildingConstruction.Build(progress);
     }
 
     private void OnBuildingFinished()
@@ -120,6 +120,6 @@ public class Building : MonoBehaviour
     private void OnDestroy()
     {
         _buildingIncomeCalculator.MoneyEarned -= OnMoneyEarned;
-        _buildingProgressCalculator.BuildingFinished -= OnBuildingFinished;
+        _buildingConstruction.BuildingFinished -= OnBuildingFinished;
     }
 }

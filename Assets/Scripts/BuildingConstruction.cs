@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BuildingProgressCalculator : MonoBehaviour
+public class BuildingConstruction : MonoBehaviour
 {
     public event Action BuildingFinished;
     
@@ -28,7 +28,7 @@ public class BuildingProgressCalculator : MonoBehaviour
         _depthExcavationForBuildingY = _building.transform.localPosition.y;
     }
 
-    public void Build(float height)
+    public void Build(float progress)
     {
         if (_tweener != null)
         {
@@ -41,7 +41,7 @@ public class BuildingProgressCalculator : MonoBehaviour
             _dustParticle.Play();
         }
 
-        var positionY = Mathf.Abs(_depthExcavationForBuildingY * height) + _depthExcavationForBuildingY;
+        var positionY = _depthExcavationForBuildingY * (1 - progress);
         if (HasBuildingBuilt(positionY))
         {
             _dustParticle.Stop();
@@ -50,7 +50,7 @@ public class BuildingProgressCalculator : MonoBehaviour
         }
         
         StartBuildProcess(positionY);
-        _onHeightChanged?.Invoke(height);
+        _onHeightChanged?.Invoke(progress);
     }
 
     private bool HasBuildingBuilt(float height)
@@ -58,9 +58,9 @@ public class BuildingProgressCalculator : MonoBehaviour
         return height >= END_BUILDING_POSITION_Y;
     }
 
-    private void StartBuildProcess(float height)
+    private void StartBuildProcess(float positionY)
     {
-        var finishPosition = new Vector3(_building.transform.localPosition.x, height,
+        var finishPosition = new Vector3(_building.transform.localPosition.x, positionY,
             _building.transform.localPosition.z);
         _tweener =_building.transform.DOLocalMove(finishPosition, _durationBuildingHeight);
     }

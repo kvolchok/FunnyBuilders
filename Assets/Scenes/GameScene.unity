@@ -6584,9 +6584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43669796b2b7c14dae91cd468779e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildingPosition: {fileID: 0}
-  _buildingBar: {fileID: 0}
+  _anchore: {fileID: 1682847976}
   _offset: {x: -2, y: 5, z: 0}
+  _uiElement: {fileID: 386875422}
 --- !u!1 &398639477
 GameObject:
   m_ObjectHideFlags: 0
@@ -28068,13 +28068,13 @@ MonoBehaviour:
   _walletManager: {fileID: 723720421}
   _unitBuyer: {fileID: 1460698042}
   _spotBuyer: {fileID: 45186040}
-  _unitSpawner: {fileID: 1614575118}
   _unitPositioner: {fileID: 1398801283}
-  _mergeController: {fileID: 887359271}
   _unitsManager: {fileID: 700339472}
-  _building: {fileID: 0}
+  _unitSpawner: {fileID: 1614575118}
+  _mergeController: {fileID: 887359271}
+  _constructionManager: {fileID: 1347243871}
   _buildingIncomeCalculator: {fileID: 1347243870}
-  _buildingProgressCalculator: {fileID: 0}
+  _buildingConstruction: {fileID: 1347243869}
   _dragController: {fileID: 757358515}
 --- !u!4 &2023092203
 Transform:
