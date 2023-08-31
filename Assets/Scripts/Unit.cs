@@ -15,6 +15,9 @@ public class Unit : MonoBehaviour, IDraggable
     [SerializeField] 
     private GameObject _waterPuddle;
    
+    [SerializeField] private SkinnedMeshRenderer _renderer;
+    [SerializeField] private PopupTextOverWorker _popupText;
+
     private Animator _animator;
 
     private void Awake()
@@ -41,6 +44,7 @@ public class Unit : MonoBehaviour, IDraggable
     
     public void ChangeState(UnitState state)
     {
+        _popupText.HideFloatingText();
         State = state;
 
         switch (State)
@@ -53,6 +57,7 @@ public class Unit : MonoBehaviour, IDraggable
                 break;
             case UnitState.Work:
                 ShowAnimation(_work);
+                _popupText.ShowFloatingText(Salary);
                 break;
         }
     }
