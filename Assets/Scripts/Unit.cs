@@ -12,7 +12,9 @@ public class Unit : MonoBehaviour, IDraggable
 
     [SerializeField]
     private SkinnedMeshRenderer _renderer;
-
+    [SerializeField] 
+    private GameObject _waterPuddle;
+   
     private Animator _animator;
 
     private void Awake()
@@ -55,6 +57,15 @@ public class Unit : MonoBehaviour, IDraggable
         }
     }
 
+    public void TurnOnPuddle()
+    {
+       _waterPuddle.SetActive(true); 
+    }
+
+    public void TurnOfPuddle()
+    {
+        _waterPuddle.SetActive(false);
+    }
     private void ShowAnimation(int state)
     {
         _animator.SetTrigger(state);

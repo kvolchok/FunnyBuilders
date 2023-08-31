@@ -61,17 +61,20 @@ public class Building : MonoBehaviour
         if (replacementUnit != null)
         {
             DismissUnit(replacementUnit);
+            targetUnitHolder.StopSweat();
             _unitPositioner.PlaceUnitInHolder(replacementUnit, currentUnitHolder);
         }
         else
         {
             currentUnitHolder.ClearFromUnit();
         }
+        targetUnitHolder.StartSweat();
     }
 
     private void DismissUnit(Unit dismissedUnit)
     {
         dismissedUnit.ChangeState(UnitState.Idle);
+        dismissedUnit.TurnOfPuddle();
         _buildingIncomeCalculator.StopPay(dismissedUnit);
     }
 
@@ -79,6 +82,7 @@ public class Building : MonoBehaviour
     {
         recruitedUnit.transform.LookAt(_foundation);
         recruitedUnit.ChangeState(UnitState.Work);
+        recruitedUnit.TurnOnPuddle();
         _buildingIncomeCalculator.StartPay(recruitedUnit);
     }
 
@@ -113,6 +117,8 @@ public class Building : MonoBehaviour
             if (workPlace.Unit != null)
             {
                 workPlace.Unit.ChangeState(UnitState.Idle);
+                workPlace.StopSweat();
+                workPlace.Unit.TurnOfPuddle();
             }
         }
     }
