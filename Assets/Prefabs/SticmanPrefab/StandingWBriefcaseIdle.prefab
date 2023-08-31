@@ -780,6 +780,7 @@ GameObject:
   - component: {fileID: 1377605766980637013}
   - component: {fileID: 5322814814766302306}
   - component: {fileID: -1948444555659907327}
+  - component: {fileID: -3397698584797807748}
   m_Layer: 0
   m_Name: StandingWBriefcaseIdle
   m_TagString: Player
@@ -895,6 +896,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderer: {fileID: 8522309904458278612}
   _waterPuddle: {fileID: 4936538538590362211}
+  _popupText: {fileID: -3397698584797807748}
+--- !u!114 &-3397698584797807748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6429152169199881064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa326c04ed3641ee8bcafd3d9f445541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Offset>k__BackingField: {x: 0, y: 0.5, z: 0}
+  _floatingTextPrefab: {fileID: 2091105505211062108, guid: 7c544eaa7f2747f4790da13292cbf07e, type: 3}
 --- !u!1 &6556263148837840947
 GameObject:
   m_ObjectHideFlags: 0

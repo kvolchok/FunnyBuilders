@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 
 public class Unit : MonoBehaviour, IDraggable
@@ -15,7 +16,7 @@ public class Unit : MonoBehaviour, IDraggable
     [SerializeField] 
     private GameObject _waterPuddle;
    
-    [SerializeField] private SkinnedMeshRenderer _renderer;
+   
     [SerializeField] private PopupTextOverWorker _popupText;
 
     private Animator _animator;
