@@ -39,16 +39,16 @@ public class GameController : MonoBehaviour
         _spotBuyer.Initialize(_walletManager, _gameSettings.SpotPrices);
         
         _unitSpawner.Initialize(_gameSettings.UnitSettings);
-        _unitPositioner.Initialize(_gameSettings.UnitOffset, _gameSettings.UnitMovementDuration);
+        _unitPositioner.Initialize(_gameSettings.UnitOffset, _gameSettings.UnitSpeed);
         _mergeController.Initialize(_gameSettings.UnitSettings.Length);
         _unitsManager.Initialize(_unitSpawner, _mergeController);
         
         _buildingIncomeCalculator.Initialize(_gameSettings.UnitPaymentInterval);
         _buildingConstruction.Initialize(_gameSettings.DurationBuildingHeight);
-        _constructionManager.Initialize(_walletManager, _buildingIncomeCalculator,
-            _buildingConstruction, _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
+        _constructionManager.Initialize(_walletManager, _buildingIncomeCalculator, _buildingConstruction,
+            _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
 
-        _dragController.Initialize(_unitPositioner.UnitOffset);
+        _dragController.Initialize(_gameSettings.UnitOffset);
         
         _dragController.CanTakeObject += OnCanTakeObject;
         _dragController.OnCantDropObject += PlaceUnit;

@@ -217,7 +217,7 @@ PrefabInstance:
     - target: {fileID: 921343358514723141, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: _particleAppear
       value: 
-      objectReference: {fileID: 504458758}
+      objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2353,11 +2353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14280d45e4c7445ebf3996d5ae9e7c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!198 &504458758 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8204208386449151972, guid: bc8a57cf66507df498430430b5f74920, type: 3}
-  m_PrefabInstance: {fileID: 22294009}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &530589418
 GameObject:
   m_ObjectHideFlags: 0
@@ -4713,11 +4708,6 @@ Transform:
   m_Father: {fileID: 700339471}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &1076622477 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8204208386449151972, guid: bc8a57cf66507df498430430b5f74920, type: 3}
-  m_PrefabInstance: {fileID: 1951954322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1087327918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1b2518d4b2d9f9541b4097c8724252ae, type: 3}
@@ -5780,7 +5770,7 @@ PrefabInstance:
     - target: {fileID: 921343358514723141, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: _particleAppear
       value: 
-      objectReference: {fileID: 2096016263}
+      objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -6900,7 +6890,7 @@ PrefabInstance:
     - target: {fileID: 921343358514723141, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: _particleAppear
       value: 
-      objectReference: {fileID: 1997278119}
+      objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -13306,7 +13296,7 @@ PrefabInstance:
     - target: {fileID: 921343358514723141, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: _particleAppear
       value: 
-      objectReference: {fileID: 1076622477}
+      objectReference: {fileID: 0}
     - target: {fileID: 6153682087324189282, guid: bc8a57cf66507df498430430b5f74920, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -13556,11 +13546,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14280d45e4c7445ebf3996d5ae9e7c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!198 &1997278119 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8204208386449151972, guid: bc8a57cf66507df498430430b5f74920, type: 3}
-  m_PrefabInstance: {fileID: 1579750896}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2005777294
 GameObject:
   m_ObjectHideFlags: 0
@@ -13680,7 +13665,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0dd743993fe38476ead23b846b0dc8d9, type: 2}
     <UnitPrices>k__BackingField: f4010000e8030000dc050000d0070000
     <UnitOffset>k__BackingField: {x: 0, y: 0.4, z: 0}
-    <UnitMovementDuration>k__BackingField: 2
+    <UnitSpeed>k__BackingField: 1
     <UnitPaymentInterval>k__BackingField: 1
     <SpotPrices>k__BackingField: e8030000d0070000b80b0000a00f0000
     <AmountAvailableSpots>k__BackingField: 0
@@ -13828,11 +13813,6 @@ Transform:
   m_Father: {fileID: 1710017692}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -64.1, z: 0}
---- !u!198 &2096016263 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8204208386449151972, guid: bc8a57cf66507df498430430b5f74920, type: 3}
-  m_PrefabInstance: {fileID: 1388850240}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2116973961
 GameObject:
   m_ObjectHideFlags: 0

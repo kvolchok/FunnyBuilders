@@ -5,21 +5,23 @@ public class UnitPositioner : MonoBehaviour
 {
     public Vector3 UnitOffset { get; private set; }
     
-    private float _unitMovementDuration;
+    private float _unitSpeed;
     
-    public void Initialize(Vector3 unitOffset, float unitMovementDuration)
+    public void Initialize(Vector3 unitOffset, float unitSpeed)
     {
         UnitOffset = unitOffset;
-        _unitMovementDuration = unitMovementDuration;
+        _unitSpeed = unitSpeed;
     }
     
     public void PlaceUnit(Unit unit, DropPlace dropPlace)
     {
         unit.ChangeState(UnitState.Run);
         var targetPosition = dropPlace.transform.position + UnitOffset;
+        var travelDistance = Vector3.Distance(unit.transform.position, targetPosition);
+        var travelTime = travelDistance / _unitSpeed;
         unit.transform.LookAt(targetPosition);
         unit.transform
-            .DOMove(targetPosition, _unitMovementDuration)
+            .DOMove(targetPosition, travelTime)
             .OnComplete(() => unit.ChangeState(UnitState.Idle));
         dropPlace.SetUnit(unit);
     }
