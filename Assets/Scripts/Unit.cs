@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour, IDraggable
     private static readonly int _run = Animator.StringToHash("Run");
 
     public event Action<Unit> UnitDestroyed;
+
+    public Transform Transform => transform;
     
     public UnitState State { get; private set; }
     public int Level { get; private set; }

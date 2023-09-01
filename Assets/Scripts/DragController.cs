@@ -72,8 +72,7 @@ public class DragController : MonoBehaviour
 
     private DropPlace GetHolderUnderDraggedObject(IDraggable draggedObject)
     {
-        var draggedObjectPosition = draggedObject.GetPosition();
-        if (!Physics.Raycast(draggedObjectPosition, Vector3.down, out var hit,
+        if (!Physics.Raycast(draggedObject.Transform.position, Vector3.down, out var hit,
                 Mathf.Infinity))
         {
             return null;
@@ -95,8 +94,7 @@ public class DragController : MonoBehaviour
         {
             var dragPoint = hit.point + _unitPositioner.UnitOffset;
             _draggedObject.Drag(dragPoint);
-            var draggedObjectPosition = _draggedObject.GetPosition();
-            _canDropObject = CanDropObject(draggedObjectPosition);
+            _canDropObject = CanDropObject(_draggedObject.Transform.position);
         }
     }
 
