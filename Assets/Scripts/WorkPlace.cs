@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WorkPlace : UnitHolder
+public class WorkPlace : DropPlace
 {
     [SerializeField]
     private ParticleSystem _particleSweat;

@@ -4,9 +4,9 @@ using UnityEngine.Events;
 public class DragController : MonoBehaviour
 {
     [SerializeField]
-    private UnityEvent<UnitHolder, MergingPlace> _dropOnMergingPlace;
+    private UnityEvent<DropPlace, MergingPlace> _dropOnMergingPlace;
     [SerializeField]
-    private UnityEvent<UnitHolder, WorkPlace> _dropOnWorkPlace;
+    private UnityEvent<DropPlace, WorkPlace> _dropOnWorkPlace;
     
     [SerializeField]
     private LayerMask _planeLayerMask;
@@ -15,8 +15,8 @@ public class DragController : MonoBehaviour
     private Camera _camera;
     
     private IDraggable _draggedObject;
-    private UnitHolder _initialUnitHolder;
-    private UnitHolder _destinationUnitHolder;
+    private DropPlace _initialDropPlace;
+    private DropPlace _destinationDropPlace;
     private bool _canDropObject;
 
     public void Initialize(UnitPositioner unitPositioner)
@@ -66,11 +66,11 @@ public class DragController : MonoBehaviour
         if (initialUnitHolder is MergingPlace)
         {
             _draggedObject = draggedObject;
-            _initialUnitHolder = initialUnitHolder;
+            _initialDropPlace = initialUnitHolder;
         }
     }
 
-    private UnitHolder GetHolderUnderDraggedObject(IDraggable draggedObject)
+    private DropPlace GetHolderUnderDraggedObject(IDraggable draggedObject)
     {
         var draggedObjectPosition = draggedObject.GetPosition();
         if (!Physics.Raycast(draggedObjectPosition, Vector3.down, out var hit,
@@ -79,7 +79,7 @@ public class DragController : MonoBehaviour
             return null;
         }
 
-        var unitHolder = hit.collider.GetComponent<UnitHolder>();
+        var unitHolder = hit.collider.GetComponent<DropPlace>();
         return unitHolder;
     }
 
@@ -108,11 +108,11 @@ public class DragController : MonoBehaviour
             return false;
         }
 
-        var unitHolder = hitInfo.collider.GetComponent<UnitHolder>();
+        var unitHolder = hitInfo.collider.GetComponent<DropPlace>();
         if (unitHolder != null)
         {
             _canDropObject = true;
-            _destinationUnitHolder = unitHolder;
+            _destinationDropPlace = unitHolder;
             return true;
         }
 
@@ -128,19 +128,19 @@ public class DragController : MonoBehaviour
 
         if (_canDropObject)
         {
-            if (_destinationUnitHolder is MergingPlace mergingPlace)
+            if (_destinationDropPlace is MergingPlace mergingPlace)
             {
-                _dropOnMergingPlace?.Invoke(_initialUnitHolder, mergingPlace);
+                _dropOnMergingPlace?.Invoke(_initialDropPlace, mergingPlace);
             }
-            else if (_destinationUnitHolder is WorkPlace workPlace)
+            else if (_destinationDropPlace is WorkPlace workPlace)
             {
-                _dropOnWorkPlace?.Invoke(_initialUnitHolder, workPlace);
+                _dropOnWorkPlace?.Invoke(_initialDropPlace, workPlace);
             }
         }
         else
         {
             var currentUnit = _draggedObject as Unit;
-            _unitPositioner.PlaceUnitInHolder(currentUnit, _initialUnitHolder);
+            _unitPositioner.PlaceUnitInHolder(currentUnit, _initialDropPlace);
         }
 
         _draggedObject = null;

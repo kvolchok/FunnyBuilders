@@ -10,28 +10,28 @@ public class MergeController : MonoBehaviour
         _maxUnitsLevel = maxUnitsLevel;
     }
     
-    public void TryMergeUnits(UnitHolder currentUnitHolder, MergingPlace targetUnitHolder,
-        Action<MergingPlace, Transform, int> onUnitsMerged, Action<Unit, UnitHolder> onUnitsNotMerged)
+    public void TryMergeUnits(DropPlace currentDropPlace, MergingPlace targetMergingPlace,
+        Action<MergingPlace, Transform, int> onUnitsMerged, Action<Unit, DropPlace> onUnitsNotMerged)
     {
-        if (targetUnitHolder.Unit == null || currentUnitHolder == targetUnitHolder)
+        if (targetMergingPlace.Unit == null || currentDropPlace == targetMergingPlace)
         {
-            onUnitsNotMerged?.Invoke(currentUnitHolder.Unit, currentUnitHolder);
+            onUnitsNotMerged?.Invoke(currentDropPlace.Unit, currentDropPlace);
             return;
         }
         
-        var targetUnitTransform = targetUnitHolder.Unit.transform;
-        var targetUnitLevel = targetUnitHolder.Unit.Level;
-        if (currentUnitHolder.Unit.Level == targetUnitLevel && currentUnitHolder.Unit.Level < _maxUnitsLevel)
+        var targetUnitTransform = targetMergingPlace.Unit.transform;
+        var targetUnitLevel = targetMergingPlace.Unit.Level;
+        if (currentDropPlace.Unit.Level == targetUnitLevel && currentDropPlace.Unit.Level < _maxUnitsLevel)
         {
-            currentUnitHolder.Unit.DestroyUnit();
-            targetUnitHolder.Unit.DestroyUnit();
-            currentUnitHolder.ClearFromUnit();
+            currentDropPlace.Unit.DestroyUnit();
+            targetMergingPlace.Unit.DestroyUnit();
+            currentDropPlace.ClearFromUnit();
             
-            onUnitsMerged?.Invoke(targetUnitHolder, targetUnitTransform, targetUnitLevel);
+            onUnitsMerged?.Invoke(targetMergingPlace, targetUnitTransform, targetUnitLevel);
         }
         else
         {
-            onUnitsNotMerged?.Invoke(currentUnitHolder.Unit, currentUnitHolder);
+            onUnitsNotMerged?.Invoke(currentDropPlace.Unit, currentDropPlace);
         }
     }
 }

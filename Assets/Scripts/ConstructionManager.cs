@@ -50,9 +50,9 @@ public class ConstructionManager : MonoBehaviour
         }
     }
 
-    public void AddUnitToBuildingSite(UnitHolder currentUnitHolder, WorkPlace targetUnitHolder)
+    public void AddUnitToBuildingSite(DropPlace currentDropPlace, WorkPlace targetUnitHolder)
     {
-        var draggableUnit = currentUnitHolder.Unit;
+        var draggableUnit = currentDropPlace.Unit;
         var replacementUnit = targetUnitHolder.Unit;
 
         _unitPositioner.PlaceUnitInWorkPlace(draggableUnit, targetUnitHolder);
@@ -61,12 +61,12 @@ public class ConstructionManager : MonoBehaviour
         if (replacementUnit != null)
         {
             DismissUnit(replacementUnit);
-            _unitPositioner.PlaceUnitInHolder(replacementUnit, currentUnitHolder);
+            _unitPositioner.PlaceUnitInHolder(replacementUnit, currentDropPlace);
             targetUnitHolder.TurnOffSweatAnimation();
         }
         else
         {
-            currentUnitHolder.ClearFromUnit();
+            currentDropPlace.ClearFromUnit();
         }
         
         targetUnitHolder.TurnOnSweatAnimation();

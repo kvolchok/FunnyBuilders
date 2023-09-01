@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class UnitHolder : MonoBehaviour
+public abstract class DropPlace : MonoBehaviour
 {
     public bool IsAvailable { get; private set; } = true;
     public Unit Unit { get; private set; }

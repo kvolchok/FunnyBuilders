@@ -13,22 +13,22 @@ public class UnitPositioner : MonoBehaviour
         _unitMovementDuration = unitMovementDuration;
     }
     
-    public void PlaceUnitInHolder(Unit unit, UnitHolder unitHolder)
+    public void PlaceUnitInHolder(Unit unit, DropPlace dropPlace)
     {
         unit.ChangeState(UnitState.Run);
-        var targetPosition = unitHolder.transform.position + UnitOffset;
+        var targetPosition = dropPlace.transform.position + UnitOffset;
         unit.transform.LookAt(targetPosition);
         unit.transform
             .DOMove(targetPosition, _unitMovementDuration)
             .OnComplete(() => unit.ChangeState(UnitState.Idle));
-        unitHolder.SetUnit(unit);
+        dropPlace.SetUnit(unit);
     }
     
-    public void PlaceUnitInWorkPlace(Unit unit, WorkPlace unitHolder)
+    public void PlaceUnitInWorkPlace(Unit unit, WorkPlace workPlace)
     {
-        var targetPosition = unitHolder.transform.position + UnitOffset;
+        var targetPosition = workPlace.transform.position + UnitOffset;
         unit.transform.LookAt(targetPosition);
         unit.transform.position = targetPosition;
-        unitHolder.SetUnit(unit);
+        workPlace.SetUnit(unit);
     }
 }

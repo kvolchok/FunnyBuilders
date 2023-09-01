@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MergingPlace : UnitHolder
+public class MergingPlace : DropPlace
 {
     [SerializeField]
     private ParticleSystem _particleFire;

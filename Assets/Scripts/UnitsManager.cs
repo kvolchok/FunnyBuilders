@@ -1,4 +1,3 @@
-using DG.Tweening;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -29,16 +28,16 @@ public class UnitsManager : MonoBehaviour
         _unitPositioner.PlaceUnitInHolder(unit, mergingPlace);
     }
     
-    public void TryMergeUnits(UnitHolder currentUnitHolder, MergingPlace targetUnitHolder)
+    public void TryMergeUnits(DropPlace currentDropPlace, MergingPlace targetMergingPlace)
     {
-        _mergeController.TryMergeUnits(currentUnitHolder, targetUnitHolder, OnUnitsMerged, 
+        _mergeController.TryMergeUnits(currentDropPlace, targetMergingPlace, OnUnitsMerged, 
             (unit, mergingPlace) => _unitPositioner.PlaceUnitInHolder(unit, mergingPlace));
     }
     
-    private void OnUnitsMerged(MergingPlace targetUnitHolder, Transform targetUnitTransform, int targetUnitLevel)
+    private void OnUnitsMerged(MergingPlace targetMergingPlace, Transform targetUnitTransform, int targetUnitLevel)
     {
         var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
-        targetUnitHolder.SetUnit(newUnit);
-        targetUnitHolder.ShowMergeAnimation();
+        targetMergingPlace.SetUnit(newUnit);
+        targetMergingPlace.ShowMergeAnimation();
     }
 }
