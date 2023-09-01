@@ -51,11 +51,11 @@ public class GameController : MonoBehaviour
         _dragController.Initialize(_unitPositioner.UnitOffset);
         
         _dragController.CanTakeObject += OnCanTakeObject;
-        _dragController.OnCantDropObject += OnCantDropObject;
-        _unitsManager.UnitSpawned += OnUnitSpawned;
-        _unitsManager.UnitsNotMerged += OnUnitsNotMerged;
+        _dragController.OnCantDropObject += PlaceUnit;
+        _unitsManager.UnitSpawned += PlaceUnit;
+        _unitsManager.UnitsNotMerged += ReturnUnitToInitialPlace;
+        _constructionManager.UnitDismissed += ReturnUnitToInitialPlace;
         _constructionManager.UnitRecruited += OnUnitRecruited;
-        _constructionManager.UnitDismissed += OnUnitDismissed;
     }
 
     private bool OnCanTakeObject(IDraggable draggedObject)
@@ -68,40 +68,29 @@ public class GameController : MonoBehaviour
         return false;
     }
     
-    private void OnCantDropObject(Unit unit, DropPlace dropPlace)
+    private void PlaceUnit(Unit unit, DropPlace dropPlace)
     {
-        _unitPositioner.PlaceUnitInHolder(unit, dropPlace);
+        _unitPositioner.PlaceUnit(unit, dropPlace);
     }
-    
-    private void OnUnitSpawned(Unit unit, MergingPlace targetPlace)
+
+    private void ReturnUnitToInitialPlace(Unit unit)
     {
-        _unitPositioner.PlaceUnitInHolder(unit, targetPlace);
-    }
-    
-    private void OnUnitsNotMerged(Unit unit)
-    {
-        var targetPlace = _dragController.InitialDropPlace;
-        _unitPositioner.PlaceUnitInHolder(unit, targetPlace);
+        var initialPlace = _dragController.InitialDropPlace;
+        _unitPositioner.PlaceUnit(unit, initialPlace);
     }
     
     private void OnUnitRecruited(Unit unit, WorkPlace workPlace)
     {
         _unitPositioner.PlaceUnitInWorkPlace(unit, workPlace);
     }
-    
-    private void OnUnitDismissed(Unit unit)
-    {
-        var targetPlace = _dragController.InitialDropPlace;
-        _unitPositioner.PlaceUnitInHolder(unit, targetPlace);
-    }
-    
+
     private void OnDestroy()
     {
         _dragController.CanTakeObject -= OnCanTakeObject;
-        _dragController.OnCantDropObject -= OnCantDropObject;
-        _unitsManager.UnitSpawned -= OnUnitSpawned;
-        _unitsManager.UnitsNotMerged -= OnUnitsNotMerged;
+        _dragController.OnCantDropObject -= PlaceUnit;
+        _unitsManager.UnitSpawned -= PlaceUnit;
+        _unitsManager.UnitsNotMerged -= ReturnUnitToInitialPlace;
+        _constructionManager.UnitDismissed -= ReturnUnitToInitialPlace;
         _constructionManager.UnitRecruited -= OnUnitRecruited;
-        _constructionManager.UnitDismissed -= OnUnitDismissed;
     }
 }

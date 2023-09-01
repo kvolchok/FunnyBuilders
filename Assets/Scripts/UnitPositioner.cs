@@ -13,7 +13,7 @@ public class UnitPositioner : MonoBehaviour
         _unitMovementDuration = unitMovementDuration;
     }
     
-    public void PlaceUnitInHolder(Unit unit, DropPlace dropPlace)
+    public void PlaceUnit(Unit unit, DropPlace dropPlace)
     {
         unit.ChangeState(UnitState.Run);
         var targetPosition = dropPlace.transform.position + UnitOffset;
