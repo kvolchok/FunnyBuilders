@@ -11,7 +11,7 @@ public abstract class DropPlace : MonoBehaviour
         ChangeState(false);
     }
 
-    public void ClearFromUnit()
+    public void Clear()
     {
         Unit = null;
         ChangeState(true);

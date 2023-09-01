@@ -1,22 +1,23 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
 public class UnitsManager : MonoBehaviour
 {
+    public event Action<Unit, MergingPlace> UnitSpawned;
+    public event Action<Unit> UnitsNotMerged;
+    
     [SerializeField]
     private MergingPlacesController _mergingPlacesController;
     [SerializeField]
     private Transform _unitSpawnPoint;
     
     private UnitSpawner _unitSpawner;
-    private UnitPositioner _unitPositioner;
     private MergeController _mergeController;
 
-    public void Initialize(UnitSpawner unitSpawner, UnitPositioner unitPositioner,
-        MergeController mergeController)
+    public void Initialize(UnitSpawner unitSpawner, MergeController mergeController)
     {
         _unitSpawner = unitSpawner;
-        _unitPositioner = unitPositioner;
         _mergeController = mergeController;
     }
     
@@ -25,13 +26,12 @@ public class UnitsManager : MonoBehaviour
     {
         var unit = _unitSpawner.SpawnUnit(_unitSpawnPoint);
         var mergingPlace = _mergingPlacesController.GetFirstAvailable();
-        _unitPositioner.PlaceUnitInHolder(unit, mergingPlace);
+        UnitSpawned?.Invoke(unit, mergingPlace);
     }
     
-    public void TryMergeUnits(DropPlace currentDropPlace, MergingPlace targetMergingPlace)
+    public void TryMergeUnits(Unit unit, MergingPlace targetMergingPlace)
     {
-        _mergeController.TryMergeUnits(currentDropPlace, targetMergingPlace, OnUnitsMerged, 
-            (unit, mergingPlace) => _unitPositioner.PlaceUnitInHolder(unit, mergingPlace));
+        _mergeController.TryMergeUnits(unit, targetMergingPlace, OnUnitsMerged, OnUnitsNotMerged);
     }
     
     private void OnUnitsMerged(MergingPlace targetMergingPlace, Transform targetUnitTransform, int targetUnitLevel)
@@ -39,5 +39,10 @@ public class UnitsManager : MonoBehaviour
         var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
         targetMergingPlace.SetUnit(newUnit);
         targetMergingPlace.ShowMergeAnimation();
+    }
+
+    private void OnUnitsNotMerged(Unit unit)
+    {
+        UnitsNotMerged?.Invoke(unit);
     }
 }

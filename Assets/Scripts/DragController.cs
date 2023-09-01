@@ -5,26 +5,28 @@ using UnityEngine.Events;
 public class DragController : MonoBehaviour
 {
     [SerializeField]
-    private UnityEvent<DropPlace, MergingPlace> _dropOnMergingPlace;
+    private UnityEvent<Unit, MergingPlace> _dropOnMergingPlace;
     [SerializeField]
-    private UnityEvent<DropPlace, WorkPlace> _dropOnWorkPlace;
+    private UnityEvent<Unit, WorkPlace> _dropOnWorkPlace;
 
-    public event Func<IDraggable, bool> CanTakeObject; 
+    public event Func<IDraggable, bool> CanTakeObject;
+    public event Action<Unit, DropPlace> OnCantDropObject;
     
+    public DropPlace InitialDropPlace { get; private set; }
+
     [SerializeField]
     private LayerMask _planeLayerMask;
-
-    private UnitPositioner _unitPositioner;
+    
+    private Vector3 _unitOffset;
     private Camera _camera;
     
     private IDraggable _draggedObject;
-    private DropPlace _initialDropPlace;
     private DropPlace _destinationDropPlace;
     private bool _canDropObject;
 
-    public void Initialize(UnitPositioner unitPositioner)
+    public void Initialize(Vector3 unitOffset)
     {
-        _unitPositioner = unitPositioner;
+        _unitOffset = unitOffset;
         _camera = Camera.main;
     }
 
@@ -67,7 +69,7 @@ public class DragController : MonoBehaviour
         }
 
         _draggedObject = draggedObject;
-        _initialDropPlace = initialUnitHolder;
+        InitialDropPlace = initialUnitHolder;
     }
 
     private DropPlace GetHolderUnderDraggedObject(IDraggable draggedObject)
@@ -92,7 +94,7 @@ public class DragController : MonoBehaviour
 
         if (_draggedObject != null)
         {
-            var dragPoint = hit.point + _unitPositioner.UnitOffset;
+            var dragPoint = hit.point + _unitOffset;
             _draggedObject.Drag(dragPoint);
             _canDropObject = CanDropObject(_draggedObject.Transform.position);
         }
@@ -123,24 +125,26 @@ public class DragController : MonoBehaviour
         {
             return;
         }
+        
+        InitialDropPlace.Clear();
 
-        if (_canDropObject)
+        if (_canDropObject && _draggedObject is Unit unit)
         {
             if (_destinationDropPlace is MergingPlace mergingPlace)
             {
-                _dropOnMergingPlace?.Invoke(_initialDropPlace, mergingPlace);
+                _dropOnMergingPlace?.Invoke(unit, mergingPlace);
             }
             else if (_destinationDropPlace is WorkPlace workPlace)
             {
-                _dropOnWorkPlace?.Invoke(_initialDropPlace, workPlace);
+                _dropOnWorkPlace?.Invoke(unit, workPlace);
             }
         }
         else
         {
-            var currentUnit = _draggedObject as Unit;
-            _unitPositioner.PlaceUnitInHolder(currentUnit, _initialDropPlace);
+            unit = _draggedObject as Unit;
+            OnCantDropObject?.Invoke(unit, InitialDropPlace);
         }
-
+        
         _draggedObject = null;
     }
 }

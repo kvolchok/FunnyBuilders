@@ -10,28 +10,27 @@ public class MergeController : MonoBehaviour
         _maxUnitsLevel = maxUnitsLevel;
     }
     
-    public void TryMergeUnits(DropPlace currentDropPlace, MergingPlace targetMergingPlace,
-        Action<MergingPlace, Transform, int> onUnitsMerged, Action<Unit, DropPlace> onUnitsNotMerged)
+    public void TryMergeUnits(Unit unit, MergingPlace targetMergingPlace,
+        Action<MergingPlace, Transform, int> onUnitsMerged, Action<Unit> onUnitsNotMerged)
     {
-        if (targetMergingPlace.Unit == null || currentDropPlace == targetMergingPlace)
+        if (targetMergingPlace.Unit == null || unit == targetMergingPlace.Unit)
         {
-            onUnitsNotMerged?.Invoke(currentDropPlace.Unit, currentDropPlace);
+            onUnitsNotMerged?.Invoke(unit);
             return;
         }
         
         var targetUnitTransform = targetMergingPlace.Unit.transform;
         var targetUnitLevel = targetMergingPlace.Unit.Level;
-        if (currentDropPlace.Unit.Level == targetUnitLevel && currentDropPlace.Unit.Level < _maxUnitsLevel)
+        if (unit.Level == targetUnitLevel && unit.Level < _maxUnitsLevel)
         {
-            currentDropPlace.Unit.DestroyUnit();
+            unit.DestroyUnit();
             targetMergingPlace.Unit.DestroyUnit();
-            currentDropPlace.ClearFromUnit();
             
             onUnitsMerged?.Invoke(targetMergingPlace, targetUnitTransform, targetUnitLevel);
         }
         else
         {
-            onUnitsNotMerged?.Invoke(currentDropPlace.Unit, currentDropPlace);
+            onUnitsNotMerged?.Invoke(unit);
         }
     }
 }

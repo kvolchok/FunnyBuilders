@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
 public class ConstructionManager : MonoBehaviour
 {
+    public event Action<Unit, WorkPlace> UnitRecruited;
+    public event Action<Unit> UnitDismissed;
+    
     [field: SerializeField]
     public List<WorkPlace> WorkPlaces { get; private set; }
 
@@ -11,7 +15,6 @@ public class ConstructionManager : MonoBehaviour
     private Transform _foundation;
 
     private WalletManager _walletManager;
-    private UnitPositioner _unitPositioner;
     private BuildingIncomeCalculator _buildingIncomeCalculator;
     private BuildingConstruction _buildingConstruction;
 
@@ -19,12 +22,10 @@ public class ConstructionManager : MonoBehaviour
     private int _amountAvailableWorkPlaces;
     private int _amountProfitAllUnits;
 
-    public void Initialize(WalletManager walletManager, UnitPositioner unitPositioner,
-        BuildingIncomeCalculator buildingIncomeCalculator, BuildingConstruction buildingConstruction,
-        int buildingConstructionCost, int amountAvailableWorkPlaces)
+    public void Initialize(WalletManager walletManager, BuildingIncomeCalculator buildingIncomeCalculator,
+        BuildingConstruction buildingConstruction, int buildingConstructionCost, int amountAvailableWorkPlaces)
     {
         _walletManager = walletManager;
-        _unitPositioner = unitPositioner;
         _buildingIncomeCalculator = buildingIncomeCalculator;
         _buildingConstruction = buildingConstruction;
 
@@ -50,26 +51,19 @@ public class ConstructionManager : MonoBehaviour
         }
     }
 
-    public void AddUnitToBuildingSite(DropPlace currentDropPlace, WorkPlace targetUnitHolder)
+    public void AddUnitToBuildingSite(Unit unit, WorkPlace targetWorkPlace)
     {
-        var draggableUnit = currentDropPlace.Unit;
-        var replacementUnit = targetUnitHolder.Unit;
-
-        _unitPositioner.PlaceUnitInWorkPlace(draggableUnit, targetUnitHolder);
-        RecruitUnit(draggableUnit);
-
+        var replacementUnit = targetWorkPlace.Unit;
         if (replacementUnit != null)
         {
             DismissUnit(replacementUnit);
-            _unitPositioner.PlaceUnitInHolder(replacementUnit, currentDropPlace);
-            targetUnitHolder.TurnOffSweatAnimation();
-        }
-        else
-        {
-            currentDropPlace.ClearFromUnit();
+            UnitDismissed?.Invoke(replacementUnit);
+            targetWorkPlace.TurnOffSweatAnimation();
         }
         
-        targetUnitHolder.TurnOnSweatAnimation();
+        UnitRecruited?.Invoke(unit, targetWorkPlace);
+        RecruitUnit(unit);
+        targetWorkPlace.TurnOnSweatAnimation();
     }
 
     private void ShowAvailableWorkPlaces(int amountAvailablePlaces)
