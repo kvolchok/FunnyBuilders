@@ -62,14 +62,14 @@ public class ConstructionManager : MonoBehaviour
         {
             DismissUnit(replacementUnit);
             _unitPositioner.PlaceUnitInHolder(replacementUnit, currentUnitHolder);
-            targetUnitHolder.StopSweat();
+            targetUnitHolder.TurnOffSweatAnimation();
         }
         else
         {
             currentUnitHolder.ClearFromUnit();
         }
         
-        targetUnitHolder.StartSweat();
+        targetUnitHolder.TurnOnSweatAnimation();
     }
 
     private void ShowAvailableWorkPlaces(int amountAvailablePlaces)
@@ -115,7 +115,7 @@ public class ConstructionManager : MonoBehaviour
         {
             if (workPlace.Unit != null)
             {
-                workPlace.StopSweat();
+                workPlace.TurnOffSweatAnimation();
                 workPlace.Unit.ChangeState(UnitState.Idle);
             }
         }

@@ -5,12 +5,12 @@ public class WorkPlace : UnitHolder
     [SerializeField]
     private ParticleSystem _particleSweat;
     
-    public void StartSweat()
+    public void TurnOnSweatAnimation()
     {
         _particleSweat.Play();
     }
     
-    public void StopSweat()
+    public void TurnOffSweatAnimation()
     {
         _particleSweat.Stop();
     }

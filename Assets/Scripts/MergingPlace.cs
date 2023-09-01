@@ -3,10 +3,10 @@ using UnityEngine;
 public class MergingPlace : UnitHolder
 {
     [SerializeField]
-    private ParticleSystem _particleAppear;
+    private ParticleSystem _particleFire;
 
-    public void ShowAppearAnimation()
+    public void ShowMergeAnimation()
     {
-        _particleAppear.Play();
+        _particleFire.Play();
     }
 }

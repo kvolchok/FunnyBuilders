@@ -1,5 +1,4 @@
 using System;
-using DefaultNamespace;
 using UnityEngine;
 
 public class Unit : MonoBehaviour, IDraggable
@@ -17,16 +16,11 @@ public class Unit : MonoBehaviour, IDraggable
     [SerializeField]
     private SkinnedMeshRenderer _renderer;
     [SerializeField]
-    private Animator _waterPuddle;
-    
-    [SerializeField] private PopupTextOverWorker _popupText;
-
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    private Animator _unitAnimator;
+    [SerializeField]
+    private Animator _waterPuddleAnimator;
+    [SerializeField]
+    private PopupTextView _popupText;
 
     public void Initialize(UnitSettings unitSettings)
     {
@@ -47,8 +41,8 @@ public class Unit : MonoBehaviour, IDraggable
 
     public void ChangeState(UnitState state)
     {
-        _popupText.HideFloatingText();
-        TurnOffPuddle();
+        _popupText.HidePopupText();
+        TurnOffPuddleAnimation();
         State = state;
 
         switch (State)
@@ -61,8 +55,8 @@ public class Unit : MonoBehaviour, IDraggable
                 break;
             case UnitState.Work:
                 ShowAnimation(_work);
-                _popupText.ShowFloatingText(Salary);
-                TurnOnPuddle();
+                _popupText.ShowPopupText(Salary);
+                TurnOnPuddleAnimation();
                 break;
         }
     }
@@ -73,25 +67,25 @@ public class Unit : MonoBehaviour, IDraggable
         Destroy(gameObject);
     }
 
-    private void TurnOnPuddle()
+    private void TurnOnPuddleAnimation()
     {
-       _waterPuddle.gameObject.SetActive(true);
-       _waterPuddle.SetTrigger(_work);
+       _waterPuddleAnimator.gameObject.SetActive(true);
+       _waterPuddleAnimator.SetTrigger(_work);
     }
 
-    private void TurnOffPuddle()
+    private void TurnOffPuddleAnimation()
     {
-        if (!_waterPuddle.gameObject.activeInHierarchy)
+        if (!_waterPuddleAnimator.gameObject.activeInHierarchy)
         {
             return;
         }
         
-        _waterPuddle.SetTrigger(_idle);
-        _waterPuddle.gameObject.SetActive(false);
+        _waterPuddleAnimator.SetTrigger(_idle);
+        _waterPuddleAnimator.gameObject.SetActive(false);
     }
     
     private void ShowAnimation(int state)
     {
-        _animator.SetTrigger(state);
+        _unitAnimator.SetTrigger(state);
     }
 }

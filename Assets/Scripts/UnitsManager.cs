@@ -39,6 +39,6 @@ public class UnitsManager : MonoBehaviour
     {
         var newUnit = _unitSpawner.SpawnUnit(targetUnitTransform, ++targetUnitLevel);
         targetUnitHolder.SetUnit(newUnit);
-        targetUnitHolder.ShowAppearAnimation();
+        targetUnitHolder.ShowMergeAnimation();
     }
 }

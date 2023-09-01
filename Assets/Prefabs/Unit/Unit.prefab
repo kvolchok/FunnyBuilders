@@ -865,7 +865,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 8522309904458278612}
-  _waterPuddle: {fileID: 2312580383010579835}
+  _unitAnimator: {fileID: 329628834361691048}
+  _waterPuddleAnimator: {fileID: 2312580383010579835}
   _popupText: {fileID: -8645932879208934517}
 --- !u!114 &-8645932879208934517
 MonoBehaviour:
@@ -880,7 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Offset>k__BackingField: {x: 0, y: 0.5, z: 0}
-  _floatingTextPrefab: {fileID: 2091105505211062108, guid: 7c544eaa7f2747f4790da13292cbf07e, type: 3}
+  _popupTextPrefab: {fileID: 2091105505211062108, guid: 7c544eaa7f2747f4790da13292cbf07e, type: 3}
 --- !u!114 &4301768819851585150
 MonoBehaviour:
   m_ObjectHideFlags: 0
