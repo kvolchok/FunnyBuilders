@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,6 +8,8 @@ public class DragController : MonoBehaviour
     private UnityEvent<DropPlace, MergingPlace> _dropOnMergingPlace;
     [SerializeField]
     private UnityEvent<DropPlace, WorkPlace> _dropOnWorkPlace;
+
+    public event Func<IDraggable, bool> CanTakeObject; 
     
     [SerializeField]
     private LayerMask _planeLayerMask;
@@ -52,9 +55,9 @@ public class DragController : MonoBehaviour
         }
 
         var draggedObject = hit.collider.GetComponent<IDraggable>();
-        if (draggedObject == null)
+        if (!CanTakeObject.Invoke(draggedObject))
         {
-            return;
+             return;   
         }
 
         var initialUnitHolder = GetHolderUnderDraggedObject(draggedObject);
@@ -62,12 +65,9 @@ public class DragController : MonoBehaviour
         {
             return;
         }
-        
-        if (initialUnitHolder is MergingPlace)
-        {
-            _draggedObject = draggedObject;
-            _initialDropPlace = initialUnitHolder;
-        }
+
+        _draggedObject = draggedObject;
+        _initialDropPlace = initialUnitHolder;
     }
 
     private DropPlace GetHolderUnderDraggedObject(IDraggable draggedObject)

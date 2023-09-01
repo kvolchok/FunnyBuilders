@@ -49,5 +49,22 @@ public class GameController : MonoBehaviour
             _buildingConstruction, _gameSettings.BuildingConstructionCost, _gameSettings.AmountAvailableSpots);
 
         _dragController.Initialize(_unitPositioner);
+        
+        _dragController.CanTakeObject += OnCanTakeObject;
+    }
+
+    private bool OnCanTakeObject(IDraggable draggedObject)
+    {
+        if (draggedObject is Unit unit)
+        {
+            return unit.State != UnitState.Work;
+        }
+
+        return false;
+    }
+    
+    private void OnDestroy()
+    {
+        _dragController.CanTakeObject -= OnCanTakeObject;
     }
 }
