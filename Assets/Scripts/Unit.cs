@@ -1,3 +1,4 @@
+using System;
 using DefaultNamespace;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class Unit : MonoBehaviour, IDraggable
     private static readonly int _work = Animator.StringToHash("Work");
     private static readonly int _run = Animator.StringToHash("Run");
 
+    public event Action<Unit> UnitDestroyed;
+    
     public UnitState State { get; private set; }
     public int Level { get; private set; }
     public int Salary { get; private set; }
@@ -62,6 +65,12 @@ public class Unit : MonoBehaviour, IDraggable
                 TurnOnPuddle();
                 break;
         }
+    }
+    
+    public void DestroyUnit()
+    {
+        UnitDestroyed?.Invoke(this);
+        Destroy(gameObject);
     }
 
     private void TurnOnPuddle()

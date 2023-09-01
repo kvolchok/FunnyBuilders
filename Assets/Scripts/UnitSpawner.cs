@@ -1,8 +1,12 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UnitSpawner : MonoBehaviour
 {
+    [SerializeField]
+    private UnityEvent<Unit> _unitSpawned;
+    
     [SerializeField]
     private Unit _unitPrefab;
 
@@ -19,6 +23,7 @@ public class UnitSpawner : MonoBehaviour
         var unit = Instantiate(_unitPrefab);
         unit.Initialize(unitSettings);
         unit.transform.position = spawnPoint.position;
+        _unitSpawned?.Invoke(unit);
         return unit;
     }
 }

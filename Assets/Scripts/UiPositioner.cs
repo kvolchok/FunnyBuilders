@@ -3,18 +3,21 @@ using UnityEngine;
 public class UiPositioner : MonoBehaviour
 {
     [SerializeField]
-    private Transform _anchore;
-    [SerializeField]
     private Vector3 _offset;
-    [SerializeField]
-    private RectTransform _uiElement;
+    
+    private Camera _camera;
 
     private void Start()
     {
-        var camera = Camera.main;
-        var screenPoint = RectTransformUtility.WorldToScreenPoint(camera, _anchore.position + _offset);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent as RectTransform, screenPoint,
+        _camera = Camera.main;
+    }
+
+    public void UpdatePosition(Transform gameEntity, RectTransform uiElement)
+    {
+        var screenPoint = RectTransformUtility.WorldToScreenPoint(_camera,
+            gameEntity.position + _offset);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, screenPoint,
             null, out var localPoint);
-        _uiElement.anchoredPosition = localPoint;
+        uiElement.anchoredPosition = localPoint;
     }
 }

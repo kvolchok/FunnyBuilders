@@ -470,6 +470,8 @@ GameObject:
   - component: {fileID: 65731936}
   - component: {fileID: 65731935}
   - component: {fileID: 65731934}
+  - component: {fileID: 65731939}
+  - component: {fileID: 65731938}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -562,6 +564,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &65731938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65731933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43669796b2b7c14dae91cd468779e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: {x: 0.3, y: -0.5, z: 0}
+--- !u!114 &65731939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65731933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b4c4597f4ac427abf3d26b3100a6a8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiPositioner: {fileID: 65731938}
+  _levelViewPrefab: {fileID: -4758115423287032702, guid: f19fc7618e8e54d8381bb23b97d14b14, type: 3}
 --- !u!1 &66608395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,7 +1704,6 @@ GameObject:
   - component: {fileID: 386875422}
   - component: {fileID: 386875424}
   - component: {fileID: 386875423}
-  - component: {fileID: 386875425}
   m_Layer: 5
   m_Name: BuildingProgressBar
   m_TagString: Untagged
@@ -1702,7 +1730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 500}
+  m_AnchoredPosition: {x: 800, y: 400}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &386875423
@@ -1799,21 +1827,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &386875425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386875421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c43669796b2b7c14dae91cd468779e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _anchore: {fileID: 1682847976}
-  _offset: {x: -2, y: 5, z: 0}
-  _uiElement: {fileID: 386875422}
 --- !u!1 &398639477
 GameObject:
   m_ObjectHideFlags: 0
@@ -7153,6 +7166,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b5be4dd7b3409086dea11a813212bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitSpawned:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 65731939}
+        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
+        m_MethodName: CreateLevelView
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _unitPrefab: {fileID: -1948444555659907327, guid: 83bc9e3096b6ff64ba1e3830f428b1c2, type: 3}
 --- !u!1 &1614575119 stripped
 GameObject:

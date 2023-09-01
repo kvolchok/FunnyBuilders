@@ -23,8 +23,8 @@ public class MergeController : MonoBehaviour
         var targetUnitLevel = targetUnitHolder.Unit.Level;
         if (currentUnitHolder.Unit.Level == targetUnitLevel && currentUnitHolder.Unit.Level < _maxUnitsLevel)
         {
-            Destroy(currentUnitHolder.Unit.gameObject);
-            Destroy(targetUnitHolder.Unit.gameObject);
+            currentUnitHolder.Unit.DestroyUnit();
+            targetUnitHolder.Unit.DestroyUnit();
             currentUnitHolder.ClearFromUnit();
             
             onUnitsMerged?.Invoke(targetUnitHolder, targetUnitTransform, targetUnitLevel);
