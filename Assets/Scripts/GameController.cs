@@ -1,4 +1,10 @@
+using BuyButton;
+using ConstructionSystem;
+using DragSystem;
+using MergeSystem;
+using Settings;
 using UnityEngine;
+using Wallet;
 
 public class GameController : MonoBehaviour
 {

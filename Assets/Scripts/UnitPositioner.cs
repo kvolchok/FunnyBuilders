@@ -3,20 +3,19 @@ using UnityEngine;
 
 public class UnitPositioner : MonoBehaviour
 {
-    public Vector3 UnitOffset { get; private set; }
-    
+    private Vector3 _unitOffset;
     private float _unitSpeed;
     
     public void Initialize(Vector3 unitOffset, float unitSpeed)
     {
-        UnitOffset = unitOffset;
+        _unitOffset = unitOffset;
         _unitSpeed = unitSpeed;
     }
     
     public void PlaceUnit(Unit unit, DropPlace dropPlace)
     {
         unit.ChangeState(UnitState.Run);
-        var targetPosition = dropPlace.transform.position + UnitOffset;
+        var targetPosition = dropPlace.transform.position + _unitOffset;
         var travelDistance = Vector3.Distance(unit.transform.position, targetPosition);
         var travelTime = travelDistance / _unitSpeed;
         unit.transform.LookAt(targetPosition);
@@ -28,7 +27,7 @@ public class UnitPositioner : MonoBehaviour
     
     public void PlaceUnitInWorkPlace(Unit unit, WorkPlace workPlace)
     {
-        var targetPosition = workPlace.transform.position + UnitOffset;
+        var targetPosition = workPlace.transform.position + _unitOffset;
         unit.transform.LookAt(targetPosition);
         unit.transform.position = targetPosition;
         workPlace.SetUnit(unit);

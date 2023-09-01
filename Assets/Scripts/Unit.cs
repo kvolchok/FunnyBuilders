@@ -1,4 +1,7 @@
 using System;
+using Animations;
+using DragSystem;
+using Settings;
 using UnityEngine;
 
 public class Unit : MonoBehaviour, IDraggable
@@ -22,7 +25,7 @@ public class Unit : MonoBehaviour, IDraggable
     [SerializeField]
     private Animator _waterPuddleAnimator;
     [SerializeField]
-    private PopupTextView _popupText;
+    private PopupTextAnimation _popupTextAnimation;
 
     public void Initialize(UnitSettings unitSettings)
     {
@@ -43,7 +46,7 @@ public class Unit : MonoBehaviour, IDraggable
 
     public void ChangeState(UnitState state)
     {
-        _popupText.HidePopupText();
+        _popupTextAnimation.TurnOffAnimation();
         TurnOffPuddleAnimation();
         State = state;
 
@@ -57,7 +60,7 @@ public class Unit : MonoBehaviour, IDraggable
                 break;
             case UnitState.Work:
                 ShowAnimation(_work);
-                _popupText.ShowPopupText(Salary);
+                _popupTextAnimation.TurnOnAnimation(Salary);
                 TurnOnPuddleAnimation();
                 break;
         }
@@ -71,8 +74,8 @@ public class Unit : MonoBehaviour, IDraggable
 
     private void TurnOnPuddleAnimation()
     {
-       _waterPuddleAnimator.gameObject.SetActive(true);
-       _waterPuddleAnimator.SetTrigger(_work);
+        _waterPuddleAnimator.gameObject.SetActive(true);
+        _waterPuddleAnimator.SetTrigger(_work);
     }
 
     private void TurnOffPuddleAnimation()
