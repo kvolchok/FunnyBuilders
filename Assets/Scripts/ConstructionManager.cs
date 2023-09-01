@@ -9,12 +9,12 @@ public class ConstructionManager : MonoBehaviour
 
     [SerializeField]
     private Transform _foundation;
-    
+
     private WalletManager _walletManager;
     private UnitPositioner _unitPositioner;
     private BuildingIncomeCalculator _buildingIncomeCalculator;
     private BuildingConstruction _buildingConstruction;
-    
+
     private int _buildingConstructionCost;
     private int _amountAvailableWorkPlaces;
     private int _amountProfitAllUnits;
@@ -27,7 +27,7 @@ public class ConstructionManager : MonoBehaviour
         _unitPositioner = unitPositioner;
         _buildingIncomeCalculator = buildingIncomeCalculator;
         _buildingConstruction = buildingConstruction;
-        
+
         _buildingIncomeCalculator.MoneyEarned += OnMoneyEarned;
         _buildingConstruction.BuildingFinished += OnBuildingFinished;
 
@@ -49,12 +49,12 @@ public class ConstructionManager : MonoBehaviour
             }
         }
     }
-    
+
     public void AddUnitToBuildingSite(UnitHolder currentUnitHolder, WorkPlace targetUnitHolder)
     {
         var draggableUnit = currentUnitHolder.Unit;
         var replacementUnit = targetUnitHolder.Unit;
-        
+
         _unitPositioner.PlaceUnitInWorkPlace(draggableUnit, targetUnitHolder);
         RecruitUnit(draggableUnit);
 
@@ -62,13 +62,16 @@ public class ConstructionManager : MonoBehaviour
         {
             DismissUnit(replacementUnit);
             _unitPositioner.PlaceUnitInHolder(replacementUnit, currentUnitHolder);
+            targetUnitHolder.StopSweat();
         }
         else
         {
             currentUnitHolder.ClearFromUnit();
         }
+        
+        targetUnitHolder.StartSweat();
     }
-    
+
     private void ShowAvailableWorkPlaces(int amountAvailablePlaces)
     {
         var count = 0;
@@ -78,7 +81,7 @@ public class ConstructionManager : MonoBehaviour
             count++;
         }
     }
-    
+
     private void RecruitUnit(Unit recruitedUnit)
     {
         recruitedUnit.transform.LookAt(_foundation);
@@ -112,6 +115,7 @@ public class ConstructionManager : MonoBehaviour
         {
             if (workPlace.Unit != null)
             {
+                workPlace.StopSweat();
                 workPlace.Unit.ChangeState(UnitState.Idle);
             }
         }
