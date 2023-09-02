@@ -748,9 +748,7 @@ GameObject:
   - component: {fileID: 5322814814766302306}
   - component: {fileID: 329628834361691048}
   - component: {fileID: -1948444555659907327}
-  - component: {fileID: -8645932879208934517}
-  - component: {fileID: 4301768819851585150}
-  - component: {fileID: 1430322651320591939}
+  - component: {fileID: 9181291399305537672}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Player
@@ -841,8 +839,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6429152169199881064}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ffb2acebfcaf5d741a26dc7624e1d1d6, type: 3}
-  m_Controller: {fileID: 9100000, guid: d5cd6302533a2bf4784259b8406c14b3, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 7e1a2cfc2ed7b374c9b4d18e7c77a6a0, type: 3}
+  m_Controller: {fileID: 9100000, guid: 4274ad26f73cdbe4fa0ca470f17facaf, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -867,8 +865,8 @@ MonoBehaviour:
   _renderer: {fileID: 8522309904458278612}
   _unitAnimator: {fileID: 329628834361691048}
   _waterPuddleAnimator: {fileID: 2312580383010579835}
-  _popupTextAnimation: {fileID: -8645932879208934517}
---- !u!114 &-8645932879208934517
+  _popupTextAnimation: {fileID: 9181291399305537672}
+--- !u!114 &9181291399305537672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -877,42 +875,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6429152169199881064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa326c04ed3641ee8bcafd3d9f445541, type: 3}
+  m_Script: {fileID: 11500000, guid: fb01b2cec3efc91449c2783d07b8938b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Offset>k__BackingField: {x: 0, y: 0.5, z: 0}
   _popupTextPrefab: {fileID: 2091105505211062108, guid: 7c544eaa7f2747f4790da13292cbf07e, type: 3}
---- !u!114 &4301768819851585150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6429152169199881064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 0
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &1430322651320591939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6429152169199881064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b31e1388f72b4562a4d44a0e1902bca2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _highlightIntensity: 4
 --- !u!1 &6556263148837840947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1054,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 7348713385421542895, guid: ffb2acebfcaf5d741a26dc7624e1d1d6, type: 3}
+  m_Mesh: {fileID: 7348713385421542895, guid: 7e1a2cfc2ed7b374c9b4d18e7c77a6a0, type: 3}
   m_Bones:
   - {fileID: 3947163736365256932}
   - {fileID: 8458067659890894856}
