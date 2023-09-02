@@ -14012,13 +14012,13 @@ MonoBehaviour:
     - {fileID: 11400000, guid: cc5b73d5329894d12a981fa773fbf2b7, type: 2}
     - {fileID: 11400000, guid: 0dd743993fe38476ead23b846b0dc8d9, type: 2}
     - {fileID: 11400000, guid: 80106d3f95fba4a799ab8f6006eb4282, type: 2}
-    <UnitPrices>k__BackingField: f4010000bc020000840300004c04000014050000dc050000a40600006c07000034080000fc080000
+    <UnitPrices>k__BackingField: f401000058020000bc0200002003000084030000e8030000b0040000780500004006000008070000d007000098080000
     <UnitOffset>k__BackingField: {x: 0, y: 0.4, z: 0}
     <UnitSpeed>k__BackingField: 1
     <UnitPaymentInterval>k__BackingField: 1
     <SpotPrices>k__BackingField: e803000014050000a4060000
     <AmountAvailableSpots>k__BackingField: 1
-    <BuildingConstructionCost>k__BackingField: 10000
+    <BuildingConstructionCost>k__BackingField: 20000
     <DurationBuildingHeight>k__BackingField: 1
   _walletManager: {fileID: 723720421}
   _unitBuyer: {fileID: 1460698042}
