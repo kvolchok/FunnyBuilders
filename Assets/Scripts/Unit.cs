@@ -39,11 +39,6 @@ public class Unit : MonoBehaviour, IDraggable
         transform.position = targetPosition;
     }
 
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
     public void ChangeState(UnitState state)
     {
         _popupTextAnimation.TurnOffAnimation();

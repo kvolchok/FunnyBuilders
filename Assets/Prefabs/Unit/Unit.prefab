@@ -867,7 +867,7 @@ MonoBehaviour:
   _renderer: {fileID: 8522309904458278612}
   _unitAnimator: {fileID: 329628834361691048}
   _waterPuddleAnimator: {fileID: 2312580383010579835}
-  _popupText: {fileID: -8645932879208934517}
+  _popupTextAnimation: {fileID: -8645932879208934517}
 --- !u!114 &-8645932879208934517
 MonoBehaviour:
   m_ObjectHideFlags: 0
