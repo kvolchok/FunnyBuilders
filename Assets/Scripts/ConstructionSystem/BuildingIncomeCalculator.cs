@@ -21,7 +21,7 @@ namespace ConstructionSystem
         public void StartPay(Unit currentUnit)
         {
             var coroutine = StartCoroutine(GiveSalary(currentUnit.Salary));
-            AddCoroutineToDataBase(currentUnit, coroutine);
+            _dataBaseCoroutine.Add(currentUnit, coroutine);
         }
 
         public void StopPay(Unit dischargedUnit)
@@ -43,11 +43,6 @@ namespace ConstructionSystem
                 MoneyEarned?.Invoke(unitSalary);
                 yield return new WaitForSeconds(_unitPaymentInterval);
             }
-        }
-
-        private void AddCoroutineToDataBase(Unit unit, Coroutine coroutine)
-        {
-            _dataBaseCoroutine.Add(unit, coroutine);
         }
     }
 }
